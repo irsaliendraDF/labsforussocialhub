@@ -4,19 +4,19 @@ import { revalidatePath } from "next/cache";
 import { getServerClient } from "@/lib/supabase/server";
 import { publishPost } from "@/lib/publish";
 
-/** Every action re-checks the session: server actions are public endpoints. */
-async function requireUser() {
+/**
+ * The hub has no login — it's an internal tool the team opens on their
+ * laptops — so these actions run against the anon key and rely on the RLS
+ * policies in supabase/schema.sql, which grant the board to `anon`.
+ */
+async function db() {
   const supabase = await getServerClient();
   if (!supabase) throw new Error("Supabase isn't connected yet.");
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error("You need to be signed in.");
-  return { supabase, user };
+  return supabase;
 }
 
 export async function schedulePostAction(postId: string, scheduledAt: string) {
-  const { supabase } = await requireUser();
+  const supabase = await db();
 
   const when = new Date(scheduledAt);
   if (Number.isNaN(when.getTime())) {
@@ -39,7 +39,7 @@ export async function schedulePostAction(postId: string, scheduledAt: string) {
 }
 
 export async function cancelScheduleAction(postId: string) {
-  const { supabase } = await requireUser();
+  const supabase = await db();
 
   const { error } = await supabase
     .from("posts")
@@ -57,7 +57,6 @@ export async function cancelScheduleAction(postId: string) {
 }
 
 export async function publishNowAction(postId: string) {
-  await requireUser();
   const result = await publishPost(postId);
   revalidatePath("/scheduler");
   return result;
@@ -65,7 +64,7 @@ export async function publishNowAction(postId: string) {
 
 /** Marks a post as posted by hand — the fallback path while approvals pend. */
 export async function markPostedAction(postId: string, url: string | null) {
-  const { supabase } = await requireUser();
+  const supabase = await db();
 
   const { error } = await supabase
     .from("posts")

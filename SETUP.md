@@ -44,18 +44,22 @@ Set the same four in Vercel under **Settings → Environment Variables**.
 request, which means nothing publishes. That is deliberate — a missing secret
 should never mean "anyone can trigger a publish".
 
-## 3. Auth and inviting the team
+## 3. No login — and what that means
 
-Supabase → **Authentication**:
+There's no sign-in. Anyone who opens the URL lands straight on the board, which
+is the point: the team bookmarks it and starts working.
 
-1. **URL Configuration** → set Site URL to the live Vercel URL, and add both
-   `http://localhost:3100/**` and `https://<your-vercel-url>/**` to Redirect URLs.
-   Magic links silently fail without this.
-2. **Users → Invite user** for each person on the team.
-3. Turn **off** open sign-ups (Authentication → Sign In / Providers → disable
-   "Allow new users to sign up") so only invited people can get in.
+The honest trade-off: **anyone with the URL can read and edit the content
+calendar.** Nothing sensitive is exposed — the Instagram and LinkedIn tokens
+live in `social_accounts`, which has no RLS policies at all and is unreachable
+from a browser under any key — but the plan itself is open to whoever has the
+link.
 
-Everyone signs in once on their laptop, stays signed in, and bookmarks the URL.
+If you'd rather the URL not be open to the world, turn on **Vercel Deployment
+Protection** (Project → Settings → Deployment Protection → Password Protection
+or Vercel Authentication). That gates the whole site at the edge with one shared
+password, so the team still has no per-person login, but a stranger with the URL
+can't get in. It's a one-switch change and needs nothing in the code.
 
 ## 4. Instagram and LinkedIn (the long pole)
 

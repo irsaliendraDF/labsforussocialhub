@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getUser } from "@/lib/supabase/server";
+import { mintOAuthState } from "@/lib/oauthState";
 
 export const dynamic = "force-dynamic";
 
@@ -15,28 +15,23 @@ export async function GET(
   request: NextRequest,
   ctx: { params: Promise<{ platform: string }> },
 ) {
-  const user = await getUser();
-  if (!user) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
-
   const { platform } = await ctx.params;
   const origin = new URL(request.url).origin;
   const redirectUri = `${origin}/api/connect/${platform}/callback`;
 
+  const missing = (what: string) =>
+    NextResponse.redirect(
+      new URL(`/scheduler?error=${encodeURIComponent(what)}`, request.url),
+    );
+
   if (platform === "instagram") {
     const appId = process.env.META_APP_ID;
     if (!appId) {
-      return NextResponse.redirect(
-        new URL(
-          "/scheduler?error=" +
-            encodeURIComponent(
-              "Instagram isn't set up yet. Add META_APP_ID and META_APP_SECRET once the Meta app exists.",
-            ),
-          request.url,
-        ),
+      return missing(
+        "Instagram isn't set up yet. Add META_APP_ID and META_APP_SECRET once the Meta app exists.",
       );
     }
+    const state = await mintOAuthState();
     const scope = [
       "instagram_basic",
       "instagram_content_publish",
@@ -50,23 +45,18 @@ export async function GET(
     url.searchParams.set("redirect_uri", redirectUri);
     url.searchParams.set("scope", scope);
     url.searchParams.set("response_type", "code");
-    url.searchParams.set("state", user.id);
+    url.searchParams.set("state", state);
     return NextResponse.redirect(url.toString());
   }
 
   if (platform === "linkedin") {
     const clientId = process.env.LINKEDIN_CLIENT_ID;
     if (!clientId) {
-      return NextResponse.redirect(
-        new URL(
-          "/scheduler?error=" +
-            encodeURIComponent(
-              "LinkedIn isn't set up yet. Add LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET once the LinkedIn app exists.",
-            ),
-          request.url,
-        ),
+      return missing(
+        "LinkedIn isn't set up yet. Add LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET once the LinkedIn app exists.",
       );
     }
+    const state = await mintOAuthState();
     const scope = [
       "r_organization_social",
       "w_organization_social",
@@ -78,7 +68,7 @@ export async function GET(
     url.searchParams.set("client_id", clientId);
     url.searchParams.set("redirect_uri", redirectUri);
     url.searchParams.set("scope", scope);
-    url.searchParams.set("state", user.id);
+    url.searchParams.set("state", state);
     return NextResponse.redirect(url.toString());
   }
 

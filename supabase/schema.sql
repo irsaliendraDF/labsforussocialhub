@@ -116,6 +116,18 @@ end
 $$;
 
 -- ---------- Row Level Security ----------
+--
+-- This hub has NO login: it's an internal tool the team opens from a bookmark,
+-- so the browser talks to Postgres with the anon key. Policies therefore grant
+-- the board to `anon` as well as `authenticated`.
+--
+-- The consequence, stated plainly: anyone who has the URL and the anon key can
+-- read and edit the content calendar. That is an accepted trade for this tool.
+-- Keep the deployment itself private (Vercel Deployment Protection) if the URL
+-- shouldn't be open to the world.
+--
+-- What is NOT exposed this way: social_accounts (OAuth tokens) has no policies
+-- at all, and post_metrics is read-only. Neither can be written from a browser.
 
 alter table posts           enable row level security;
 alter table templates       enable row level security;
@@ -123,28 +135,28 @@ alter table pillars         enable row level security;
 alter table social_accounts enable row level security;
 alter table post_metrics    enable row level security;
 
--- posts: any signed-in team member has full access.
+-- posts: the shared board, fully editable by anyone using the hub.
 drop policy if exists "team reads posts"   on posts;
 drop policy if exists "team writes posts"  on posts;
 drop policy if exists "team updates posts" on posts;
 drop policy if exists "team deletes posts" on posts;
 
-create policy "team reads posts"   on posts for select to authenticated using (true);
-create policy "team writes posts"  on posts for insert to authenticated with check (true);
-create policy "team updates posts" on posts for update to authenticated using (true) with check (true);
-create policy "team deletes posts" on posts for delete to authenticated using (true);
+create policy "team reads posts"   on posts for select to anon, authenticated using (true);
+create policy "team writes posts"  on posts for insert to anon, authenticated with check (true);
+create policy "team updates posts" on posts for update to anon, authenticated using (true) with check (true);
+create policy "team deletes posts" on posts for delete to anon, authenticated using (true);
 
--- templates + pillars: readable by the team, edited by an admin in Supabase.
+-- templates + pillars: read-only from the app, edited by an admin in Supabase.
 drop policy if exists "team reads templates" on templates;
 drop policy if exists "team reads pillars"   on pillars;
 
-create policy "team reads templates" on templates for select to authenticated using (true);
-create policy "team reads pillars"   on pillars   for select to authenticated using (true);
+create policy "team reads templates" on templates for select to anon, authenticated using (true);
+create policy "team reads pillars"   on pillars   for select to anon, authenticated using (true);
 
--- post_metrics: readable by the team, written only by the metrics job
+-- post_metrics: readable by the app, written only by the metrics job
 -- (service role bypasses RLS, so no write policy is granted here).
 drop policy if exists "team reads metrics" on post_metrics;
-create policy "team reads metrics" on post_metrics for select to authenticated using (true);
+create policy "team reads metrics" on post_metrics for select to anon, authenticated using (true);
 
 -- social_accounts: NO policies at all. The table holds access tokens, so it is
 -- unreachable from the browser under any role. Only the service-role key,

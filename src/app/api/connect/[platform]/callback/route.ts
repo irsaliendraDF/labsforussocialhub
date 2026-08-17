@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getAdminClient, getUser } from "@/lib/supabase/server";
+import { getAdminClient } from "@/lib/supabase/server";
+import { consumeOAuthState } from "@/lib/oauthState";
 
 export const dynamic = "force-dynamic";
 
@@ -19,20 +20,18 @@ export async function GET(
   request: NextRequest,
   ctx: { params: Promise<{ platform: string }> },
 ) {
-  const user = await getUser();
-  if (!user) return NextResponse.redirect(new URL("/sign-in", request.url));
-
   const { platform } = await ctx.params;
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const state = searchParams.get("state");
 
   if (searchParams.get("error")) {
     return back(request, searchParams.get("error_description") ?? "Cancelled.");
   }
   if (!code) return back(request, "No authorization code came back.");
-  // The state we sent was the user's id; a mismatch means this isn't our flow.
-  if (state !== user.id) return back(request, "Sign-in state didn't match.");
+  // Echoed state must match the one we minted, or this isn't our flow.
+  if (!(await consumeOAuthState(searchParams.get("state")))) {
+    return back(request, "That connect link expired. Hit Connect again.");
+  }
 
   const admin = getAdminClient();
   if (!admin) return back(request, "Server isn't configured to store tokens.");
@@ -87,7 +86,7 @@ export async function GET(
         token_expires_at: expiresIn
           ? new Date(Date.now() + expiresIn * 1000).toISOString()
           : null,
-        connected_by: user.email ?? user.id,
+        connected_by: "Lab for Us team",
       });
 
       return back(request, "Instagram connected.", true);
@@ -145,7 +144,7 @@ export async function GET(
         token_expires_at: tok.expires_in
           ? new Date(Date.now() + tok.expires_in * 1000).toISOString()
           : null,
-        connected_by: user.email ?? user.id,
+        connected_by: "Lab for Us team",
       });
 
       return back(request, "LinkedIn connected.", true);

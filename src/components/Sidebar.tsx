@@ -82,7 +82,7 @@ const GROUPS: Group[] = [
   },
 ];
 
-export default function Sidebar({ email }: { email?: string | null }) {
+export default function Sidebar() {
   const pathname = usePathname();
 
   return (
@@ -108,18 +108,9 @@ export default function Sidebar({ email }: { email?: string | null }) {
       ))}
 
       <div className="nav-foot">
-        {email ? (
-          <>
-            <div className="nav-user">{email}</div>
-            <form action="/auth/sign-out" method="post">
-              <button className="nav-signout" type="submit">
-                Sign out
-              </button>
-            </form>
-          </>
-        ) : (
-          <div className="nav-user">Not signed in</div>
-        )}
+        <div className="nav-user">
+          Shared board — everyone sees the same live picture.
+        </div>
       </div>
     </nav>
   );

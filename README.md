@@ -31,8 +31,8 @@ and channel).
 
 ## Stack
 
-Next.js 16 (App Router) · React 19 · TypeScript · Supabase (Postgres, Auth,
-Realtime) · Vercel + Vercel Cron.
+Next.js 16 (App Router) · React 19 · TypeScript · Supabase (Postgres, Realtime)
+· Vercel + Vercel Cron.
 
 No CSS framework — `src/app/globals.css` carries the prototype's tokens and
 component styles verbatim.
@@ -67,10 +67,17 @@ the analytics rollups.
 
 ## Security notes
 
+- **There is no login.** The team opens a bookmark and starts working, so the
+  browser talks to Postgres with the anon key and the RLS policies grant the
+  board to `anon`. Anyone with the URL can read and edit the calendar. To keep
+  the URL itself private without adding per-person logins, switch on Vercel
+  Deployment Protection — see SETUP.md.
 - `social_accounts` holds OAuth tokens and has **no RLS policies at all** — it is
   unreachable from the browser under any role. Only server-side code holding the
   service-role key touches it, and the Scheduler page projects the token columns
   away before rendering.
+- The connect flows use a random, single-use, httpOnly-cookie-backed OAuth
+  `state` for CSRF protection, since there's no session to derive it from.
 - Publishing and metrics run server-side only.
 - Cron endpoints authenticate with `CRON_SECRET` and refuse every request if it
   isn't set.

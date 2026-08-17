@@ -44,13 +44,3 @@ export function getAdminClient() {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 }
-
-/** Convenience: the current user, or null. */
-export async function getUser() {
-  const supabase = await getServerClient();
-  if (!supabase) return null;
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  return user;
-}
