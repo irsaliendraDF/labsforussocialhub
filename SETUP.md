@@ -107,11 +107,30 @@ npx vercel --prod
 
 `vercel.json` already registers the two cron jobs:
 
-- `/api/cron/publish` — every 10 minutes, drains the scheduled queue.
-- `/api/cron/metrics` — daily, snapshots performance for published posts.
+- `/api/cron/publish` — daily at 13:09 UTC (about 10:09am in Halifax), drains
+  the scheduled queue.
+- `/api/cron/metrics` — daily at 07:23 UTC, snapshots performance for published
+  posts.
 
 Both are scheduled off the hour on purpose; Vercel's cron runners are busiest at
 `:00` and `:30`.
+
+### Why daily, and what it means for scheduling
+
+**Vercel's Hobby plan only permits daily crons**, and allows two of them — which
+is exactly what this uses. So the publish queue is swept once a day rather than
+continuously.
+
+The practical consequence: **a post scheduled for 2pm does not go out at 2pm.**
+It goes out on the next sweep after that time. Schedule something for this
+afternoon and it leaves tomorrow morning. The Scheduler says this on screen —
+each queued post shows both "Set for" and "Goes out" — so nobody has to hold it
+in their head.
+
+If Lab for Us later wants posts to leave at the minute they were planned for,
+that's a Vercel Pro upgrade, then change the `publish` cron in `vercel.json` to
+something like `7,17,27,37,47,57 * * * *` and update
+`PUBLISH_RUN_UTC_HOUR`/`MINUTE` in `src/lib/schedule.ts`. No other code changes.
 
 ---
 

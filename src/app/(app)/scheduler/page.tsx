@@ -1,3 +1,4 @@
+import HowToSchedule from "@/components/HowToSchedule";
 import SchedulerBoard from "@/components/SchedulerBoard";
 import SetupBanner from "@/components/SetupBanner";
 import { getAdminClient } from "@/lib/supabase/server";
@@ -32,7 +33,8 @@ export default async function SchedulerPage() {
         <h1>Scheduler</h1>
         <p>
           Connect Instagram and LinkedIn, put Ready posts on a time, and watch
-          the queue. The queue runs every ten minutes.
+          the queue. The queue is swept once a day, so a scheduled post goes
+          out on the next sweep after the time you pick.
         </p>
       </div>
 
@@ -44,7 +46,9 @@ export default async function SchedulerPage() {
         liLive={process.env.LINKEDIN_PUBLISHING_ENABLED === "true"}
       />
 
-      <p className="note" style={{ marginTop: 30 }}>
+      <HowToSchedule />
+
+      <p className="note" style={{ marginTop: 26 }}>
         Instagram publishing needs a Business or Creator account on a Facebook
         Page, a Meta app, and App Review. LinkedIn needs the Page, a LinkedIn
         app, and Community Management API access. Those approvals, not the code,

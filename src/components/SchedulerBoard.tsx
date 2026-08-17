@@ -3,6 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { pillarColor } from "@/lib/content";
 import { fmtDateTime, fmtLongDate, toDatetimeLocal } from "@/lib/dates";
+import { goesOutOnRun, publishRunLocalTime } from "@/lib/schedule";
 import { usePosts } from "@/lib/usePosts";
 import type { Post, SocialAccount } from "@/lib/types";
 import { ToastProvider, useToast } from "./Toast";
@@ -183,7 +184,8 @@ function Board({ accounts, igLive, liLive }: Props) {
           <h2 className="strat-sub">Ready to schedule</h2>
           <p className="strat-subnote">
             Posts you&apos;ve marked <strong>Ready</strong> on the calendar.
-            Pick a time and they join the queue.
+            Pick a time and they join the queue, which goes out once a day at
+            around <strong>{publishRunLocalTime()}</strong>.
           </p>
 
           {loading ? (
@@ -217,6 +219,17 @@ function Board({ accounts, igLive, liLive }: Props) {
                         value={when}
                         onChange={(e) => setWhen(e.target.value)}
                       />
+                      {/* The queue sweeps once a day, so say out loud when
+                          this will actually leave rather than implying the
+                          exact minute is honoured. */}
+                      {when && !Number.isNaN(new Date(when).getTime()) && (
+                        <span className="run-hint">
+                          Goes out{" "}
+                          {fmtDateTime(
+                            goesOutOnRun(new Date(when)).toISOString(),
+                          )}
+                        </span>
+                      )}
                       <button
                         className="btn sm solid"
                         disabled={pending}
@@ -279,9 +292,24 @@ function Board({ accounts, igLive, liLive }: Props) {
                       <h4>{p.title}</h4>
                       <div className="qm">
                         <span>{p.channel}</span>
-                        <span>{fmtDateTime(p.scheduled_at)}</span>
+                        <span>Set for {fmtDateTime(p.scheduled_at)}</span>
                         <span>{p.pillar}</span>
                       </div>
+                      {p.scheduled_at && (
+                        <div
+                          className="qm"
+                          style={{ marginTop: 3, color: "var(--amber)" }}
+                        >
+                          <span style={{ fontWeight: 600 }}>
+                            Goes out{" "}
+                            {fmtDateTime(
+                              goesOutOnRun(
+                                new Date(p.scheduled_at),
+                              ).toISOString(),
+                            )}
+                          </span>
+                        </div>
+                      )}
                     </div>
                     {statusBadge(p)}
                     <div className="qa">
