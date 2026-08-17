@@ -11,9 +11,46 @@ export default function HowToSchedule() {
     <>
       <h2 className="strat-sub">How to schedule</h2>
       <p className="strat-subnote">
-        Open the channel you&apos;re posting to. Everything here works whether
-        or not direct posting has been switched on yet.
+        The run, end to end. Then open the channel you&apos;re posting to for
+        the detail. It all works whether or not direct posting has been
+        switched on yet.
       </p>
+
+      <div className="flow">
+        <div className="flow-step">
+          <h4>Plan it</h4>
+          <p>
+            On the Calendar, pick a channel, a pillar, a template, and a date.
+          </p>
+        </div>
+        <div className="flow-step">
+          <h4>Make it</h4>
+          <p>
+            Open the template in Canva, make a copy, edit it, and export the
+            image.
+          </p>
+        </div>
+        <div className="flow-step">
+          <h4>Fill it in</h4>
+          <p>
+            Paste the exported link and write the caption on the post, then
+            move it to <strong>Ready</strong>.
+          </p>
+        </div>
+        <div className="flow-step">
+          <h4>Schedule it</h4>
+          <p>
+            It shows up here under Ready to schedule. Pick a time and confirm.
+          </p>
+        </div>
+        <div className="flow-step">
+          <h4>Check it went</h4>
+          <p>
+            Watch Upcoming, then Published. Anything that failed says why and
+            can be retried.
+          </p>
+        </div>
+      </div>
 
       {/* ------------------------------ Instagram ------------------------ */}
       <details className="fold guide">
@@ -35,7 +72,7 @@ export default function HowToSchedule() {
           </p>
 
           <p className="subhead">Every time you post</p>
-          <ol className="steps-list">
+          <ol className="steps-list numbered">
             <li>
               <strong>Plan it on the Calendar.</strong> Pick Instagram, a
               pillar, and a template, and give it a date.
@@ -48,7 +85,7 @@ export default function HowToSchedule() {
             <li>
               <strong>Export it as a JPEG.</strong> In Canva:{" "}
               <em>Share &rarr; Download &rarr; JPG</em>. Instagram is fussy
-              about formats — JPEG is the safe one, and the image needs to sit
+              about formats: JPEG is the safe one, and the image needs to sit
               between 4:5 (tall) and 1.91:1 (wide). The square and portrait
               templates are already inside that range.
             </li>
@@ -69,7 +106,7 @@ export default function HowToSchedule() {
 
           <p className="subhead">While approval is pending</p>
           <p className="guide-lead">
-            Until Meta approves the app, the post won&apos;t leave on its own —
+            Until Meta approves the app, the post won&apos;t leave on its own,
             and the tool will say so rather than pretending it went. When it
             comes up in the queue: open the post, copy the caption, post it from
             the Instagram app with your exported image, then hit{" "}
@@ -96,7 +133,7 @@ export default function HowToSchedule() {
             <li>
               <strong>The connection expires roughly every 60 days.</strong> If
               the card above stops saying &quot;Posting live&quot;, hit
-              Reconnect. Nothing is lost — queued posts just wait.
+              Reconnect. Nothing is lost. Queued posts just wait.
             </li>
           </ul>
         </div>
@@ -116,12 +153,12 @@ export default function HowToSchedule() {
           <p className="guide-lead">
             LinkedIn is the credibility channel: one post a week, aimed at
             partners, funders, and outcomes. It&apos;s more forgiving than
-            Instagram in one useful way — <strong>text-only posts work</strong>,
+            Instagram in one useful way: <strong>text-only posts work</strong>,
             so a strong written update needs no design at all.
           </p>
 
           <p className="subhead">Every time you post</p>
-          <ol className="steps-list">
+          <ol className="steps-list numbered">
             <li>
               <strong>Plan it on the Calendar.</strong> Pick LinkedIn and a
               pillar. The <em>LinkedIn post</em> template under &quot;For
@@ -129,7 +166,7 @@ export default function HowToSchedule() {
             </li>
             <li>
               <strong>Write the caption.</strong> This <em>is</em> the post on
-              LinkedIn — the words carry it. Up to about 3,000 characters, but
+              LinkedIn. The words carry it. Up to about 3,000 characters, but
               the first two lines are what people see before &quot;see
               more&quot;, so lead with the point.
             </li>
@@ -159,7 +196,7 @@ export default function HowToSchedule() {
             </li>
             <li>
               <strong>LinkedIn has no native scheduling through the API</strong>{" "}
-              — the timing comes from this tool, which is exactly why the queue
+             , the timing comes from this tool, which is exactly why the queue
               exists.
             </li>
             <li>
@@ -186,22 +223,22 @@ export default function HowToSchedule() {
         <div className="fold-bd">
           <p className="guide-lead">
             A failed post shows under <strong>Needs attention</strong> with the
-            actual reason, and nothing is lost — the post and its caption are
+            actual reason, and nothing is lost, the post and its caption are
             still there.
           </p>
           <ul className="steps-list plain">
             <li>
-              <strong>&quot;needs an image or video URL&quot;</strong> — the
+              <strong>&quot;needs an image or video URL&quot;</strong>, the
               post has a Canva <em>design</em> link rather than an exported
               image. Export it and paste that link instead.
             </li>
             <li>
               <strong>&quot;isn&apos;t connected for direct posting&quot;</strong>{" "}
-              — expected until approval lands. Post it by hand and hit Mark
+             , expected until approval lands. Post it by hand and hit Mark
               posted.
             </li>
             <li>
-              <strong>Anything about tokens or permissions</strong> — the
+              <strong>Anything about tokens or permissions</strong>, the
               connection lapsed. Hit Reconnect on the card above, then{" "}
               <strong>Retry</strong>.
             </li>

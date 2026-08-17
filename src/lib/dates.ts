@@ -55,9 +55,9 @@ export function todayIso(): string {
 
 /** Local-time datetime string for a timestamptz, e.g. "Aug 19, 2:30 PM". */
 export function fmtDateTime(ts: string | null): string {
-  if (!ts) return "—";
+  if (!ts) return "Not set";
   const d = new Date(ts);
-  if (Number.isNaN(d.getTime())) return "—";
+  if (Number.isNaN(d.getTime())) return "Not set";
   return `${MON_ABBR[d.getMonth()]} ${d.getDate()}, ${d.toLocaleTimeString(
     undefined,
     { hour: "numeric", minute: "2-digit" },

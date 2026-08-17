@@ -14,7 +14,7 @@ function back(request: NextRequest, message: string, ok = false) {
  * Exchanges the authorization code for a long-lived token and stores it.
  *
  * Tokens are written with the service-role client and are never selected back
- * into any page — the Scheduler reads only display fields.
+ * into any page, the Scheduler reads only display fields.
  */
 export async function GET(
   request: NextRequest,

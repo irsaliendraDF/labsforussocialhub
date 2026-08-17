@@ -12,7 +12,7 @@ export function isSupabaseConfigured(): boolean {
   return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 }
 
-/** Service-role key. Server-only — never import this from a client component. */
+/** Service-role key. Server-only, never import this from a client component. */
 export function serviceRoleKey(): string {
   return process.env.SUPABASE_SERVICE_ROLE_KEY ?? "";
 }

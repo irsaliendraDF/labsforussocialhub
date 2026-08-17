@@ -5,8 +5,8 @@ import { getServerClient } from "@/lib/supabase/server";
 import { publishPost } from "@/lib/publish";
 
 /**
- * The hub has no login — it's an internal tool the team opens on their
- * laptops — so these actions run against the anon key and rely on the RLS
+ * The hub has no login, it's an internal tool the team opens on their
+ * laptops, so these actions run against the anon key and rely on the RLS
  * policies in supabase/schema.sql, which grant the board to `anon`.
  */
 async function db() {
@@ -62,7 +62,7 @@ export async function publishNowAction(postId: string) {
   return result;
 }
 
-/** Marks a post as posted by hand — the fallback path while approvals pend. */
+/** Marks a post as posted by hand, the fallback path while approvals pend. */
 export async function markPostedAction(postId: string, url: string | null) {
   const supabase = await db();
 

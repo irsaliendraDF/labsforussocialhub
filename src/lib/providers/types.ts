@@ -18,7 +18,7 @@ export type PublishResult =
   | {
       ok: false;
       error: string;
-      /** False for permanent failures (bad media, revoked scope) — don't retry. */
+      /** False for permanent failures (bad media, revoked scope), don't retry. */
       retryable: boolean;
     };
 

@@ -181,7 +181,7 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
                 value={draft.format ?? ""}
                 onChange={(e) => set("format", e.target.value)}
               >
-                <option value="">—</option>
+                <option value="">Not set</option>
                 {[...new Set([...FORMATS, draft.format].filter(Boolean))].map(
                   (f) => (
                     <option key={f as string}>{f as string}</option>
@@ -207,7 +207,7 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
                 value={draft.cta ?? ""}
                 onChange={(e) => set("cta", e.target.value)}
               >
-                <option value="">—</option>
+                <option value="">Not set</option>
                 {[...new Set([...CTAS, draft.cta].filter(Boolean))].map((c) => (
                   <option key={c as string}>{c as string}</option>
                 ))}

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 type Item = { href: string; label: string; icon: React.ReactNode };
 type Group = { label: string; items: Item[] };
 
-/* Simple stroked glyphs — soft and rounded, matching the brand's feel. */
+/* Simple stroked glyphs, soft and rounded, matching the brand's feel. */
 const I = {
   overview: (
     <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -109,8 +109,15 @@ export default function Sidebar() {
       ))}
 
       <div className="nav-foot">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="nav-mascot"
+          src="/brand/mascot.webp"
+          alt=""
+          aria-hidden="true"
+        />
         <div className="nav-user">
-          Shared board — everyone sees the same live picture.
+          Shared board, everyone sees the same live picture.
         </div>
       </div>
     </nav>

@@ -7,7 +7,7 @@ import type { Post } from "./types";
 /**
  * Walks every published post and appends a fresh `post_metrics` row.
  *
- * It's a time series on purpose — one row per capture — so the Analytics tab
+ * It's a time series on purpose, one row per capture, so the Analytics tab
  * can chart how a post accrued reach rather than only showing today's number.
  */
 export async function runMetricsJob(): Promise<{

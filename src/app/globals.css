@@ -1,5 +1,5 @@
 /* ============================================================
-   Lab for Us — design system
+   Lab for Us design system
    Tokens and component styles ported verbatim from the approved
    prototype (Lab_for_Us_Content_Hub.html). Do not restyle.
    New app-shell / scheduler / analytics styles below follow the
@@ -68,7 +68,7 @@ img {
 }
 
 /* ============================================================
-   APP SHELL — persistent left sidebar
+   APP SHELL: persistent left sidebar
    ============================================================ */
 
 .shell {
@@ -150,30 +150,22 @@ img {
   border-top: 1px solid var(--line);
   padding-top: 14px;
 }
+/* The pencil mascot sits above the strapline, a bit of warmth at the foot of
+   the rail. Decorative, so it's hidden from screen readers. */
+.nav-mascot {
+  width: 78px;
+  height: auto;
+  display: block;
+  margin: 2px auto 10px;
+  filter: drop-shadow(0 8px 14px rgba(76, 60, 32, 0.14));
+}
 .nav-user {
   font-size: 12.5px;
   color: var(--muted);
   padding: 0 12px 8px;
-  word-break: break-all;
+  text-align: center;
+  line-height: 1.45;
 }
-.nav-signout {
-  font-family: var(--body);
-  font-weight: 500;
-  font-size: 13.5px;
-  color: var(--muted);
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  text-align: left;
-  width: 100%;
-}
-.nav-signout:hover {
-  background: #f3ecdb;
-  color: var(--ink);
-}
-
 .main {
   min-width: 0;
   padding: 34px 38px 70px;
@@ -718,41 +710,86 @@ img {
   align-items: center;
 }
 
-/* ---- Pillar cards with their templates folded inside ---- */
+/* ---- Content pillars: literal pillars ----
+   Five tall columns standing side by side, each holding its own templates,
+   scrolling sideways when the screen can't hold them all. */
 
-.pillar-block {
+.pillar-cols {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 14px;
+  margin: 0 -2px;
+  scroll-snap-type: x proximity;
+  /* A visible, brand-toned scrollbar, this row scrolls, so say so. */
+  scrollbar-color: #ddd2ba transparent;
+  scrollbar-width: thin;
+}
+.pillar-cols::-webkit-scrollbar {
+  height: 10px;
+}
+.pillar-cols::-webkit-scrollbar-track {
+  background: #f4eddc;
+  border-radius: 999px;
+}
+.pillar-cols::-webkit-scrollbar-thumb {
+  background: #ddd2ba;
+  border-radius: 999px;
+}
+.pillar-cols::-webkit-scrollbar-thumb:hover {
+  background: #cabfa6;
+}
+
+.pillar-col {
+  flex: 0 0 300px;
+  width: 300px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: 22px;
   box-shadow: var(--shadow-sm);
   background: var(--card-grad);
   overflow: hidden;
-  margin-bottom: 16px;
 }
-.pillar-block > .cap {
+.pillar-col > .cap {
   height: 7px;
+  flex: none;
 }
-.pillar-block .bd {
-  padding: 20px 24px;
+.pillar-col .col-head {
+  padding: 17px 19px 15px;
 }
-.pillar-block .bd h2 {
-  font-size: 21px;
+.pillar-col .col-head h2 {
+  font-size: 18px;
   font-weight: 700;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 9px;
   margin-bottom: 7px;
+  line-height: 1.2;
 }
-.pillar-block .bd h2 .dot {
-  width: 13px;
-  height: 13px;
+.pillar-col .col-head h2 .dot {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   flex: none;
   display: inline-block;
+  margin-top: 5px;
 }
-.pillar-block .bd > p {
+.pillar-col .col-head > p {
   margin: 0;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+@media (max-width: 620px) {
+  .pillar-col {
+    flex-basis: 84vw;
+    width: 84vw;
+  }
 }
 
 .fold {
@@ -762,7 +799,7 @@ img {
 .fold > summary {
   list-style: none;
   cursor: pointer;
-  padding: 14px 24px;
+  padding: 12px 19px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -801,7 +838,7 @@ img {
   transform: rotate(180deg);
 }
 .fold .fold-bd {
-  padding: 4px 24px 24px;
+  padding: 4px 19px 19px;
 }
 
 /* Templates inside a pillar: a vertical list, one per row, so the set reads
@@ -811,15 +848,18 @@ img {
   flex-direction: column;
   gap: 10px;
 }
+/* Inside a pillar column there's no room for a side-by-side row, so the
+   template stacks: name, what it's for, then the button across the foot. */
 .tpl-row {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
   border: 1px solid var(--line);
   border-left: 5px solid var(--line);
   border-radius: 14px;
   background: #fff;
-  padding: 13px 16px;
+  padding: 12px 14px;
   box-shadow: var(--shadow-sm);
   transition: transform 0.14s ease, box-shadow 0.14s ease;
 }
@@ -848,14 +888,14 @@ img {
   flex: none;
   font-family: var(--body);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12.5px;
   text-decoration: none;
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 8px 16px;
+  padding: 7px 14px;
   text-align: center;
   color: var(--ink);
-  background: #fff;
+  background: var(--cream);
   white-space: nowrap;
   transition: background 0.14s ease, color 0.14s ease;
 }
@@ -871,16 +911,6 @@ img {
   cursor: not-allowed;
 }
 
-@media (max-width: 620px) {
-  .tpl-row {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .tpl-row .lnk {
-    width: 100%;
-  }
-}
 
 /* ============================================================
    TEMPLATES
@@ -1767,6 +1797,85 @@ textarea:focus {
 .steps-list li::marker {
   color: var(--amber);
   font-weight: 700;
+}
+
+/* Numbered circles, same treatment as the step flow on Strategy so a step is
+   a step wherever you meet one. Uses a CSS counter, so the markup stays a
+   plain semantic <ol> and screen readers still announce it as a list. */
+.steps-list.numbered {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: step;
+}
+.steps-list.numbered li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 40px;
+  min-height: 28px;
+  margin-bottom: 11px;
+  padding-top: 3px;
+}
+.steps-list.numbered li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 13.5px;
+  color: #fff;
+  background: linear-gradient(180deg, #3a8a1c, #256011);
+  box-shadow: var(--shadow-sm);
+}
+
+/* The top-level "how the Scheduler works" run, shown as cards in a row. */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+  counter-reset: flow;
+}
+.flow-step {
+  counter-increment: flow;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card-grad);
+  box-shadow: var(--shadow-sm);
+  padding: 16px 16px 15px;
+}
+.flow-step::before {
+  content: counter(flow);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-family: var(--disp);
+  font-weight: 800;
+  font-size: 13.5px;
+  color: #fff;
+  background: linear-gradient(180deg, #3a8a1c, #256011);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 9px;
+}
+.flow-step h4 {
+  font-family: var(--disp);
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.flow-step p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
 }
 .steps-list.plain {
   list-style: none;

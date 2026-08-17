@@ -1,9 +1,9 @@
 -- ============================================================
--- Lab for Us — seed data
+-- Lab for Us seed data
 -- Run after schema.sql. Safe to re-run: everything upserts.
 --
 -- Seeds the strategy (5 pillars, 18 templates with their real Canva links).
--- The `posts` table is deliberately NOT seeded — the calendar starts empty so
+-- The `posts` table is deliberately NOT seeded. The calendar starts empty so
 -- the team plans their own run.
 -- ============================================================
 

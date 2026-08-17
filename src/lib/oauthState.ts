@@ -9,7 +9,7 @@ const COOKIE = "lfu_oauth_state";
  *
  * There's no login here, so the state can't be derived from a session. We mint
  * a random value, keep it in a short-lived httpOnly cookie, and require the
- * callback to echo it back — which is what the `state` parameter is actually
+ * callback to echo it back, which is what the `state` parameter is actually
  * for.
  */
 export async function mintOAuthState(): Promise<string> {

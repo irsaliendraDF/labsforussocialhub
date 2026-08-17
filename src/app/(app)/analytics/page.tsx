@@ -2,11 +2,11 @@ import AnalyticsView, { type Row } from "@/components/AnalyticsView";
 import SetupBanner from "@/components/SetupBanner";
 import { getServerClient } from "@/lib/supabase/server";
 
-export const metadata = { title: "Analytics — Lab for Us" };
+export const metadata = { title: "Analytics · Lab for Us" };
 export const dynamic = "force-dynamic";
 
 /**
- * `post_metrics` is a time series — one row per capture. For the tab we want
+ * `post_metrics` is a time series, one row per capture. For the tab we want
  * the newest capture per post, so we pull them newest-first and keep the first
  * sighting of each post_id.
  */
@@ -65,7 +65,7 @@ export default async function AnalyticsPage() {
         <h1>Analytics</h1>
         <p>
           How each post actually landed, rolled up by pillar, format, and
-          channel — so the numbers loop back into the strategy and you can see
+          channel, so the numbers loop back into the strategy and you can see
           which themes are worth more of the week.
         </p>
       </div>

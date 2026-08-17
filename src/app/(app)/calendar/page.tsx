@@ -1,6 +1,6 @@
 import CalendarBoard from "@/components/CalendarBoard";
 
-export const metadata = { title: "Calendar — Lab for Us" };
+export const metadata = { title: "Calendar · Lab for Us" };
 
 export default function CalendarPage() {
   return (

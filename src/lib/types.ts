@@ -40,7 +40,7 @@ export type Pillar = {
   sort_order: number | null;
 };
 
-/** Tokens are never selected client-side — see the RLS notes in the schema. */
+/** Tokens are never selected client-side, see the RLS notes in the schema. */
 export type SocialAccount = {
   id: string;
   platform: Channel;

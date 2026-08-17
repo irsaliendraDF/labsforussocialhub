@@ -1,6 +1,6 @@
 /**
  * Static strategy content. These are the parts of the hub that describe what
- * Lab for Us is, rather than what the team is doing this week — they live in
+ * Lab for Us is, rather than what the team is doing this week, they live in
  * code, not the database.
  *
  * Pillars and templates are ALSO seeded into Supabase (see supabase/seed.sql)
@@ -109,7 +109,7 @@ export const HASHTAGS = ["#MadeAtLabForUs", "#labforus"];
  * `canvaId` is the real Canva design ID for that template, matched to the
  * "Lab for Us: ..." designs in the team's Canva. Canva's short /d/ links are
  * regenerated on each API call, so we store the stable design ID and build the
- * URL from it — that link opens the exact template in the editor, not a folder.
+ * URL from it, that link opens the exact template in the editor, not a folder.
  */
 export type TemplateDef = {
   name: string;
@@ -285,7 +285,7 @@ export const HOLIDAYS: Record<string, Holiday> = {
 
 /**
  * Launch-run week labels, anchored to the activation plan.
- * The calendar itself ships empty — the team plans their own posts.
+ * The calendar itself ships empty, the team plans their own posts.
  */
 export function weekOf(iso: string): string {
   if (iso <= "2026-08-23") return "Week -1";

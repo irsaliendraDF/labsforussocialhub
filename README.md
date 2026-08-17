@@ -1,8 +1,8 @@
-# Lab for Us — Content Hub
+# Lab for Us Content Hub
 
 The internal tool the Lab for Us team signs into to **plan, execute, and
 measure** social content: plan posts, jump to the right Canva template, schedule
-and publish to Instagram and LinkedIn, and see how each post performed — with
+and publish to Instagram and LinkedIn, and see how each post performed, with
 everyone looking at the same live board.
 
 Built from the approved `Lab_for_Us_Content_Hub.html` prototype. The branding is
@@ -21,12 +21,12 @@ Everyone sees the board update live.
 
 ## Structure
 
-**Strategy** — Overview, Pillars, Brand kit (tap-to-copy swatches, the element
+**Strategy**: Overview, Pillars, Brand kit (tap-to-copy swatches, the element
 gallery, and the kit download).
-**Content** — Templates (all 18, each deep-linking to its real Canva design),
+**Content**: Templates (all 18, each deep-linking to its real Canva design),
 Calendar (calendar / list / kanban, drag to reschedule, drag between stages),
 Scheduler (connect accounts, queue, retry).
-**Engagement** — Analytics (per-post performance, rolled up by pillar, format,
+**Engagement**: Analytics (per-post performance, rolled up by pillar, format,
 and channel).
 
 ## Stack
@@ -34,7 +34,7 @@ and channel).
 Next.js 16 (App Router) · React 19 · TypeScript · Supabase (Postgres, Realtime)
 · Vercel + Vercel Cron.
 
-No CSS framework — `src/app/globals.css` carries the prototype's tokens and
+No CSS framework. `src/app/globals.css` carries the prototype's tokens and
 component styles verbatim.
 
 ## Setup
@@ -71,8 +71,8 @@ the analytics rollups.
   browser talks to Postgres with the anon key and the RLS policies grant the
   board to `anon`. Anyone with the URL can read and edit the calendar. To keep
   the URL itself private without adding per-person logins, switch on Vercel
-  Deployment Protection — see SETUP.md.
-- `social_accounts` holds OAuth tokens and has **no RLS policies at all** — it is
+  Deployment Protection. See SETUP.md.
+- `social_accounts` holds OAuth tokens and has **no RLS policies at all**, so it is
   unreachable from the browser under any role. Only server-side code holding the
   service-role key touches it, and the Scheduler page projects the token columns
   away before rendering.

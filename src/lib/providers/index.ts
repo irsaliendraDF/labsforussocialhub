@@ -9,7 +9,7 @@ export * from "./types";
  * Picks the provider for a platform.
  *
  * Direct posting only switches on once the account is connected AND the
- * relevant env flag is set — that flag is what Irene flips the day Meta and
+ * relevant env flag is set, that flag is what Irene flips the day Meta and
  * LinkedIn approve the app, with no code change. Until then every platform
  * resolves to `manual`, which is honest about not having published.
  */

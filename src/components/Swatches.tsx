@@ -19,7 +19,7 @@ function fallback(text: string, done: () => void) {
   try {
     document.execCommand("copy");
   } catch {
-    /* clipboard unavailable — the hex is still on screen to read */
+    /* clipboard unavailable, the hex is still on screen to read */
   }
   ta.remove();
   done();

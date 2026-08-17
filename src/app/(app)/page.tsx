@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FORMATS } from "@/lib/content";
 
-export const metadata = { title: "Strategy — Lab for Us" };
+export const metadata = { title: "Strategy · Lab for Us" };
 
 function Arrow() {
   return (

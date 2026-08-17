@@ -33,7 +33,7 @@ export async function getServerClient() {
 }
 
 /**
- * Service-role client. Bypasses RLS — use ONLY in route handlers and server
+ * Service-role client. Bypasses RLS, use ONLY in route handlers and server
  * actions that publish, store tokens, or write metrics. Never expose the
  * result of a query made with this to an unauthenticated caller.
  */

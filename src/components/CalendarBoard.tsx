@@ -361,7 +361,7 @@ function CalendarView({
                             }}
                             onDragEnd={() => setDragId(null)}
                             onClick={() => onOpen(p.id)}
-                            title={`${p.title} — ${p.channel}, ${p.pillar}, ${p.status}. Click to edit, drag to another day to reschedule.`}
+                            title={`${p.title} · ${p.channel}, ${p.pillar}, ${p.status}. Click to edit, drag to another day to reschedule.`}
                           >
                             {p.channel === "Instagram" ? "IG " : "LI "}
                             {p.title}
@@ -387,7 +387,7 @@ function CalendarView({
         </span>
       </div>
       <p className="note">
-        Click a post to open it. Drag it to another day to reschedule — everyone
+        Click a post to open it. Drag it to another day to reschedule, everyone
         else sees the move straight away.
       </p>
     </>

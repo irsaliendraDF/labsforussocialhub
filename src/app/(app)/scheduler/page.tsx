@@ -4,7 +4,7 @@ import SetupBanner from "@/components/SetupBanner";
 import { getAdminClient } from "@/lib/supabase/server";
 import type { SocialAccount } from "@/lib/types";
 
-export const metadata = { title: "Scheduler — Lab for Us" };
+export const metadata = { title: "Scheduler · Lab for Us" };
 export const dynamic = "force-dynamic";
 
 /**
@@ -52,7 +52,7 @@ export default async function SchedulerPage() {
         Instagram publishing needs a Business or Creator account on a Facebook
         Page, a Meta app, and App Review. LinkedIn needs the Page, a LinkedIn
         app, and Community Management API access. Those approvals, not the code,
-        are the long pole — start them early and the switch flips with an
+        are the long pole. Start them early and the switch flips with an
         environment variable.
       </p>
     </>

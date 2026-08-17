@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Lab for Us — Content Hub",
+  title: "Lab for Us Content Hub",
   description:
     "Plan, execute, and measure Lab for Us social content, all in one place.",
 };

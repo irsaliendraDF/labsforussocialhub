@@ -1,4 +1,4 @@
-# Lab for Us — Content Hub setup
+# Lab for Us Content Hub setup
 
 The app runs right now without any of this: Strategy, Pillars, Brand kit, and
 Templates are fully working, and the Calendar runs in preview mode (changes stay
@@ -11,13 +11,13 @@ Do these in order.
 
 ## 1. Supabase project
 
-Create the project on the **Lab for Us account**, not a DigitalFlow one — the
+Create the project on the **Lab for Us account**, not a DigitalFlow one. The
 team's logins and their Instagram/LinkedIn tokens should live with the client.
 
 1. Create a new project. `ca-central-1` keeps the data in Canada.
 2. Open **SQL Editor** and run `supabase/schema.sql`.
 3. Run `supabase/seed.sql`. That loads the 5 pillars and the 18 templates with
-   their real Canva links. It deliberately does **not** create any posts — the
+   their real Canva links. It deliberately does **not** create any posts, the
    calendar starts empty so the team plans their own.
 
 Both files are safe to re-run.
@@ -41,18 +41,18 @@ cp .env.example .env.local
 Set the same four in Vercel under **Settings → Environment Variables**.
 
 `CRON_SECRET` matters: without it the `/api/cron/*` endpoints reject every
-request, which means nothing publishes. That is deliberate — a missing secret
+request, which means nothing publishes. That is deliberate: a missing secret
 should never mean "anyone can trigger a publish".
 
-## 3. No login — and what that means
+## 3. No login, and what that means
 
 There's no sign-in. Anyone who opens the URL lands straight on the board, which
 is the point: the team bookmarks it and starts working.
 
 The honest trade-off: **anyone with the URL can read and edit the content
-calendar.** Nothing sensitive is exposed — the Instagram and LinkedIn tokens
+calendar.** Nothing sensitive is exposed (the Instagram and LinkedIn tokens
 live in `social_accounts`, which has no RLS policies at all and is unreachable
-from a browser under any key — but the plan itself is open to whoever has the
+from a browser under any key), but the plan itself is open to whoever has the
 link.
 
 If you'd rather the URL not be open to the world, turn on **Vercel Deployment
@@ -63,8 +63,8 @@ can't get in. It's a one-switch change and needs nothing in the code.
 
 ## 4. Instagram and LinkedIn (the long pole)
 
-The code is done. What takes time is platform approval, so start these early —
-they run in parallel with everything else and the app is useful without them.
+The code is done. What takes time is platform approval, so start these early.
+They run in parallel with everything else and the app is useful without them.
 
 **Instagram**
 
@@ -85,7 +85,7 @@ Then hit **Connect** on the Scheduler page for each.
 
 ### Turning direct posting on
 
-Connecting an account is not enough on its own — publishing stays behind a flag
+Connecting an account is not enough on its own: publishing stays behind a flag
 so an un-approved app can't fail silently in front of the team:
 
 ```
@@ -107,9 +107,9 @@ npx vercel --prod
 
 `vercel.json` already registers the two cron jobs:
 
-- `/api/cron/publish` — daily at 13:09 UTC (about 10:09am in Halifax), drains
+- `/api/cron/publish`: daily at 13:09 UTC (about 10:09am in Halifax), drains
   the scheduled queue.
-- `/api/cron/metrics` — daily at 07:23 UTC, snapshots performance for published
+- `/api/cron/metrics`: daily at 07:23 UTC, snapshots performance for published
   posts.
 
 Both are scheduled off the hour on purpose; Vercel's cron runners are busiest at
@@ -117,14 +117,13 @@ Both are scheduled off the hour on purpose; Vercel's cron runners are busiest at
 
 ### Why daily, and what it means for scheduling
 
-**Vercel's Hobby plan only permits daily crons**, and allows two of them — which
-is exactly what this uses. So the publish queue is swept once a day rather than
+**Vercel's Hobby plan only permits daily crons**, and allows two of them, which is exactly what this uses. So the publish queue is swept once a day rather than
 continuously.
 
 The practical consequence: **a post scheduled for 2pm does not go out at 2pm.**
 It goes out on the next sweep after that time. Schedule something for this
-afternoon and it leaves tomorrow morning. The Scheduler says this on screen —
-each queued post shows both "Set for" and "Goes out" — so nobody has to hold it
+afternoon and it leaves tomorrow morning. The Scheduler says this on screen:
+each queued post shows both "Set for" and "Goes out", so nobody has to hold it
 in their head.
 
 If Lab for Us later wants posts to leave at the minute they were planned for,
@@ -157,7 +156,7 @@ Then open http://localhost:3100.
 
 ## Changing a Canva link later
 
-Update the row in the `templates` table — no deploy needed. If a row's
+Update the row in the `templates` table. No deploy needed. If a row's
 `canva_url` is blank the app falls back to the design ID baked into
 `src/lib/content.ts`.
 

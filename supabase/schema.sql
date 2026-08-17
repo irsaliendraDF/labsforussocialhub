@@ -1,5 +1,5 @@
 -- ============================================================
--- Lab for Us — Content Hub schema
+-- Lab for Us Content Hub schema
 -- Run this once in the Supabase SQL editor, then run seed.sql.
 -- ============================================================
 
@@ -161,4 +161,4 @@ create policy "team reads metrics" on post_metrics for select to anon, authentic
 -- social_accounts: NO policies at all. The table holds access tokens, so it is
 -- unreachable from the browser under any role. Only the service-role key,
 -- used server-side in the connect callback and the publish/metrics jobs, can
--- touch it — and the Scheduler page projects away the token columns.
+-- touch it, and the Scheduler page projects away the token columns.

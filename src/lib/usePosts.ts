@@ -84,7 +84,7 @@ export function usePosts(): PostsApi {
   useEffect(() => {
     if (!supabase) return;
     // refresh() awaits the network before it touches state, so this is not a
-    // synchronous setState — the lint rule just can't see past the async call.
+    // synchronous setState, the lint rule just can't see past the async call.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh();
 

@@ -1,7 +1,7 @@
 import Swatches from "@/components/Swatches";
 import { DIVIDERS, HASHTAGS, SQUIGGLES } from "@/lib/content";
 
-export const metadata = { title: "Brand kit — Lab for Us" };
+export const metadata = { title: "Brand kit · Lab for Us" };
 
 export default function BrandKitPage() {
   return (
