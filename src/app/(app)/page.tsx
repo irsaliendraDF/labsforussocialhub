@@ -1,9 +1,20 @@
 import Link from "next/link";
-import { DIVIDERS, FORMATS, PILLARS } from "@/lib/content";
+import { FORMATS } from "@/lib/content";
 
-export const metadata = { title: "Overview — Lab for Us" };
+export const metadata = { title: "Strategy — Lab for Us" };
 
-export default function OverviewPage() {
+function Arrow() {
+  return (
+    <div className="step-arrow" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 12h15" />
+        <path d="m13 6 6 6-6 6" />
+      </svg>
+    </div>
+  );
+}
+
+export default function StrategyPage() {
   return (
     <>
       <div className="page-head">
@@ -67,57 +78,40 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      <h2 className="strat-sub">Content pillars</h2>
-      <p className="strat-subnote">
-        Five themes drawn from what Lab for Us is. Every post ladders up to one.
-      </p>
-      <div className="pillars">
-        {PILLARS.map((p) => (
-          <div className="pill" key={p.name}>
-            <div className="cap" style={{ background: p.color }} />
-            <div className="bd">
-              <h3>
-                <span className="dot" style={{ background: p.color }} />
-                {p.name}
-              </h3>
-              <p>{p.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={DIVIDERS[0]}
-        alt=""
-        style={{ height: 18, width: "auto", margin: "34px 0 26px" }}
-      />
-
-      <h2 className="strat-sub" style={{ marginTop: 0 }}>
+      <h2 className="strat-sub" style={{ marginTop: 24 }}>
         How the week runs
       </h2>
       <p className="strat-subnote">
         The loop this hub is built around. Everyone sees the same board.
       </p>
-      <div className="strat-grid">
+
+      <div className="steps">
         <div className="assetbox">
-          <h3>Plan and make</h3>
+          <div className="step-head">
+            <span className="step-num">1</span>
+            <h3>Plan and make</h3>
+          </div>
           <p className="strat-lead">
             Open the <Link href="/calendar">Calendar</Link>, plan a post against
             a pillar and a template, then jump to that{" "}
-            <Link href="/templates">template in Canva</Link>, duplicate it, and
+            <Link href="/pillars">template in Canva</Link>, duplicate it, and
             paste the finished link back onto the post. Move it through Idea,
             Drafting, and Ready.
           </p>
         </div>
+
+        <Arrow />
+
         <div className="assetbox">
-          <h3>Ship and measure</h3>
+          <div className="step-head">
+            <span className="step-num">2</span>
+            <h3>Ship and measure</h3>
+          </div>
           <p className="strat-lead">
-            Once a post is Ready, the{" "}
-            <Link href="/scheduler">Scheduler</Link> sends it to Instagram or
-            LinkedIn at the time you pick. After it goes out,{" "}
-            <Link href="/analytics">Analytics</Link> pulls the numbers back and
-            rolls them up by pillar, format, and channel.
+            Once a post is Ready, the <Link href="/scheduler">Scheduler</Link>{" "}
+            sends it to Instagram or LinkedIn at the time you pick. After it
+            goes out, <Link href="/analytics">Analytics</Link> pulls the numbers
+            back and rolls them up by pillar, format, and channel.
           </p>
         </div>
       </div>

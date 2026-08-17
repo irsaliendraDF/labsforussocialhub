@@ -10,14 +10,7 @@ import {
   pillarColor,
   weekOf,
 } from "@/lib/content";
-import {
-  DOW,
-  MONTHS,
-  fmtDate,
-  monthRange,
-  todayIso,
-  toIso,
-} from "@/lib/dates";
+import { DOW, MONTHS, fmtDate, monthRange, todayIso, toIso } from "@/lib/dates";
 import { usePosts } from "@/lib/usePosts";
 import type { Post } from "@/lib/types";
 import PostDrawer from "./PostDrawer";
@@ -200,7 +193,11 @@ function Board() {
         </div>
       </div>
 
-      <div className="viewtoggle" role="group" aria-label="Choose calendar view">
+      <div
+        className="viewtoggle"
+        role="group"
+        aria-label="Choose calendar view"
+      >
         {(["calendar", "list", "kanban"] as View[]).map((v) => (
           <button
             key={v}
@@ -302,74 +299,78 @@ function CalendarView({
               <h3>
                 {MONTHS[m]} {y}
               </h3>
-              <div className="cal-grid">
-                {DOW.map((d) => (
-                  <div className="cal-dow" key={d}>
-                    {d}
-                  </div>
-                ))}
-                {Array.from({ length: first }, (_, i) => (
-                  <div className="cal-cell cal-empty" key={`pad-${i}`} />
-                ))}
-                {Array.from({ length: days }, (_, i) => {
-                  const d = i + 1;
-                  const iso = toIso(y, m, d);
-                  const hol = HOLIDAYS[iso];
-                  const dayPosts = list.filter((p) => p.post_date === iso);
-                  return (
-                    <div
-                      key={iso}
-                      className={`cal-cell${over === iso ? " dragover" : ""}`}
-                      onDragOver={(e) => {
-                        e.preventDefault();
-                        setOver(iso);
-                      }}
-                      onDragLeave={() => setOver((o) => (o === iso ? null : o))}
-                      onDrop={(e) => {
-                        e.preventDefault();
-                        setOver(null);
-                        const id =
-                          e.dataTransfer.getData("text/plain") || dragId;
-                        if (id) onMove(id, iso);
-                        setDragId(null);
-                      }}
-                    >
-                      <span className="cal-daynum">{d}</span>
-                      {hol && (
-                        <div
-                          className={`hol ${hol.t}`}
-                          title={`${
-                            hol.t === "off"
-                              ? "Holiday or day off: "
-                              : "Awareness or celebration: "
-                          }${hol.n}`}
-                        >
-                          {hol.n}
-                        </div>
-                      )}
-                      {dayPosts.map((p) => (
-                        <button
-                          key={p.id}
-                          className={`cal-chip${
-                            dragId === p.id ? " dragging" : ""
-                          }`}
-                          style={{ borderLeftColor: pillarColor(p.pillar) }}
-                          draggable
-                          onDragStart={(e) => {
-                            e.dataTransfer.setData("text/plain", p.id);
-                            setDragId(p.id);
-                          }}
-                          onDragEnd={() => setDragId(null)}
-                          onClick={() => onOpen(p.id)}
-                          title={`${p.title} — ${p.channel}, ${p.pillar}, ${p.status}. Click to edit, drag to another day to reschedule.`}
-                        >
-                          {p.channel === "Instagram" ? "IG " : "LI "}
-                          {p.title}
-                        </button>
-                      ))}
+              <div className="cal-scroll">
+                <div className="cal-grid">
+                  {DOW.map((d) => (
+                    <div className="cal-dow" key={d}>
+                      {d}
                     </div>
-                  );
-                })}
+                  ))}
+                  {Array.from({ length: first }, (_, i) => (
+                    <div className="cal-cell cal-empty" key={`pad-${i}`} />
+                  ))}
+                  {Array.from({ length: days }, (_, i) => {
+                    const d = i + 1;
+                    const iso = toIso(y, m, d);
+                    const hol = HOLIDAYS[iso];
+                    const dayPosts = list.filter((p) => p.post_date === iso);
+                    return (
+                      <div
+                        key={iso}
+                        className={`cal-cell${over === iso ? " dragover" : ""}`}
+                        onDragOver={(e) => {
+                          e.preventDefault();
+                          setOver(iso);
+                        }}
+                        onDragLeave={() =>
+                          setOver((o) => (o === iso ? null : o))
+                        }
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          setOver(null);
+                          const id =
+                            e.dataTransfer.getData("text/plain") || dragId;
+                          if (id) onMove(id, iso);
+                          setDragId(null);
+                        }}
+                      >
+                        <span className="cal-daynum">{d}</span>
+                        {hol && (
+                          <div
+                            className={`hol ${hol.t}`}
+                            title={`${
+                              hol.t === "off"
+                                ? "Holiday or day off: "
+                                : "Awareness or celebration: "
+                            }${hol.n}`}
+                          >
+                            {hol.n}
+                          </div>
+                        )}
+                        {dayPosts.map((p) => (
+                          <button
+                            key={p.id}
+                            className={`cal-chip${
+                              dragId === p.id ? " dragging" : ""
+                            }`}
+                            style={{ borderLeftColor: pillarColor(p.pillar) }}
+                            draggable
+                            onDragStart={(e) => {
+                              e.dataTransfer.setData("text/plain", p.id);
+                              setDragId(p.id);
+                            }}
+                            onDragEnd={() => setDragId(null)}
+                            onClick={() => onOpen(p.id)}
+                            title={`${p.title} — ${p.channel}, ${p.pillar}, ${p.status}. Click to edit, drag to another day to reschedule.`}
+                          >
+                            {p.channel === "Instagram" ? "IG " : "LI "}
+                            {p.title}
+                          </button>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           );
@@ -419,9 +420,7 @@ function ListView({
             <div className="top">
               <span className="date">{fmtDate(p.post_date)}</span>
               <span className="wk">{weekOf(p.post_date)}</span>
-              <span
-                className={`ch ${p.channel === "Instagram" ? "ig" : "li"}`}
-              >
+              <span className={`ch ${p.channel === "Instagram" ? "ig" : "li"}`}>
                 {p.channel}
               </span>
             </div>

@@ -135,7 +135,9 @@ function Board({ accounts, igLive, liLive }: Props) {
                   live ? (
                     <span className="badge ok">Posting live</span>
                   ) : (
-                    <span className="badge warn">Connected, approval pending</span>
+                    <span className="badge warn">
+                      Connected, approval pending
+                    </span>
                   )
                 ) : (
                   <span className="badge">Not connected</span>
@@ -145,7 +147,8 @@ function Board({ accounts, igLive, liLive }: Props) {
                 <>
                   <p className="note" style={{ marginTop: 0 }}>
                     {acct.display_name ?? acct.external_account_id}
-                    {acct.connected_by && ` · connected by ${acct.connected_by}`}
+                    {acct.connected_by &&
+                      ` · connected by ${acct.connected_by}`}
                   </p>
                   {!live && (
                     <p className="note" style={{ marginTop: 0 }}>
@@ -174,95 +177,24 @@ function Board({ accounts, igLive, liLive }: Props) {
         })}
       </div>
 
-      {/* ---------- Ready to schedule ---------- */}
-      <h2 className="strat-sub">Ready to schedule</h2>
-      <p className="strat-subnote">
-        Posts you&apos;ve marked <strong>Ready</strong> on the calendar. Pick a
-        time and they join the queue.
-      </p>
+      {/* ---------- Ready to schedule | queue ---------- */}
+      <div className="sched-cols">
+        <section>
+          <h2 className="strat-sub">Ready to schedule</h2>
+          <p className="strat-subnote">
+            Posts you&apos;ve marked <strong>Ready</strong> on the calendar.
+            Pick a time and they join the queue.
+          </p>
 
-      {loading ? (
-        <div className="count">Loading…</div>
-      ) : readyToSchedule.length === 0 ? (
-        <div className="empty">
-          Nothing is Ready yet. Move a post to <strong>Ready</strong> on the
-          calendar once its design and caption are done.
-        </div>
-      ) : (
-        readyToSchedule.map((p) => (
-          <div
-            className="qrow"
-            key={p.id}
-            style={{ borderLeftColor: pillarColor(p.pillar) }}
-          >
-            <div className="qt">
-              <h4>{p.title}</h4>
-              <div className="qm">
-                <span>{p.channel}</span>
-                <span>{p.pillar}</span>
-                <span>Planned {fmtLongDate(p.post_date)}</span>
-                {!p.caption && <span>⚠ no caption yet</span>}
-              </div>
+          {loading ? (
+            <div className="count">Loading…</div>
+          ) : readyToSchedule.length === 0 ? (
+            <div className="empty">
+              Nothing is Ready yet. Move a post to <strong>Ready</strong> on the
+              calendar once its design and caption are done.
             </div>
-            <div className="qa">
-              {schedulingId === p.id ? (
-                <>
-                  <input
-                    type="datetime-local"
-                    value={when}
-                    onChange={(e) => setWhen(e.target.value)}
-                  />
-                  <button
-                    className="btn sm solid"
-                    disabled={pending}
-                    onClick={() => {
-                      run(() => schedulePostAction(p.id, when));
-                      setSchedulingId(null);
-                    }}
-                  >
-                    Confirm
-                  </button>
-                  <button
-                    className="btn sm"
-                    onClick={() => setSchedulingId(null)}
-                  >
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    className="btn sm"
-                    onClick={() => {
-                      setSchedulingId(p.id);
-                      setWhen(toDatetimeLocal(`${p.post_date}T10:00:00`));
-                    }}
-                  >
-                    Schedule
-                  </button>
-                  <button
-                    className="btn sm solid"
-                    disabled={pending}
-                    onClick={() => run(() => publishNowAction(p.id))}
-                  >
-                    Publish now
-                  </button>
-                </>
-              )}
-            </div>
-          </div>
-        ))
-      )}
-
-      {/* ---------- Upcoming queue ---------- */}
-      <h2 className="strat-sub">Upcoming</h2>
-      {upcoming.length === 0 ? (
-        <div className="empty">Nothing scheduled.</div>
-      ) : (
-        byDay(upcoming, (p) => p.scheduled_at).map(([day, list]) => (
-          <div className="queue-day" key={day}>
-            <h3>{fmtLongDate(day)}</h3>
-            {list.map((p) => (
+          ) : (
+            readyToSchedule.map((p) => (
               <div
                 className="qrow"
                 key={p.id}
@@ -272,123 +204,200 @@ function Board({ accounts, igLive, liLive }: Props) {
                   <h4>{p.title}</h4>
                   <div className="qm">
                     <span>{p.channel}</span>
-                    <span>{fmtDateTime(p.scheduled_at)}</span>
                     <span>{p.pillar}</span>
+                    <span>Planned {fmtLongDate(p.post_date)}</span>
+                    {!p.caption && <span>⚠ no caption yet</span>}
                   </div>
                 </div>
-                {statusBadge(p)}
                 <div className="qa">
-                  <button
-                    className="btn sm"
-                    disabled={pending}
-                    onClick={() => run(() => cancelScheduleAction(p.id))}
-                  >
-                    Cancel
-                  </button>
+                  {schedulingId === p.id ? (
+                    <>
+                      <input
+                        type="datetime-local"
+                        value={when}
+                        onChange={(e) => setWhen(e.target.value)}
+                      />
+                      <button
+                        className="btn sm solid"
+                        disabled={pending}
+                        onClick={() => {
+                          run(() => schedulePostAction(p.id, when));
+                          setSchedulingId(null);
+                        }}
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className="btn sm"
+                        onClick={() => setSchedulingId(null)}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="btn sm"
+                        onClick={() => {
+                          setSchedulingId(p.id);
+                          setWhen(toDatetimeLocal(`${p.post_date}T10:00:00`));
+                        }}
+                      >
+                        Schedule
+                      </button>
+                      <button
+                        className="btn sm solid"
+                        disabled={pending}
+                        onClick={() => run(() => publishNowAction(p.id))}
+                      >
+                        Publish now
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
-            ))}
-          </div>
-        ))
-      )}
+            ))
+          )}
+        </section>
 
-      {/* ---------- Failed ---------- */}
-      {failed.length > 0 && (
-        <>
-          <h2 className="strat-sub">Needs attention</h2>
-          {failed.map((p) => (
-            <div
-              className="qrow"
-              key={p.id}
-              style={{
-                borderLeftColor: "var(--rasp)",
-                flexWrap: "wrap",
-              }}
-            >
-              <div className="qt">
-                <h4>{p.title}</h4>
-                <div className="qm">
-                  <span>{p.channel}</span>
-                  <span>Was due {fmtDateTime(p.scheduled_at)}</span>
-                </div>
-                {p.publish_error && (
-                  <div className="errbox">{p.publish_error}</div>
-                )}
+        <section>
+          {/* ---------- Upcoming queue ---------- */}
+          <h2 className="strat-sub">Upcoming</h2>
+          {upcoming.length === 0 ? (
+            <div className="empty">Nothing scheduled.</div>
+          ) : (
+            byDay(upcoming, (p) => p.scheduled_at).map(([day, list]) => (
+              <div className="queue-day" key={day}>
+                <h3>{fmtLongDate(day)}</h3>
+                {list.map((p) => (
+                  <div
+                    className="qrow"
+                    key={p.id}
+                    style={{ borderLeftColor: pillarColor(p.pillar) }}
+                  >
+                    <div className="qt">
+                      <h4>{p.title}</h4>
+                      <div className="qm">
+                        <span>{p.channel}</span>
+                        <span>{fmtDateTime(p.scheduled_at)}</span>
+                        <span>{p.pillar}</span>
+                      </div>
+                    </div>
+                    {statusBadge(p)}
+                    <div className="qa">
+                      <button
+                        className="btn sm"
+                        disabled={pending}
+                        onClick={() => run(() => cancelScheduleAction(p.id))}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="qa">
-                <button
-                  className="btn sm"
-                  disabled={pending}
-                  onClick={() => run(() => publishNowAction(p.id))}
-                >
-                  Retry
-                </button>
-                <button
-                  className="btn sm"
-                  disabled={pending}
-                  onClick={() => {
-                    const url = prompt(
-                      "Posted it by hand? Paste the live post's URL (or leave blank).",
-                    );
-                    if (url !== null) {
-                      run(() => markPostedAction(p.id, url.trim() || null));
-                    }
+            ))
+          )}
+
+          {/* ---------- Failed ---------- */}
+          {failed.length > 0 && (
+            <>
+              <h2 className="strat-sub">Needs attention</h2>
+              {failed.map((p) => (
+                <div
+                  className="qrow"
+                  key={p.id}
+                  style={{
+                    borderLeftColor: "var(--rasp)",
+                    flexWrap: "wrap",
                   }}
                 >
-                  Mark posted
-                </button>
-                <button
-                  className="btn sm"
-                  disabled={pending}
-                  onClick={() => run(() => cancelScheduleAction(p.id))}
-                >
-                  Unschedule
-                </button>
-              </div>
-            </div>
-          ))}
-        </>
-      )}
-
-      {/* ---------- Published ---------- */}
-      <h2 className="strat-sub">Recently published</h2>
-      {published.length === 0 ? (
-        <div className="empty">Nothing has gone out yet.</div>
-      ) : (
-        byDay(published, (p) => p.published_at).map(([day, list]) => (
-          <div className="queue-day" key={day}>
-            <h3>{fmtLongDate(day)}</h3>
-            {list.map((p) => (
-              <div
-                className="qrow"
-                key={p.id}
-                style={{ borderLeftColor: pillarColor(p.pillar) }}
-              >
-                <div className="qt">
-                  <h4>{p.title}</h4>
-                  <div className="qm">
-                    <span>{p.channel}</span>
-                    <span>{fmtDateTime(p.published_at)}</span>
+                  <div className="qt">
+                    <h4>{p.title}</h4>
+                    <div className="qm">
+                      <span>{p.channel}</span>
+                      <span>Was due {fmtDateTime(p.scheduled_at)}</span>
+                    </div>
+                    {p.publish_error && (
+                      <div className="errbox">{p.publish_error}</div>
+                    )}
+                  </div>
+                  <div className="qa">
+                    <button
+                      className="btn sm"
+                      disabled={pending}
+                      onClick={() => run(() => publishNowAction(p.id))}
+                    >
+                      Retry
+                    </button>
+                    <button
+                      className="btn sm"
+                      disabled={pending}
+                      onClick={() => {
+                        const url = prompt(
+                          "Posted it by hand? Paste the live post's URL (or leave blank).",
+                        );
+                        if (url !== null) {
+                          run(() => markPostedAction(p.id, url.trim() || null));
+                        }
+                      }}
+                    >
+                      Mark posted
+                    </button>
+                    <button
+                      className="btn sm"
+                      disabled={pending}
+                      onClick={() => run(() => cancelScheduleAction(p.id))}
+                    >
+                      Unschedule
+                    </button>
                   </div>
                 </div>
-                {statusBadge(p)}
-                {p.published_url && (
-                  <div className="qa">
-                    <a
-                      className="btn sm"
-                      href={p.published_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View
-                    </a>
+              ))}
+            </>
+          )}
+
+          {/* ---------- Published ---------- */}
+          <h2 className="strat-sub">Published</h2>
+          {published.length === 0 ? (
+            <div className="empty">Nothing has gone out yet.</div>
+          ) : (
+            byDay(published, (p) => p.published_at).map(([day, list]) => (
+              <div className="queue-day" key={day}>
+                <h3>{fmtLongDate(day)}</h3>
+                {list.map((p) => (
+                  <div
+                    className="qrow"
+                    key={p.id}
+                    style={{ borderLeftColor: pillarColor(p.pillar) }}
+                  >
+                    <div className="qt">
+                      <h4>{p.title}</h4>
+                      <div className="qm">
+                        <span>{p.channel}</span>
+                        <span>{fmtDateTime(p.published_at)}</span>
+                      </div>
+                    </div>
+                    {statusBadge(p)}
+                    {p.published_url && (
+                      <div className="qa">
+                        <a
+                          className="btn sm"
+                          href={p.published_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View
+                        </a>
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
-            ))}
-          </div>
-        ))
-      )}
+            ))
+          )}
+        </section>
+      </div>
     </>
   );
 }

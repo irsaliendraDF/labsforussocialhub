@@ -63,15 +63,16 @@ const GROUPS: Group[] = [
   {
     label: "Strategy",
     items: [
-      { href: "/", label: "Overview", icon: I.overview },
-      { href: "/pillars", label: "Pillars", icon: I.pillars },
+      { href: "/", label: "Strategy", icon: I.overview },
+      // Templates now live inside the pillar they serve, so there's no
+      // separate Templates tab.
+      { href: "/pillars", label: "Content Pillars", icon: I.templates },
       { href: "/brand-kit", label: "Brand kit", icon: I.brand },
     ],
   },
   {
     label: "Content",
     items: [
-      { href: "/templates", label: "Templates", icon: I.templates },
       { href: "/calendar", label: "Calendar", icon: I.calendar },
       { href: "/scheduler", label: "Scheduler", icon: I.scheduler },
     ],

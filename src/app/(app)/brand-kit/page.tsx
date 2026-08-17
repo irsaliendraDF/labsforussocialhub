@@ -6,24 +6,24 @@ export const metadata = { title: "Brand kit — Lab for Us" };
 export default function BrandKitPage() {
   return (
     <>
-      <div className="page-head">
-        <span className="eyebrow">Strategy</span>
-        <h1>Brand kit</h1>
-        <p>
-          Tap any colour to copy its hex. These are the same values loaded into
-          the Canva Brand Kit, so what you build there and what you see here
-          stay in step.
-        </p>
+      <div className="head-row">
+        <div className="page-head">
+          <span className="eyebrow">Strategy</span>
+          <h1>Brand kit</h1>
+          <p>
+            Tap any colour to copy its hex. These are the same values loaded
+            into the Canva Brand Kit, so what you build there and what you see
+            here stay in step.
+          </p>
+        </div>
+        <a
+          className="btn solid head-action"
+          href="/Lab_for_Us_Brand_Kit.zip"
+          download="Lab_for_Us_Brand_Kit.zip"
+        >
+          Grab the brand kit
+        </a>
       </div>
-
-      <a
-        className="btn solid"
-        href="/Lab_for_Us_Brand_Kit.zip"
-        download="Lab_for_Us_Brand_Kit.zip"
-        style={{ marginBottom: 26 }}
-      >
-        Grab the brand kit
-      </a>
 
       <Swatches />
 
