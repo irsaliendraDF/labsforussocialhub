@@ -5,6 +5,8 @@ export type PublishInput = {
   /** Image or video the platform should post. Canva links are not media URLs. */
   mediaUrl?: string | null;
   caption: string;
+  /** Image description. Access is a stated pillar, so this travels with the post. */
+  altText?: string | null;
   accessToken: string;
   externalAccountId: string;
 };

@@ -6,7 +6,7 @@ import { getBrowserClient } from "./supabase/client";
 import type { Post } from "./types";
 
 const COLUMNS =
-  "id, title, channel, pillar, format, template, cta, owner, status, post_date, canva_link, caption, scheduled_at, publish_status, platform_post_id, published_at, published_url, publish_error, notes, created_at, updated_at";
+  "id, title, channel, pillar, format, template, cta, owner, status, post_date, canva_link, caption, scheduled_at, publish_status, platform_post_id, published_at, published_url, publish_error, notes, link_url, tracked_url, alt_text, is_reshare, permission_status, permission_source, permission_note, permission_recorded_at, created_at, updated_at";
 
 /**
  * Shape for a post created locally before Supabase is connected, so the
@@ -34,6 +34,14 @@ function blankPost(patch: Partial<Post>): Post {
     published_url: null,
     publish_error: null,
     notes: null,
+    link_url: null,
+    tracked_url: null,
+    alt_text: null,
+    is_reshare: false,
+    permission_status: "not_needed",
+    permission_source: null,
+    permission_note: null,
+    permission_recorded_at: null,
     created_at: now,
     updated_at: now,
     ...patch,

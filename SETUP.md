@@ -17,10 +17,14 @@ team's logins and their Instagram/LinkedIn tokens should live with the client.
 1. Create a new project. `ca-central-1` keeps the data in Canada.
 2. Open **SQL Editor** and run `supabase/schema.sql`.
 3. Run `supabase/seed.sql`. That loads the 5 pillars and the 18 templates with
-   their real Canva links. It deliberately does **not** create any posts, the
-   calendar starts empty so the team plans their own.
+   their real Canva links.
+4. Run `supabase/seed_posts.sql`. That loads a six-week launch run built to the
+   agreed cadence: Instagram two to three a week, LinkedIn one a week, every
+   post against a pillar with a caption, alt text, a call to action, and an
+   owner. Skip this step if the team would rather start from a blank calendar.
 
-Both files are safe to re-run.
+All three files are safe to re-run. `seed_posts.sql` only fires against an
+empty `posts` table, so it can never duplicate or overwrite real work.
 
 ## 2. Environment variables
 
@@ -151,7 +155,9 @@ Then open http://localhost:3100.
 | `src/lib/providers/` | The publish seam: Instagram, LinkedIn, manual fallback |
 | `src/lib/publish.ts` | The publish runner used by both the UI and the cron job |
 | `src/lib/metrics.ts` | The daily metrics job |
-| `supabase/` | `schema.sql` and `seed.sql` |
+| `src/lib/utm.ts` | Link tagging, and where each call to action points |
+| `src/lib/schedule.ts` | When the daily publish sweep runs |
+| `supabase/` | `schema.sql`, `seed.sql`, and `seed_posts.sql` |
 | `public/brand/` | Logo, mascot, 9 squiggles, 6 dividers |
 
 ## Changing a Canva link later
@@ -164,3 +170,33 @@ Update the row in the `templates` table. No deploy needed. If a row's
 
 `HOLIDAYS` in `src/lib/content.ts`. `off` renders tan (holiday or day off),
 `aw` renders teal (worth posting for).
+
+## Link tracking
+
+Every post can carry a destination link, and the hub tags it automatically:
+`utm_source` is the channel, `utm_medium` is always `social`,
+`utm_campaign` is the pillar, and `utm_content` identifies the post. The
+finished link is stored on the post rather than rebuilt on the fly, so a link
+that has already gone out never changes underneath you.
+
+Where each call to action points is set in `CTA_DESTINATIONS` in
+`src/lib/utm.ts`. **Update those URLs once the real pages exist**, they are
+currently sensible guesses against labforus.ca. Every tagged link is listed
+together under Analytics, so checking a campaign is one place to look.
+
+## Reshare permission
+
+A post marked as resharing someone else's work cannot be scheduled or published
+until permission is recorded as granted. The block is enforced in the scheduling
+action and again in the publish runner, so it holds whether the post is
+scheduled by hand or picked up by cron. This is deliberate: the "Made here"
+pillar reposts work by community members, often young people, and consent
+should be recorded rather than remembered.
+
+## Alt text
+
+Every post has an alt text field, passed to Instagram when the media container
+is created. LinkedIn posts are text-only in this build, so alt text has nowhere
+to travel there yet; adding image posts to LinkedIn is where that would change.
+Access is one of the five pillars, so an image without a description is treated
+as an unfinished post, not a nitpick.

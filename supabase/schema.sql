@@ -162,3 +162,71 @@ create policy "team reads metrics" on post_metrics for select to anon, authentic
 -- unreachable from the browser under any role. Only the service-role key,
 -- used server-side in the connect callback and the publish/metrics jobs, can
 -- touch it, and the Scheduler page projects away the token columns.
+
+-- ============================================================
+-- Additions: link tracking, accessibility, reshare permission,
+-- and the engagement log.
+-- Safe to re-run alongside everything above.
+-- ============================================================
+
+alter table posts add column if not exists link_url    text;
+alter table posts add column if not exists tracked_url text;
+alter table posts add column if not exists alt_text    text;
+
+-- Reshare permission trail. The "Made here" pillar reposts community work,
+-- often by students and young people, so consent is recorded rather than
+-- remembered.
+alter table posts add column if not exists is_reshare boolean not null default false;
+alter table posts add column if not exists permission_status text
+  not null default 'not_needed'
+  check (permission_status in ('not_needed','requested','granted','declined'));
+alter table posts add column if not exists permission_source text;
+alter table posts add column if not exists permission_note   text;
+alter table posts add column if not exists permission_recorded_at timestamptz;
+
+-- Engagement log. Replying is the other half of community management, and it
+-- needs no platform approval to be worth tracking, so this is filled in by
+-- hand.
+create table if not exists engagement_log (
+  id          uuid primary key default gen_random_uuid(),
+  platform    text not null check (platform in ('Instagram','LinkedIn')),
+  kind        text not null default 'Comment'
+              check (kind in ('Comment','DM','Mention','Tag','Review')),
+  who         text,
+  summary     text not null,
+  link        text,
+  post_id     uuid references posts(id) on delete set null,
+  status      text not null default 'Needs reply'
+              check (status in ('Needs reply','Replied','No reply needed')),
+  handled_by  text,
+  handled_at  timestamptz,
+  created_at  timestamptz default now()
+);
+
+create index if not exists engagement_open_idx on engagement_log (status, created_at desc);
+
+alter table engagement_log enable row level security;
+
+drop policy if exists "team reads engagement"   on engagement_log;
+drop policy if exists "team writes engagement"  on engagement_log;
+drop policy if exists "team updates engagement" on engagement_log;
+drop policy if exists "team deletes engagement" on engagement_log;
+
+create policy "team reads engagement"   on engagement_log for select to anon, authenticated using (true);
+create policy "team writes engagement"  on engagement_log for insert to anon, authenticated with check (true);
+create policy "team updates engagement" on engagement_log for update to anon, authenticated using (true) with check (true);
+create policy "team deletes engagement" on engagement_log for delete to anon, authenticated using (true);
+
+-- The engagement log is a shared board too, so keep it live across laptops.
+alter table engagement_log replica identity full;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and tablename = 'engagement_log'
+  ) then
+    alter publication supabase_realtime add table engagement_log;
+  end if;
+end
+$$;

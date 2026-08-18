@@ -1,5 +1,50 @@
 import type { Channel, PublishStatus, Status } from "./content";
 
+export const PERMISSION_STATUSES = [
+  "not_needed",
+  "requested",
+  "granted",
+  "declined",
+] as const;
+export type PermissionStatus = (typeof PERMISSION_STATUSES)[number];
+
+export const PERMISSION_LABELS: Record<PermissionStatus, string> = {
+  not_needed: "Not needed",
+  requested: "Asked, waiting",
+  granted: "Granted",
+  declined: "Declined",
+};
+
+export const ENGAGEMENT_KINDS = [
+  "Comment",
+  "DM",
+  "Mention",
+  "Tag",
+  "Review",
+] as const;
+export type EngagementKind = (typeof ENGAGEMENT_KINDS)[number];
+
+export const ENGAGEMENT_STATUSES = [
+  "Needs reply",
+  "Replied",
+  "No reply needed",
+] as const;
+export type EngagementStatus = (typeof ENGAGEMENT_STATUSES)[number];
+
+export type EngagementEntry = {
+  id: string;
+  platform: Channel;
+  kind: EngagementKind;
+  who: string | null;
+  summary: string;
+  link: string | null;
+  post_id: string | null;
+  status: EngagementStatus;
+  handled_by: string | null;
+  handled_at: string | null;
+  created_at: string;
+};
+
 export type Post = {
   id: string;
   title: string;
@@ -20,6 +65,17 @@ export type Post = {
   published_url: string | null;
   publish_error: string | null;
   notes: string | null;
+  // link tracking
+  link_url: string | null;
+  tracked_url: string | null;
+  // accessibility
+  alt_text: string | null;
+  // reshare permission trail
+  is_reshare: boolean;
+  permission_status: PermissionStatus;
+  permission_source: string | null;
+  permission_note: string | null;
+  permission_recorded_at: string | null;
   created_at: string;
   updated_at: string;
 };

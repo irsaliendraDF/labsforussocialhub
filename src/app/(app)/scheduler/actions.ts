@@ -23,6 +23,20 @@ export async function schedulePostAction(postId: string, scheduledAt: string) {
     return { ok: false, message: "That date and time didn't parse." };
   }
 
+  const { data: post } = await supabase
+    .from("posts")
+    .select("is_reshare, permission_status")
+    .eq("id", postId)
+    .single();
+
+  if (post?.is_reshare && post.permission_status !== "granted") {
+    return {
+      ok: false,
+      message:
+        "This reshares someone else's work. Record permission as granted on the post first.",
+    };
+  }
+
   const { error } = await supabase
     .from("posts")
     .update({

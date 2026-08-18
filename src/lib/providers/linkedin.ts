@@ -23,6 +23,11 @@ function headers(token: string) {
  * Requires a LinkedIn Page, a LinkedIn app, and approval into the Community
  * Management API (w_organization_social for posting, r_organization_social
  * plus the analytics endpoints for metrics).
+ *
+ * This posts text-only commentary, which is the common case for the one-a-week
+ * LinkedIn cadence. Attaching an image needs a separate register-upload call,
+ * and alt text rides on that image reference, so `altText` is intentionally
+ * unused here until image posting is added.
  */
 export const linkedinProvider: SocialProvider = {
   id: "linkedin-posts",

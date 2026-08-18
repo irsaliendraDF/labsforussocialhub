@@ -23,6 +23,7 @@ export const instagramProvider: SocialProvider = {
   async publish({
     mediaUrl,
     caption,
+    altText,
     accessToken,
     externalAccountId,
   }: PublishInput): Promise<PublishResult> {
@@ -45,6 +46,8 @@ export const instagramProvider: SocialProvider = {
           body: JSON.stringify({
             image_url: mediaUrl,
             caption,
+            // Screen-reader description. Omitted rather than sent empty.
+            ...(altText?.trim() ? { alt_text: altText.trim() } : {}),
             access_token: accessToken,
           }),
         },

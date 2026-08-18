@@ -12,7 +12,8 @@ import {
   pillarColor,
 } from "@/lib/content";
 import { fmtLongDate } from "@/lib/dates";
-import type { Post } from "@/lib/types";
+import { buildTrackedUrl, destinationForCta } from "@/lib/utm";
+import { PERMISSION_LABELS, PERMISSION_STATUSES, type Post } from "@/lib/types";
 
 type Props = {
   post: Post;
@@ -44,6 +45,20 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
   const templatesForPillar = TEMPLATES.filter((t) => t.pillar === draft.pillar);
   const templateUrl = canvaUrlForTemplate(draft.template);
 
+  // Recomputed live so the team sees the tagged link before it is saved.
+  const trackedUrl = buildTrackedUrl({
+    linkUrl: draft.link_url,
+    cta: draft.cta,
+    channel: draft.channel,
+    pillar: draft.pillar,
+    postDate: draft.post_date,
+    title: draft.title,
+  });
+
+  const needsAlt = Boolean(draft.canva_link) && !draft.alt_text?.trim();
+  const permissionBlocked =
+    draft.is_reshare && draft.permission_status !== "granted";
+
   async function save() {
     setSaving(true);
     await onSave({
@@ -59,6 +74,18 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
       canva_link: draft.canva_link,
       caption: draft.caption,
       notes: draft.notes,
+      link_url: draft.link_url,
+      tracked_url: trackedUrl,
+      alt_text: draft.alt_text,
+      is_reshare: draft.is_reshare,
+      permission_status: draft.permission_status,
+      permission_source: draft.permission_source,
+      permission_note: draft.permission_note,
+      permission_recorded_at:
+        draft.permission_status === "granted" ||
+        draft.permission_status === "declined"
+          ? (draft.permission_recorded_at ?? new Date().toISOString())
+          : null,
     });
     setSaving(false);
     setSaved(true);
@@ -248,6 +275,122 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
           </div>
 
           <label className="field grow">
+            Alt text
+            <textarea
+              style={{ minHeight: 62 }}
+              placeholder="Describe the image for someone who can't see it. Say what's happening, not 'image of'."
+              value={draft.alt_text ?? ""}
+              onChange={(e) => set("alt_text", e.target.value)}
+            />
+          </label>
+          <p className="note" style={{ marginTop: -6 }}>
+            {needsAlt ? (
+              <strong style={{ color: "var(--rasp)" }}>
+                This post has a design but no alt text yet.
+              </strong>
+            ) : (
+              "Access is one of our pillars. Every image gets a description."
+            )}
+          </p>
+
+          <label className="field grow">
+            Where the link goes
+            <input
+              type="url"
+              placeholder={destinationForCta(draft.cta)}
+              value={draft.link_url ?? ""}
+              onChange={(e) => set("link_url", e.target.value)}
+            />
+          </label>
+          {trackedUrl && (
+            <div className="tracked">
+              <div className="tracked-lb">Tagged link to use in the post</div>
+              <code>{trackedUrl}</code>
+              <button
+                type="button"
+                className="btn sm"
+                onClick={() => {
+                  navigator.clipboard?.writeText(trackedUrl);
+                }}
+              >
+                Copy link
+              </button>
+            </div>
+          )}
+
+          <label
+            className="checkline"
+            title="Turn this on when the post reuses someone else's work"
+          >
+            <input
+              type="checkbox"
+              checked={draft.is_reshare}
+              onChange={(e) => {
+                const on = e.target.checked;
+                setDraft((d) => ({
+                  ...d,
+                  is_reshare: on,
+                  permission_status: on ? "requested" : "not_needed",
+                }));
+                setSaved(false);
+              }}
+            />
+            This post reshares someone else&apos;s work
+          </label>
+
+          {draft.is_reshare && (
+            <div className="permission-box">
+              <div className="field-row">
+                <label className="field">
+                  Permission
+                  <select
+                    value={draft.permission_status}
+                    onChange={(e) =>
+                      set(
+                        "permission_status",
+                        e.target.value as Post["permission_status"],
+                      )
+                    }
+                  >
+                    {PERMISSION_STATUSES.filter((p) => p !== "not_needed").map(
+                      (p) => (
+                        <option key={p} value={p}>
+                          {PERMISSION_LABELS[p]}
+                        </option>
+                      ),
+                    )}
+                  </select>
+                </label>
+                <label className="field">
+                  Whose work
+                  <input
+                    type="text"
+                    placeholder="@handle or name"
+                    value={draft.permission_source ?? ""}
+                    onChange={(e) => set("permission_source", e.target.value)}
+                  />
+                </label>
+              </div>
+              <label className="field grow" style={{ marginTop: 10 }}>
+                How it was asked and answered
+                <textarea
+                  style={{ minHeight: 56 }}
+                  placeholder="DM'd them on the 14th, they said yes and asked to be credited as..."
+                  value={draft.permission_note ?? ""}
+                  onChange={(e) => set("permission_note", e.target.value)}
+                />
+              </label>
+              {permissionBlocked && (
+                <div className="errbox" style={{ marginTop: 10 }}>
+                  This can&apos;t be scheduled until permission is granted. We
+                  repost work by students and young people, so consent gets
+                  recorded, not remembered.
+                </div>
+              )}
+            </div>
+          )}
+
+          <label className="field grow">
             Caption
             <textarea
               placeholder="The caption that goes out with it. Remember #MadeAtLabForUs."
@@ -287,9 +430,7 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
             className="btn sm danger"
             style={{ alignSelf: "flex-start" }}
             onClick={async () => {
-              if (
-                confirm(`Delete "${draft.title}"? This can't be undone.`)
-              ) {
+              if (confirm(`Delete "${draft.title}"? This can't be undone.`)) {
                 await onDelete();
                 onClose();
               }

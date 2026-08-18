@@ -13,6 +13,8 @@ export type Row = {
   published_at: string | null;
   post_date: string;
   published_url: string | null;
+  tracked_url: string | null;
+  link_url: string | null;
   impressions: number | null;
   reach: number | null;
   likes: number | null;
@@ -128,6 +130,64 @@ type SortKey =
   | "reach"
   | "impressions"
   | "engagements";
+
+/**
+ * The link reference.
+ *
+ * Every tagged link the team has put out, in one place they can come back to.
+ * Without this the UTM tags exist only inside whatever post used them, which
+ * makes checking a campaign in site analytics a scavenger hunt.
+ */
+function TrackedLinks({ rows }: { rows: Row[] }) {
+  const tagged = rows.filter((r) => r.tracked_url);
+  if (!tagged.length) return null;
+
+  return (
+    <>
+      <h2 className="strat-sub">Tracked links</h2>
+      <p className="strat-subnote">
+        The tagged link behind each post. Paste any of these into your site
+        analytics to see what a single post actually drove.
+      </p>
+      <div className="tablewrap" style={{ marginBottom: 8 }}>
+        <table className="data">
+          <thead>
+            <tr>
+              <th>Post</th>
+              <th>Channel</th>
+              <th>Campaign</th>
+              <th>Tagged link</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tagged.map((r) => (
+              <tr key={r.id}>
+                <td>{r.title}</td>
+                <td>{r.channel}</td>
+                <td style={{ whiteSpace: "nowrap" }}>{r.pillar}</td>
+                <td>
+                  <a
+                    href={r.tracked_url!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      fontFamily:
+                        "ui-monospace, SFMono-Regular, Menlo, monospace",
+                      fontSize: 11.5,
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    {r.tracked_url}
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
 
 export default function AnalyticsView({ rows }: { rows: Row[] }) {
   const [sort, setSort] = useState<SortKey>("published_at");
@@ -255,6 +315,8 @@ export default function AnalyticsView({ rows }: { rows: Row[] }) {
         colorFor={channelColor}
         unit="engagements"
       />
+
+      <TrackedLinks rows={rows} />
 
       <h2 className="strat-sub">Every post</h2>
       <p className="strat-subnote">

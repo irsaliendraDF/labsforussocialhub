@@ -1,15 +1,12 @@
-import AnalyticsView, { type Row } from "@/components/AnalyticsView";
+import QuarterReport from "@/components/QuarterReport";
 import SetupBanner from "@/components/SetupBanner";
+import type { Row } from "@/components/AnalyticsView";
 import { getServerClient } from "@/lib/supabase/server";
 
-export const metadata = { title: "Analytics · Lab for Us" };
+export const metadata = { title: "Quarterly report · Lab for Us" };
 export const dynamic = "force-dynamic";
 
-/**
- * `post_metrics` is a time series, one row per capture. For the tab we want
- * the newest capture per post, so we pull them newest-first and keep the first
- * sighting of each post_id.
- */
+/** Same shape Analytics uses: newest metric capture per published post. */
 async function loadRows(): Promise<Row[]> {
   const supabase = await getServerClient();
   if (!supabase) return [];
@@ -55,30 +52,24 @@ async function loadRows(): Promise<Row[]> {
   });
 }
 
-export default async function AnalyticsPage() {
+export default async function ReportPage() {
   const rows = await loadRows();
 
   return (
     <>
       <div className="page-head">
         <span className="eyebrow">Engagement</span>
-        <h1>Analytics</h1>
+        <h1>Quarterly report</h1>
         <p>
-          How each post actually landed, rolled up by pillar, format, and
-          channel, so the numbers loop back into the strategy and you can see
-          which themes are worth more of the week.
+          A board and funder ready summary of a quarter of social activity.
+          Pick the quarter, then print it or save it as a PDF straight from the
+          browser.
         </p>
       </div>
 
-      <SetupBanner what="Post performance" />
+      <SetupBanner what="Quarterly figures" />
 
-      <AnalyticsView rows={rows} />
-
-      <p className="note" style={{ marginTop: 26 }}>
-        Numbers refresh once a day from Instagram insights and LinkedIn
-        analytics. A post only appears here after it has published through the
-        Scheduler with a connected account.
-      </p>
+      <QuarterReport rows={rows} />
     </>
   );
 }

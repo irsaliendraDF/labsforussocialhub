@@ -50,6 +50,17 @@ const I = {
       <path d="M18 14.5V16l1 1" />
     </svg>
   ),
+  engagement: (
+    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1.4-4.6A7.5 7.5 0 1 1 20 11.5Z" />
+    </svg>
+  ),
+  report: (
+    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" />
+      <path d="M14 3v6h6M9 13h6M9 17h4" />
+    </svg>
+  ),
   analytics: (
     <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 19V5" />
@@ -79,7 +90,11 @@ const GROUPS: Group[] = [
   },
   {
     label: "Engagement",
-    items: [{ href: "/analytics", label: "Analytics", icon: I.analytics }],
+    items: [
+      { href: "/engagement", label: "Replies", icon: I.engagement },
+      { href: "/analytics", label: "Analytics", icon: I.analytics },
+      { href: "/report", label: "Quarterly report", icon: I.report },
+    ],
   },
 ];
 

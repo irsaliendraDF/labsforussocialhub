@@ -33,6 +33,25 @@ export async function publishPost(postId: string): Promise<{
     return { ok: true, message: "Already published." };
   }
 
+  // Consent gate. The "Made here" pillar reposts community work, often by
+  // students, so a reshare without recorded permission never goes out, even if
+  // someone scheduled it by mistake.
+  if (post.is_reshare && post.permission_status !== "granted") {
+    await admin
+      .from("posts")
+      .update({
+        publish_status: "failed",
+        publish_error:
+          "Held back: this reshares someone else's work and permission isn't recorded as granted.",
+      })
+      .eq("id", postId);
+    return {
+      ok: false,
+      message:
+        "Held back: this reshares someone else's work and permission isn't recorded as granted.",
+    };
+  }
+
   // Claim the row so two overlapping cron runs can't double-post.
   const { data: claimed } = await admin
     .from("posts")
@@ -59,6 +78,7 @@ export async function publishPost(postId: string): Promise<{
     post,
     mediaUrl: post.canva_link,
     caption: post.caption ?? post.title,
+    altText: post.alt_text,
     accessToken: account?.access_token ?? "",
     externalAccountId: account?.external_account_id ?? "",
   });

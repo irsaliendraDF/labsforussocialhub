@@ -40,6 +40,32 @@ export default function StrategyPage() {
 
         <div className="strat-grid">
           <div className="assetbox">
+            <h3>The mission, in one line</h3>
+            <p className="strat-lead">
+              Lab for Us exists so that making things is not something you need
+              money, equipment, or permission to do. It is a space for art,
+              community, creativity, and collaboration, built for the people
+              who are usually left outside those rooms. Belonging first, then
+              access, then the work itself.
+            </p>
+          </div>
+
+          <div className="assetbox">
+            <h3>What the Digital Library is</h3>
+            <p className="strat-lead">
+              The Digital Library is the catalogue of what the space has and
+              what you can borrow or book: cameras, audio kit, editing
+              software, studio and workshop time. Someone signs up, sees what
+              is available, and reserves it. That is the thing the content is
+              pointing at, so when a post says{" "}
+              <em>Explore the library</em> or <em>Book the space</em>, this is
+              where it lands.
+            </p>
+          </div>
+        </div>
+
+        <div className="strat-grid">
+          <div className="assetbox">
             <h3>Channels and cadence</h3>
             <div className="chan">
               <div className="chan-card ig">
@@ -114,6 +140,52 @@ export default function StrategyPage() {
             back and rolls them up by pillar, format, and channel.
           </p>
         </div>
+      </div>
+
+      <h2 className="strat-sub">When to revisit this</h2>
+      <p className="strat-subnote">
+        A plan you never review is a guess you keep repeating.
+      </p>
+
+      <div className="assetbox">
+        <h3>Check in at 60 to 80 published posts</h3>
+        <p className="strat-lead" style={{ marginBottom: 12 }}>
+          Not monthly, and not after a good week. At this cadence, roughly three
+          or four posts a week, that lands somewhere around five to six months
+          in. The reason for waiting is honest: below about 60 posts there
+          simply is not enough data to tell a real pattern from a fluke, and
+          reacting to noise is how a good strategy gets abandoned early. One
+          post going quiet means nothing. Twenty posts in the same pillar going
+          quiet means something.
+        </p>
+        <p className="subhead">What to look at when you get there</p>
+        <ul className="steps-list plain">
+          <li>
+            <strong>Which pillars earn their slot.</strong> If one consistently
+            under-delivers on engagement, it does not necessarily get cut, but
+            it should get fewer slots or a different format.
+          </li>
+          <li>
+            <strong>Which formats do the work.</strong> Reels against carousels
+            against stills. Put the effort where it returns.
+          </li>
+          <li>
+            <strong>Instagram against LinkedIn.</strong> They serve different
+            audiences, so judge them separately rather than against each other.
+          </li>
+          <li>
+            <strong>What the tagged links actually drove.</strong> Reach is
+            nice; signups and bookings are the goal.
+          </li>
+          <li>
+            <strong>Day and time.</strong> Only by this point is there enough
+            history for posting-time patterns to mean anything.
+          </li>
+        </ul>
+        <p className="note">
+          The <Link href="/report">quarterly report</Link> is the natural place
+          to run this, since the numbers are already gathered there.
+        </p>
       </div>
     </>
   );
