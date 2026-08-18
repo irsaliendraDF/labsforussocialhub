@@ -1,9 +1,10 @@
 # Lab for Us Content Hub setup
 
-The app runs right now without any of this: Strategy, Pillars, Brand kit, and
-Templates are fully working, and the Calendar runs in preview mode (changes stay
-in your browser tab). Everything below is what turns it into the shared, live
-tool the whole team signs into.
+The app runs right now without any of this. Strategy, Content Pillars, and
+Brand kit are fully working, and the Calendar runs in preview mode showing the
+planned launch run, so you can see and click the whole thing before a database
+exists. Changes in preview mode stay in your browser tab and are lost on
+reload. Everything below is what turns it into the shared, live tool.
 
 Do these in order.
 
@@ -155,6 +156,7 @@ Then open http://localhost:3100.
 | `src/lib/providers/` | The publish seam: Instagram, LinkedIn, manual fallback |
 | `src/lib/publish.ts` | The publish runner used by both the UI and the cron job |
 | `src/lib/metrics.ts` | The daily metrics job |
+| `src/lib/launchRun.ts` | The launch run. **Source of truth**, run `npm run seed:sql` after editing |
 | `src/lib/utm.ts` | Link tagging, and where each call to action points |
 | `src/lib/schedule.ts` | When the daily publish sweep runs |
 | `supabase/` | `schema.sql`, `seed.sql`, and `seed_posts.sql` |
@@ -200,3 +202,15 @@ is created. LinkedIn posts are text-only in this build, so alt text has nowhere
 to travel there yet; adding image posts to LinkedIn is where that would change.
 Access is one of the five pillars, so an image without a description is treated
 as an unfinished post, not a nitpick.
+
+## Editing the launch run
+
+The 19 launch posts are defined once, in `src/lib/launchRun.ts`. The app reads
+them for preview mode, and `supabase/seed_posts.sql` is generated from them:
+
+```bash
+npm run seed:sql
+```
+
+Edit the TypeScript, regenerate, commit both. The SQL is marked as generated so
+nobody hand-edits it and watches the two drift apart.

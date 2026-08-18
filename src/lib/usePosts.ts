@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { getBrowserClient } from "./supabase/client";
+import { launchRunAsPosts } from "./launchRun";
 import type { Post } from "./types";
 
 const COLUMNS =
@@ -64,7 +65,12 @@ export function usePosts(): PostsApi {
   const supabase = getBrowserClient();
   const preview = !supabase;
 
-  const [posts, setPosts] = useState<Post[]>([]);
+  // Without a database there is nothing to read, so preview mode shows the
+  // planned launch run. It makes the calendar legible before Supabase exists;
+  // edits are local to the tab and the banner says so.
+  const [posts, setPosts] = useState<Post[]>(() =>
+    preview ? launchRunAsPosts() : [],
+  );
   const [loading, setLoading] = useState(!preview);
   const [error, setError] = useState<string | null>(null);
 

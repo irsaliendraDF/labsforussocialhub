@@ -1,28 +1,20 @@
 -- ============================================================
 -- Lab for Us launch run
 --
--- Six weeks of content built to the agreed strategy:
---   Instagram 2 to 3 a week, LinkedIn 1 a week
---   every post ladders up to one of the five pillars
---   every post uses a real template and carries a caption,
---   alt text, a call to action, and an owner
+-- GENERATED FILE. Do not edit by hand.
+-- Source: src/lib/launchRun.ts   Regenerate: npm run seed:sql
 --
--- Pillar mix across the run is deliberate. "For Us" carries the
--- launch, "Access and how it works" does the recruiting, and
--- "People and community" builds the habit of showing faces.
+-- 19 posts over six weeks: 13 Instagram, 6 LinkedIn.
+-- Every post ladders up to a pillar and carries a caption, alt text, a call
+-- to action, and an owner.
 --
--- Dates are real, not relative, so the awareness-day posts land on the
--- actual day and nothing falls on Labour Day (Sep 7). The rhythm is
--- Tuesday, Thursday, Friday. Awareness days used:
---   Aug 19 World Photography Day, which the launch post sits on
---   Sep 8  International Literacy Day
---   Sep 30 National Day for Truth and Reconciliation
+-- Dates are real, not relative, so the awareness-day posts land on the actual
+-- day and nothing falls on Labour Day (Sep 7). The rhythm is Tuesday,
+-- Thursday, Friday. If the launch slips, drag the posts on the calendar.
+-- Nothing here is load-bearing except the pillar mix and the cadence.
 --
--- If the launch slips, drag the posts on the calendar. Nothing here is
--- load-bearing except the pillar mix and the cadence.
---
--- SAFETY: this only runs against an empty posts table, so it can
--- never duplicate or trample work the team has already done.
+-- SAFETY: this only runs against an empty posts table, so it can never
+-- duplicate or trample work the team has already done.
 -- Run it after schema.sql and seed.sql.
 -- ============================================================
 
@@ -30,7 +22,6 @@ insert into posts
   (title, channel, pillar, format, template, cta, owner, status, post_date,
    caption, alt_text, is_reshare, permission_status)
 select * from (values
-  -- ---------- Week 1: launch ----------
   ('Introducing Lab for Us',
    'LinkedIn', 'For Us', 'Launch announcement', 'Launch announcement',
    'Visit the site', 'Irene', 'Idea', DATE '2026-08-19',
@@ -52,7 +43,6 @@ select * from (values
    'A wide view of the Lab for Us studio with equipment shelves and a large shared work table.',
    false, 'not_needed'),
 
-  -- ---------- Week 2: how it works ----------
   ('How to book the space in a few taps',
    'Instagram', 'Access and how it works', 'Tip or how-to', 'Tip / how-to',
    'Book the space', 'Ivy', 'Idea', DATE '2026-08-27',
@@ -74,7 +64,6 @@ select * from (values
    'A carousel cover reading Questions we get asked most, in bold rounded type on cream.',
    false, 'not_needed'),
 
-  -- ---------- Week 3: people ----------
   ('Maker spotlight',
    'Instagram', 'People and community', 'Maker spotlight', 'Maker spotlight',
    'Explore the library', 'Zack and Adrian', 'Idea', DATE '2026-09-03',
@@ -96,7 +85,6 @@ select * from (values
    'A sticker-style hashtag lockup reading Made At Lab For Us over a photo of a busy studio evening.',
    false, 'not_needed'),
 
-  -- ---------- Week 4: made here ----------
   ('Made here: work from the community',
    'Instagram', 'Made here', 'Community reshare', 'Community reshare frame',
    'Book the space', 'Ivy', 'Idea', DATE '2026-09-15',
@@ -118,7 +106,6 @@ select * from (values
    'Type-led design reading Access, not talent, is the barrier, in bold rounded type.',
    false, 'not_needed'),
 
-  -- ---------- Week 5: workshops and open call ----------
   ('Our first workshop',
    'Instagram', 'People and community', 'Tip or how-to', 'Workshop or class',
    'Sign up', 'Zack and Adrian', 'Idea', DATE '2026-09-17',
@@ -147,7 +134,6 @@ select * from (values
    'A quiet notice card in muted brand tones marking the National Day for Truth and Reconciliation.',
    false, 'not_needed'),
 
-  -- ---------- Week 6: proof and partners ----------
   ('What has happened since we opened',
    'LinkedIn', 'For Us', 'Mission or quote', 'LinkedIn post',
    'Visit the site', 'Irene', 'Idea', DATE '2026-10-02',
