@@ -2420,3 +2420,32 @@ table.data td.num {
     background: #fff;
   }
 }
+
+/* ---- Quarterly report as the right-hand column of Analytics ---- */
+
+/* The report's tables inherit the 760px floor meant for the full-width
+   per-post table; in a ~450px column that floor forces a sideways scroll on
+   every table, so give the report's simpler three-column tables a lower one. */
+.ana-side table.data {
+  min-width: 420px;
+}
+.ana-side .stat .vl {
+  font-size: 24px;
+}
+
+/* Printing from Analytics should produce the funder PDF, not the whole page:
+   the report column becomes the document and everything else steps aside. */
+@media print {
+  .ana-cols {
+    display: block;
+  }
+  .ana-cols > section:first-child,
+  .ana-cols .strat-subnote,
+  .page-head,
+  .setup-banner {
+    display: none !important;
+  }
+  .ana-side table.data {
+    min-width: 0;
+  }
+}

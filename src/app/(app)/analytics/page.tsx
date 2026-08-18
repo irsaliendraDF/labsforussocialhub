@@ -1,4 +1,5 @@
 import AnalyticsView, { type Row } from "@/components/AnalyticsView";
+import QuarterReport from "@/components/QuarterReport";
 import SetupBanner from "@/components/SetupBanner";
 import { getServerClient } from "@/lib/supabase/server";
 
@@ -65,20 +66,39 @@ export default async function AnalyticsPage() {
         <h1>Analytics</h1>
         <p>
           How each post actually landed, rolled up by pillar, format, and
-          channel, so the numbers loop back into the strategy and you can see
-          which themes are worth more of the week.
+          channel, with the quarterly funder report alongside, so the numbers
+          loop back into the strategy and out to the board from one place.
         </p>
       </div>
 
       <SetupBanner what="Post performance" />
 
-      <AnalyticsView rows={rows} />
+      {/* Performance on the left, the funder-ready quarter on the right.
+          They read the same rows, so splitting them across two pages made
+          people flip back and forth for no reason. */}
+      <div className="sched-cols ana-cols">
+        <section>
+          <AnalyticsView rows={rows} />
 
-      <p className="note" style={{ marginTop: 26 }}>
-        Numbers refresh once a day from Instagram insights and LinkedIn
-        analytics. A post only appears here after it has published through the
-        Scheduler with a connected account.
-      </p>
+          <p className="note" style={{ marginTop: 26 }}>
+            Numbers refresh once a day from Instagram insights and LinkedIn
+            analytics. A post only appears here after it has published through
+            the Scheduler with a connected account.
+          </p>
+        </section>
+
+        <section className="ana-side">
+          <h2 className="strat-sub" style={{ marginTop: 0 }}>
+            Quarterly report
+          </h2>
+          <p className="strat-subnote">
+            A board and funder ready summary. Pick the quarter, then print it
+            or save it as a PDF; only the report prints, not the rest of this
+            page.
+          </p>
+          <QuarterReport rows={rows} />
+        </section>
+      </div>
     </>
   );
 }

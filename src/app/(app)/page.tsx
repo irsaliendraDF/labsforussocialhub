@@ -183,8 +183,9 @@ export default function StrategyPage() {
           </li>
         </ul>
         <p className="note">
-          The <Link href="/report">quarterly report</Link> is the natural place
-          to run this, since the numbers are already gathered there.
+          The quarterly report on the{" "}
+          <Link href="/analytics">Analytics</Link> page is the natural place to
+          run this, since the numbers are already gathered there.
         </p>
       </div>
     </>
