@@ -15,13 +15,20 @@ import { CTAS } from "./content";
 
 export const SITE = "https://labforus.ca";
 
-/** Where each call to action sends people. Edit as the real pages land. */
+/**
+ * Where each call to action sends people.
+ *
+ * The team's direction (2026-08-26): every CTA points at the homepage. The
+ * UTM tags still tell each post's clicks apart, so per-post attribution is
+ * unaffected. If the site later grows real /book or /library pages, deepen
+ * the entries here; nothing else needs to change.
+ */
 export const CTA_DESTINATIONS: Record<string, string> = {
   Follow: SITE,
-  "Sign up": `${SITE}/signup`,
+  "Sign up": SITE,
   "Visit the site": SITE,
-  "Book the space": `${SITE}/book`,
-  "Explore the library": `${SITE}/library`,
+  "Book the space": SITE,
+  "Explore the library": SITE,
 };
 
 export function destinationForCta(cta: string | null | undefined): string {

@@ -182,9 +182,10 @@ finished link is stored on the post rather than rebuilt on the fly, so a link
 that has already gone out never changes underneath you.
 
 Where each call to action points is set in `CTA_DESTINATIONS` in
-`src/lib/utm.ts`. **Update those URLs once the real pages exist**, they are
-currently sensible guesses against labforus.ca. Every tagged link is listed
-together under Analytics, so checking a campaign is one place to look.
+`src/lib/utm.ts`. Per the team's direction, every CTA currently points at
+https://labforus.ca/. If the site later grows dedicated pages (booking, the
+library), deepen the entries there. Every tagged link is listed together under
+Analytics, so checking a campaign is one place to look.
 
 ## Reshare permission
 
