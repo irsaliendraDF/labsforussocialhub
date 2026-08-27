@@ -4,7 +4,7 @@ import { DIVIDERS, HASHTAGS, SQUIGGLES } from "@/lib/content";
 export const metadata = { title: "Brand kit · Lab for Us" };
 
 /**
- * The researchers' identity additions (2026-08-27): the logo family and the
+ * The team's identity additions (2026-08-27): the logo family and the
  * walking pencil, cropped from their visual identity board.
  */
 const LOGO_FAMILY = [
@@ -37,8 +37,8 @@ export default function BrandKitPage() {
           <p>
             Tap any colour to copy its hex. These are the same values loaded
             into the Canva Brand Kit, so what you build there and what you see
-            here stay in step. The colour meanings come from the research
-            team&apos;s visual identity work.
+            here stay in step. The colour meanings come from the team&apos;s
+            visual identity work.
           </p>
         </div>
         <a
@@ -74,7 +74,7 @@ export default function BrandKitPage() {
                 aria-label="The pencil mascot walking"
               />
               <p className="note">
-                The identity board from the research team, with the walking
+                The identity board from the team, with the walking
                 pencil that anchors the animated side of the brand. Use the
                 loop anywhere a little life helps: Stories, page headers, the
                 end of a Reel.
@@ -100,7 +100,7 @@ export default function BrandKitPage() {
           </div>
           <p className="note">
             Cropped from the identity board for reference here; the original
-            vector files live with the research team and belong in the shared
+            vector files live with the team and belong in the shared
             Canva folder.
           </p>
         </div>

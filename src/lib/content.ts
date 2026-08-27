@@ -52,7 +52,7 @@ export function pillarColor(name: string | null | undefined): string {
 }
 
 /**
- * The palette, with the researchers' names and meanings (added 2026-08-27
+ * The palette, with the team's names and meanings (added 2026-08-27
  * from the team's visual identity work). The hexes are the ones on their
  * identity board, which match what the hub has used from day one; only
  * Forest Green's documented value differs by a single invisible digit, so
