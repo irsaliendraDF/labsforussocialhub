@@ -51,16 +51,62 @@ export function pillarColor(name: string | null | undefined): string {
   return (name && PILLAR_COLOR[name]) || "#ece4d2";
 }
 
-export const PALETTE: [string, string][] = [
-  ["Orange", "#f46129"],
-  ["Blue", "#3d3bf5"],
-  ["Gold", "#edb919"],
-  ["Green", "#2a6a12"],
-  ["Periwinkle", "#9191ea"],
-  ["Teal", "#5ce1e6"],
-  ["Raspberry", "#db385a"],
-  ["Ink", "#111111"],
-  ["Paper", "#ffffff"],
+/**
+ * The palette, with the researchers' names and meanings (added 2026-08-27
+ * from the team's visual identity work). The hexes are the ones on their
+ * identity board, which match what the hub has used from day one; only
+ * Forest Green's documented value differs by a single invisible digit, so
+ * the copyable swatch carries the team's number while the app chrome and
+ * pillar colours stay untouched.
+ */
+export type PaletteColor = { name: string; hex: string; meaning: string };
+
+export const PALETTE: PaletteColor[] = [
+  {
+    name: "Turquoise",
+    hex: "#5ce1e6",
+    meaning: "Clarity, openness, accessibility.",
+  },
+  {
+    name: "Gold",
+    hex: "#edb919",
+    meaning: "Happiness, belonging, positive energy.",
+  },
+  {
+    name: "Coral",
+    hex: "#f46129",
+    meaning: "Creativity, engagement, community action.",
+  },
+  {
+    name: "Raspberry",
+    hex: "#db385a",
+    meaning: "Carries the For Us pillar across the hub.",
+  },
+  {
+    name: "Lilac",
+    hex: "#9191ea",
+    meaning: "Sensitivity, imagination, emotional listening.",
+  },
+  {
+    name: "Electric Blue",
+    hex: "#3d3bf5",
+    meaning: "Critical research, strong presence, depth.",
+  },
+  {
+    name: "Forest Green",
+    hex: "#2a6b12",
+    meaning: "Environment, nature, balance.",
+  },
+  {
+    name: "Black",
+    hex: "#000000",
+    meaning: "Strength, resistance, visual structure.",
+  },
+  {
+    name: "White",
+    hex: "#ffffff",
+    meaning: "Space, breathing room, visual accessibility.",
+  },
 ];
 
 export const FORMATS = [

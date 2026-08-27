@@ -2449,3 +2449,57 @@ table.data td.num {
     min-width: 0;
   }
 }
+
+/* ============================================================
+   IDENTITY ADDITIONS (from the research team's visual identity)
+   ============================================================ */
+
+/* Meaning line on each colour swatch */
+.sw .mn {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 3px;
+}
+
+/* The identity board video beside the walking pencil loop */
+.idmotion {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.idmotion video {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  display: block;
+}
+.idmotion-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 320px;
+}
+.idmotion-side video {
+  max-width: 210px;
+}
+@media (max-width: 700px) {
+  .idmotion {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Logo family tiles read better a little larger than the squiggles */
+.gallery.logos {
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+}
+
+.fmtchip.wordchip {
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}

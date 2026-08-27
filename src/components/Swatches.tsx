@@ -29,7 +29,7 @@ function Grid() {
   const toast = useToast();
   return (
     <div className="swatches">
-      {PALETTE.map(([name, hex]) => (
+      {PALETTE.map(({ name, hex, meaning }) => (
         <button
           className="sw"
           type="button"
@@ -50,6 +50,7 @@ function Grid() {
           <div className="meta">
             <div className="nm">{name}</div>
             <div className="hx">{hex}</div>
+            <div className="mn">{meaning}</div>
           </div>
         </button>
       ))}
