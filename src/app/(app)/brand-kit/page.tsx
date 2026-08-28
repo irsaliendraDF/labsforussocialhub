@@ -8,13 +8,23 @@ export const metadata = { title: "Brand kit · Lab for Us" };
  * walking pencil, cropped from their visual identity board.
  */
 const LOGO_FAMILY = [
-  { src: "/brand/identity/wordmark-black.webp", alt: "The stacked Labs For Us wordmark in black" },
-  { src: "/brand/identity/wordmark-color.webp", alt: "The stacked Labs For Us wordmark with each letter in a palette colour" },
+  { src: "/brand/team/logo-black.png", alt: "The stacked Labs For Us wordmark in black" },
+  { src: "/brand/team/logo-colorful.png", alt: "The stacked Labs For Us wordmark with each letter in a palette colour" },
+  { src: "/brand/team/logo-white.png", alt: "The stacked Labs For Us wordmark in white, shown on a dark tile", dark: true },
   { src: "/brand/identity/mark-hands.webp", alt: "A circular line drawing of many hands making things, ringed by the words Lab For Us" },
   { src: "/brand/identity/badge-grey.webp", alt: "The wordmark inside a soft grey circle badge" },
   { src: "/brand/identity/badge-cream.webp", alt: "The colourful wordmark inside a cream circle badge" },
   { src: "/brand/identity/badge-outline.webp", alt: "The wordmark inside a thin black outline circle" },
-  { src: "/brand/identity/badge-pencil.webp", alt: "The pencil mascot ringed by the words Connecting art, research, community for change" },
+  { src: "/brand/team/pencil-badge.png", alt: "The pencil mascot ringed by the words Connecting art, research, community for change" },
+];
+
+/** LABFORUS spelled in the team's custom letterform PNGs. */
+const LETTERFORM_SAMPLE = ["L", "A", "B", "F", "O", "R", "U", "S"];
+
+const STICKERS = [
+  { src: "/brand/team/whats-new.png", alt: "A colourful What's New sticker in the custom letterforms" },
+  { src: "/brand/team/whats-new-2.png", alt: "A second What's New sticker variant" },
+  { src: "/brand/team/pencilman.png", alt: "The pencil mascot standing on its own" },
 ];
 
 const ACTION_WORDS = [
@@ -65,13 +75,11 @@ export default function BrandKitPage() {
               aria-label="The Lab for Us visual identity board: wordmark, palette, logo family, and the walking pencil animation"
             />
             <div className="idmotion-side">
-              <video
-                src="/brand/identity/pencil-walk.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label="The pencil mascot walking"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="pencil-gif"
+                src="/brand/team/pencilman.gif"
+                alt="The pencil mascot walking, an animated loop"
               />
               <p className="note">
                 The identity board from the team, with the walking
@@ -92,16 +100,17 @@ export default function BrandKitPage() {
           </p>
           <div className="gallery logos">
             {LOGO_FAMILY.map((m) => (
-              <div className="gtile" key={m.src}>
+              <div className={"gtile" + ("dark" in m && m.dark ? " dark" : "")} key={m.src}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={m.src} alt={m.alt} loading="lazy" />
               </div>
             ))}
           </div>
           <p className="note">
-            Cropped from the identity board for reference here; the original
-            vector files live with the team and belong in the shared
-            Canva folder.
+            The black, colour, and white wordmarks and the pencil badge are the
+            team&apos;s own files. The print-ready vector versions, including
+            each vinyl-cut letter and the full colour logo at 70 by 70 cm, are
+            inside the downloadable kit under vinyl-print.
           </p>
         </div>
 
@@ -137,6 +146,33 @@ export default function BrandKitPage() {
           <p className="note">
             Squiggles are accents, dividers are section breaks, the mascot is a
             sparing guide, and the logo carries the wordmark.
+          </p>
+        </div>
+
+        <div className="assetbox">
+          <h3>The custom letterforms</h3>
+          <p className="strat-subnote" style={{ marginBottom: 12 }}>
+            The team&apos;s own alphabet, one file per character, ready to
+            assemble into headlines and stickers.
+          </p>
+          <div className="letterrow" aria-label="LABFORUS spelled in the custom letterforms">
+            {LETTERFORM_SAMPLE.map((ch, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={i} src={"/brand/type/" + ch + ".png"} alt={ch} />
+            ))}
+          </div>
+          <p className="subhead">Stickers</p>
+          <div className="gallery">
+            {STICKERS.map((m) => (
+              <div className="gtile" key={m.src}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={m.src} alt={m.alt} loading="lazy" />
+              </div>
+            ))}
+          </div>
+          <p className="note">
+            The full set, numbers and uppercase plus most of the lowercase,
+            ships in the downloadable kit as individual files.
           </p>
         </div>
 
@@ -202,11 +238,11 @@ export default function BrandKitPage() {
           <h3>Type</h3>
           <p className="strat-lead" style={{ marginBottom: 14 }}>
             Headlines belong to the team&apos;s <strong>custom Lab for Us
-            letterforms</strong>, the playful cut alphabet from the identity
-            work. Running text uses <strong>Open Sauce</strong>. This hub
-            stands in with Baloo 2 and Inter until the font files join the
-            shared kit; the templates in Canva are where the real letterforms
-            live.
+            letterforms</strong>, now in the kit as one image per character.
+            Running text uses <strong>Open Sauce</strong>. This hub stands in
+            with Baloo 2 and Inter, since an installable font file for the
+            letterforms does not exist yet; the templates in Canva are where
+            the real letterforms live.
           </p>
           <p
             style={{

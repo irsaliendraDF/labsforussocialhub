@@ -2503,3 +2503,28 @@ table.data td.num {
   display: inline-flex;
   align-items: center;
 }
+
+/* Team asset additions */
+.gtile.dark {
+  background: #221f19;
+}
+.idmotion-side .pencil-gif {
+  max-width: 170px;
+  height: auto;
+  display: block;
+}
+.letterrow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 6px;
+}
+.letterrow img {
+  height: 64px;
+  width: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 8px 6px;
+}
