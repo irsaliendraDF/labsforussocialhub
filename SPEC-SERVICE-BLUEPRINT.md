@@ -40,7 +40,8 @@ A new sidebar group, **The space**, after Engagement, in `src/components/Sidebar
 | Route | Page |
 | --- | --- |
 | `/blueprint` | Service blueprint: the diagram with zoom and pan, the decisions, who gets the space, and the outstanding list |
-| `/best-practices` | The six moments as the target state |
+| `/best-practices` | The six moments as compact columns, each opening a full view |
+| `/best-practices/[moment]` | One moment in full, with tabs to the others and previous and next |
 | `/roles` | Everyone with a role overview |
 | `/roles/[id]` | One person's overview |
 

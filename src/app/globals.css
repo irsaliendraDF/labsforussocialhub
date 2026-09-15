@@ -3115,3 +3115,211 @@ table.data td.num {
     gap: 4px;
   }
 }
+
+/* THE SPACE: best practices as columns, each opening a full view of its
+   moment at /best-practices/[moment]. Same bp- prefix. */
+
+.bp-cols {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+.bp-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--card-grad);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  padding: 12px 13px 14px;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+.bp-col:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.bp-col:focus-within {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+.bp-col-num {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.bp-col-title {
+  font-size: 19px;
+  margin-top: -6px;
+}
+.bp-col-title a {
+  text-decoration: none;
+  outline: none;
+}
+.bp-col-title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+}
+.bp-col-gate {
+  border-radius: 10px;
+  padding: 7px 9px;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.bp-col-gate.waiting {
+  background: #fff3ec;
+  border: 1px solid #f6cdb8;
+  color: #7a3208;
+}
+.bp-col-gate.decided {
+  background: #eef6ea;
+  border: 1px solid #cfe3c3;
+  color: #1f4a10;
+}
+.bp-col-chip {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.bp-col-gate.waiting .bp-col-chip {
+  color: #c4460c;
+}
+.bp-col-gate.decided .bp-col-chip {
+  color: var(--green);
+}
+.bp-col-gatetext,
+.bp-col-band dd {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bp-col-gatetext {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.bp-col-bands {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bp-col-band dt {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.bp-col-band dd {
+  margin: 1px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+.bp-col-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: 1px;
+}
+.bp-col-go {
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.bp-moment-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.bp-moment-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--muted);
+}
+.bp-moment-tab:hover,
+.bp-moment-tab[aria-current="page"] {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.bp-moment-tab[aria-current="page"] {
+  background: #fff;
+}
+.bp-moment-tab-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+}
+.bp-moment-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+.bp-moment-nav a {
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+.bp-moment-nav a:hover {
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 1320px) {
+  .bp-cols {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .bp-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* On a phone the columns become a row to swipe through, so the page stays
+   about one column tall instead of six stacked. */
+@media (max-width: 520px) {
+  .bp-cols {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+  }
+  .bp-col {
+    scroll-snap-align: start;
+  }
+  .bp-col:hover {
+    transform: none;
+  }
+}
