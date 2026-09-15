@@ -69,6 +69,14 @@ const I = {
       <path d="M9.5 4v16" />
     </svg>
   ),
+  practices: (
+    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m4 6.5 1.6 1.6L8.5 5" />
+      <path d="m4 12.5 1.6 1.6 2.9-3.1" />
+      <path d="m4 18.5 1.6 1.6 2.9-3.1" />
+      <path d="M11.5 6.5H20M11.5 12.5H20M11.5 18.5H20" />
+    </svg>
+  ),
 };
 
 const GROUPS: Group[] = [
@@ -100,8 +108,9 @@ const GROUPS: Group[] = [
   {
     label: "The space",
     items: [
-      // Best practices and Roles join this group in the next two stages.
+      // Roles joins this group in the next stage.
       { href: "/blueprint", label: "Service blueprint", icon: I.blueprint },
+      { href: "/best-practices", label: "Best practices", icon: I.practices },
     ],
   },
 ];

@@ -401,3 +401,91 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
     ],
   },
 ];
+
+/**
+ * How a visit should run once everything is in place, for each moment and
+ * each layer, plus what that moment is still waiting on. `**` marks a run of
+ * bold text inside a sentence.
+ */
+export type Practice = { layer: LayerId; where?: Where; text: string };
+
+export type BestPractice = {
+  moment: MomentId;
+  bands: Practice[];
+  gate: { kind: "waiting" | "decided"; label: string; text: string };
+};
+
+export const BEST_PRACTICE: BestPractice[] = [
+  {
+    moment: "reach",
+    bands: [
+      { layer: "physical", text: "The brochure sits where people can pick it up, the window says what the space is, and an event held in the space brings people through the door who were not looking for it." },
+      { layer: "user", text: "Hears about the space: a post in their feed, something through NSCAD, a poster, or a friend who books it every Thursday." },
+      { layer: "digital", where: "social_hub", text: "Two or three posts a week go out on the morning send, put together by somebody on the team. Every caption invites people into Lab for Us or points at **labforus.ca**, so there is one door and everything points at it." },
+      { layer: "inperson", text: "Nothing yet. Nobody from the team is involved at this moment." },
+      { layer: "backstage", where: "social_hub", text: "Whoever is posting opens the calendar, picks a template by pillar, edits it in Canva, and marks it done. Nobody starts from a blank page." },
+      { layer: "support", where: "social_hub", text: "The hub publishes to Instagram and LinkedIn directly, and the finished design attaches itself to the post." },
+    ],
+    gate: { kind: "waiting", label: "Waiting on", text: "the Facebook Page, then the Meta and LinkedIn approvals. Until those land, posts are planned in the hub and published by hand." },
+  },
+  {
+    moment: "signup",
+    bands: [
+      { layer: "physical", text: "One QR code, the same one on every slide and every printed piece. A staff member can also just point somebody at the website, which is the same route through another door." },
+      { layer: "user", text: "Taps the link or scans the code and makes an account. Once approved, they can borrow." },
+      { layer: "digital", where: "digital_library", text: "A short guided walkthrough runs on first login: the dashboard, the four things you can do, your bookings, booking the studio, browsing inventory, the suggestion box. **This is built.**" },
+      { layer: "inperson", where: "in_person", text: "At an activation or a first visit, somebody sits with them and watches them do it, so any friction is seen rather than reported. Irene writes this process down." },
+      { layer: "backstage", where: "digital_library", text: "The new member goes onto the newsletter list and waits for approval. The team sees them arrive, so a first timer is recognised as one when they walk in rather than treated as a regular." },
+      { layer: "support", where: "digital_library", text: "**Approval comes before borrowing.** The policies and terms are accepted at signup, and the community agreement covers how borrowed things are treated." },
+    ],
+    gate: { kind: "decided", label: "Decided 14 September", text: "sign up, then approval, then borrowing, with the newsletter and the terms at signup. Still to name: who approves." },
+  },
+  {
+    moment: "book",
+    bands: [
+      { layer: "physical", text: "Nothing. Booking happens online and there is no physical step at this moment, which is the point of having a booking system at all." },
+      { layer: "user", text: "Picks a table or the studio, adds the items they need, says what they are making, and chooses whether they are working here, taking things home, or both." },
+      { layer: "digital", where: "digital_library", text: "Quantities show on every item, and the screen says plainly that a single table is shared space. **Every booking detail is captured so an admin can collect the items** before the person arrives." },
+      { layer: "inperson", text: "Nothing in the room. Booking happens entirely on a screen, which is the point of having one." },
+      { layer: "backstage", where: "digital_library", text: "The booking lands with Anissa at one InACTS library inbox. The room is confirmed free, the items confirmed available, and the event type tells her what the group will need." },
+      { layer: "support", where: "digital_library", text: "Groups that come every week book once and get a reminder, rather than filling the same form fifty times a year." },
+    ],
+    gate: { kind: "waiting", label: "Waiting on", text: "the booking inbox address, plus the three booking types, the basket, recurring bookings and the weekly printable list, all in build." },
+  },
+  {
+    moment: "arrive",
+    bands: [
+      { layer: "physical", text: "The door and who gets through it, the kids area, the pocket gallery, and the rules poster where a new person can actually read it. **When Anissa is not there, NSCAD security has been told.**" },
+      { layer: "user", text: "Shows up at Lab for Us on time, for the booking they made. Nobody asks them to explain it, because it is already known." },
+      { layer: "digital", where: "digital_library", text: "A **check in** on arrival walks them through the arrival steps and the security details, so the same things get covered every time and nobody has to remember them. New, and it needs scoping with Paul." },
+      { layer: "inperson", where: "in_person", text: "They are greeted, matched to their booking, and shown their items. A first timer gets the thirty second version of how the space works." },
+      { layer: "backstage", where: "digital_library", text: "The items were packed the day before and labelled with the booking reference, from the week’s printed list. Working a day ahead is the smallest habit here and the one that makes a visit feel run." },
+      { layer: "support", where: "digital_library", text: "The booking is visible in the admin view with the items listed on the card, not buried in an email." },
+    ],
+    gate: { kind: "decided", label: "Decided 14 September", text: "Anissa or Diane by day, partners on their own days, and NSCAD security told after hours. The greeting and the check in now go into the extended SOP." },
+  },
+  {
+    moment: "borrow",
+    bands: [
+      { layer: "physical", text: "Every item and every piece of furniture carries a QR code and a **Property of Lab for Us** label." },
+      { layer: "user", text: "Gets the item, works, and leaves with whatever they are allowed to take. They know when it is due back because somebody said it out loud." },
+      { layer: "digital", text: "No screen needed. Their basket is made up on site with everything in it, ready to use here or take home." },
+      { layer: "inperson", where: "in_person", text: "Somebody from the team hands over the items and goes over the terms of borrowing. **The return date is already on the booking**, so this is a conversation rather than a negotiation." },
+      { layer: "backstage", where: "digital_library", text: "The borrow record already exists, because the user created it when they booked. What happens here is **reviewing new borrowing requests**. Where a session is documented, the observer and creator captures are logged and named to the pattern." },
+      { layer: "support", where: "digital_library", text: "The admin view shows what may leave the building and what stays, and the borrow record tracks the object rather than the visit." },
+    ],
+    gate: { kind: "waiting", label: "Waiting on", text: "item level check in and out on the admin side, so the team knows what left the building. The SOP already covers the borrow loop for workshops and is being extended to cover everyone." },
+  },
+  {
+    moment: "return",
+    bands: [
+      { layer: "physical", text: "The thing they made, and the pocket gallery wall it might end up on." },
+      { layer: "user", text: "Brings the item back and shares what they made. Returning and sharing are one action with one expectation: photos and videos of the creation come back to the space. Being asked is what makes that happen, and most people say yes when somebody asks." },
+      { layer: "digital", where: "digital_library", text: "They upload what they made to their own profile, with a reflection on the creation and a testimonial on the experience. New, and it needs scoping with Paul." },
+      { layer: "inperson", where: "in_person", text: "Somebody checks everything came back and flags what is running low or needs replacing. They encourage a reflection, and ask whether the person wants help to photograph or film what they made." },
+      { layer: "backstage", where: "digital_library", text: "The record closes with what the item actually produced attached to it, and anything overdue is chased on a known rhythm rather than when somebody happens to notice." },
+      { layer: "support", where: "social_hub", text: "The photo moves to the content calendar, which is where the next maker spotlight comes from. That is the loop closing." },
+    ],
+    gate: { kind: "waiting", label: "Waiting on", text: "a branding strategy for the space from Chido, which decides who moves a photo from the room to the calendar. The return conversation and the overdue rhythm go into the extended SOP meanwhile." },
+  },
+];
