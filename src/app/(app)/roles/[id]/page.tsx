@@ -48,6 +48,42 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   const waitingGates = BEST_PRACTICE.filter((b) => starred.has(b.moment) && b.gate.kind === "waiting");
   const blocked = items.filter((it) => /^(Behind|Waiting)/.test(it.status));
 
+  // The list leads the page when there is one, so the work comes first. An empty
+  // list would only open the page with a "nothing here" line, so it stays last.
+  const listFirst = items.length > 0;
+  const listSection = (
+    <section className="bp-section">
+      <h2 className="bp-h2">On {first}’s list</h2>
+      {items.length > 0 ? (
+        <div className="tablewrap">
+          <table className="bp-table" style={{ minWidth: 0 }}>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((it) => (
+                <tr key={it.title}>
+                  <td className="bp-item">
+                    {it.title}
+                    <small>{it.detail}</small>
+                  </td>
+                  <td>
+                    <span className={BADGE[it.tone]}>{it.status}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="note">Nothing on the open list for {first}.</p>
+      )}
+    </section>
+  );
+
   return (
     <>
       <Link href="/roles" className="bp-back">
@@ -68,6 +104,8 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
         )}
         <p>{person.context}</p>
       </div>
+
+      {listFirst && listSection}
 
       <section className="bp-section">
         <h2 className="bp-h2">What matters most for {first}</h2>
@@ -142,36 +180,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
         )}
       </section>
 
-      <section className="bp-section">
-        <h2 className="bp-h2">On {first}’s list</h2>
-        {items.length > 0 ? (
-          <div className="tablewrap">
-            <table className="bp-table" style={{ minWidth: 0 }}>
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((it) => (
-                  <tr key={it.title}>
-                    <td className="bp-item">
-                      {it.title}
-                      <small>{it.detail}</small>
-                    </td>
-                    <td>
-                      <span className={BADGE[it.tone]}>{it.status}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p className="note">Nothing on the open list for {first}.</p>
-        )}
-      </section>
+      {!listFirst && listSection}
     </>
   );
 }
