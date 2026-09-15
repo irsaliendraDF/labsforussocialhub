@@ -489,3 +489,49 @@ export const BEST_PRACTICE: BestPractice[] = [
     gate: { kind: "waiting", label: "Waiting on", text: "a branding strategy for the space from Chido, which decides who moves a photo from the room to the calendar. The return conversation and the overdue rhythm go into the extended SOP meanwhile." },
   },
 ];
+
+/** Layer names by id, for pages that list steps outside the diagram. */
+export const LAYER_LABEL = Object.fromEntries(LAYERS.map((l) => [l.id, l.label])) as Record<LayerId, string>;
+
+/**
+ * Role overviews. A person's steps and open items are not listed here: they
+ * are read from `owners` on STEPS and OUTSTANDING, so an overview can never
+ * disagree with the blueprint. A `null` role or an empty priorities list is a
+ * slot still to fill, and the page shows it as one.
+ */
+export type Person = {
+  id: Owner;
+  name: string;
+  role: string | null;
+  context: string;
+  priorities: string[];
+};
+
+export const PEOPLE: Person[] = [
+  {
+    id: "anissa",
+    name: "Anissa Peralta",
+    role: "Main operations",
+    context: "In the space regularly, and the brand and visual identity work too.",
+    priorities: [
+      "Create the Facebook Page and link it to @labforus. Every other social item waits behind this one.",
+      "Receive each booking, pack the items the day before, and label them with the booking reference.",
+      "Check people in and out of the space. After hours, NSCAD security is told instead.",
+      "Write the content for the security and access form.",
+    ],
+  },
+  {
+    id: "kirsty",
+    name: "Kirsty",
+    role: "Workshops and engagement",
+    context: "Workshops and engagement are not one of the six moments of a visit, so none of this work is on the blueprint yet.",
+    priorities: [],
+  },
+  {
+    id: "diane",
+    name: "Diane",
+    role: null,
+    context: "Covers the room by day when she is in.",
+    priorities: [],
+  },
+];

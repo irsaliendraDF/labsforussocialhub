@@ -77,9 +77,25 @@ const I = {
       <path d="M11.5 6.5H20M11.5 12.5H20M11.5 18.5H20" />
     </svg>
   ),
+  roles: (
+    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3.5 19.5c0-3.4 2.5-5.4 5.5-5.4s5.5 2 5.5 5.4" />
+      <circle cx="17" cy="9" r="2.6" />
+      <path d="M15.8 14.3c.4-.1.8-.1 1.2-.1 2.4 0 4.3 1.7 4.3 4.6" />
+    </svg>
+  ),
 };
 
 const GROUPS: Group[] = [
+  {
+    label: "The space",
+    items: [
+      { href: "/blueprint", label: "Service blueprint", icon: I.blueprint },
+      { href: "/best-practices", label: "Best practices", icon: I.practices },
+      { href: "/roles", label: "Roles", icon: I.roles },
+    ],
+  },
   {
     label: "Strategy",
     items: [
@@ -105,14 +121,6 @@ const GROUPS: Group[] = [
       { href: "/analytics", label: "Analytics", icon: I.analytics },
     ],
   },
-  {
-    label: "The space",
-    items: [
-      // Roles joins this group in the next stage.
-      { href: "/blueprint", label: "Service blueprint", icon: I.blueprint },
-      { href: "/best-practices", label: "Best practices", icon: I.practices },
-    ],
-  },
 ];
 
 export default function Sidebar() {
@@ -131,7 +139,12 @@ export default function Sidebar() {
               key={it.href}
               href={it.href}
               className="nav-row"
-              aria-current={pathname === it.href ? "page" : undefined}
+              aria-current={
+                pathname === it.href ||
+                (it.href !== "/" && pathname.startsWith(`${it.href}/`))
+                  ? "page"
+                  : undefined
+              }
             >
               {it.icon}
               {it.label}

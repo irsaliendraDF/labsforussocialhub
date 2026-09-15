@@ -1,35 +1,8 @@
-import { Fragment } from "react";
 import Link from "next/link";
-import {
-  BEST_PRACTICE,
-  LAYERS,
-  MOMENTS,
-  type LayerId,
-  type Where,
-} from "@/lib/blueprint";
+import { MOMENT_COLOR, Rich, WherePill } from "@/components/BlueprintBits";
+import { BEST_PRACTICE, LAYER_LABEL, MOMENTS } from "@/lib/blueprint";
 
 export const metadata = { title: "Best practices · Lab for Us" };
-
-const MOMENT_COLOR = ["#f46129", "#edb919", "#2a6a12", "#5ce1e6", "#9191ea", "#db385a"];
-
-const LAYER_LABEL = Object.fromEntries(LAYERS.map((l) => [l.id, l.label])) as Record<LayerId, string>;
-
-const PILL: Partial<Record<Where, { label: string; color: string }>> = {
-  in_person: { label: "In person", color: "#2a6a12" },
-  digital_library: { label: "Digital Library", color: "#2b29e6" },
-  social_hub: { label: "Social Hub", color: "#0f8f97" },
-};
-
-/** Renders the `**bold**` runs the data file uses inside a sentence. */
-function Rich({ text }: { text: string }) {
-  return (
-    <>
-      {text.split("**").map((part, i) =>
-        i % 2 ? <b key={i}>{part}</b> : <Fragment key={i}>{part}</Fragment>,
-      )}
-    </>
-  );
-}
 
 export default function BestPracticesPage() {
   return (
@@ -64,20 +37,15 @@ export default function BestPracticesPage() {
               </div>
 
               <dl className="bp-bands">
-                {bp.bands.map((b) => {
-                  const pill = b.where ? PILL[b.where] : undefined;
-                  return (
-                    <div className="bp-band" key={b.layer}>
-                      <dt>{LAYER_LABEL[b.layer]}</dt>
-                      <dd>
-                        {pill && (
-                          <span className="bp-pill" style={{ color: pill.color }}>{pill.label}</span>
-                        )}
-                        <Rich text={b.text} />
-                      </dd>
-                    </div>
-                  );
-                })}
+                {bp.bands.map((b) => (
+                  <div className="bp-band" key={b.layer}>
+                    <dt>{LAYER_LABEL[b.layer]}</dt>
+                    <dd>
+                      <WherePill where={b.where} />
+                      <Rich text={b.text} />
+                    </dd>
+                  </div>
+                ))}
               </dl>
 
               <div className={`bp-gate ${bp.gate.kind}`}>
