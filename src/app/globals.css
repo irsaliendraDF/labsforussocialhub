@@ -2528,3 +2528,353 @@ table.data td.num {
   background: #fff;
   padding: 8px 6px;
 }
+
+/* ============================================================
+   THE SPACE: service blueprint. Every class is prefixed bp- so
+   nothing here reaches an existing page.
+   ============================================================ */
+
+.bp-section {
+  margin-top: 34px;
+}
+.bp-h2 {
+  font-size: clamp(21px, 2.4vw, 27px);
+  margin-bottom: 10px;
+}
+.bp-lede {
+  color: var(--muted);
+  max-width: 72ch;
+  font-size: 15px;
+  margin: -2px 0 14px;
+}
+
+.bp-layers {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+.bp-layer {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 4px solid currentColor;
+  border-radius: 0 0 14px 14px;
+  padding: 11px 12px 13px;
+}
+.bp-layer-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.25;
+}
+.bp-layer-name svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+.bp-layer p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.bp-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.bp-key-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 5px 12px 5px 9px;
+  background: #fff;
+}
+.bp-sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: currentColor;
+  flex: none;
+}
+.bp-star {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+
+.bp-lines {
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.bp-lines b {
+  color: var(--ink);
+}
+
+.bp-frame {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fffdf7;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.bp-zoombar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--cream);
+}
+.bp-zoombar .btn.sm {
+  padding: 6px 14px;
+}
+.bp-zlevel {
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 48px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.bp-zhint {
+  margin-left: auto;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.bp-scroller {
+  overflow: auto;
+  max-height: 78vh;
+  padding: 10px;
+  cursor: grab;
+  overscroll-behavior: contain;
+}
+.bp-scroller.grabbing {
+  cursor: grabbing;
+}
+.bp-scroller svg {
+  display: block;
+  height: auto;
+}
+.bp-caption {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 12px 4px 0;
+  max-width: 96ch;
+}
+.bp-caption b {
+  color: var(--ink);
+}
+
+.bp-decisions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bp-decision {
+  border-left: 6px solid #e04e10;
+}
+.bp-decision.settled {
+  border-left-color: var(--green);
+}
+.bp-dhead {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.bp-dnum {
+  font-weight: 700;
+  font-size: 13px;
+  color: #e04e10;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 1px 10px;
+  flex: none;
+  margin-top: 2px;
+}
+.bp-decision.settled .bp-dnum {
+  color: var(--green);
+}
+.bp-dq {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.25;
+}
+.bp-dopts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.bp-dopt {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 11px 14px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.bp-dopt .k {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.bp-dopt.done .k {
+  color: var(--green);
+}
+.bp-dopt.open {
+  background: #fff3ec;
+  border-color: #f6cdb8;
+}
+.bp-dopt.open .k {
+  color: #c4460c;
+}
+
+.bp-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bp-tier {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  align-items: start;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.bp-tn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--amber);
+  color: var(--amber);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bp-mandate {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  color: var(--muted);
+}
+.bp-mandate b {
+  color: var(--ink);
+}
+
+.bp-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.bp-table th {
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 12px 9px 0;
+  border-bottom: 2px solid var(--ink);
+}
+.bp-table td {
+  padding: 11px 12px 11px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.bp-table .bp-group td {
+  border-bottom: 0;
+  padding: 24px 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.bp-item {
+  font-weight: 600;
+}
+.bp-item small {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 2px;
+}
+.bp-where {
+  white-space: nowrap;
+  font-size: 13px;
+  color: var(--muted);
+}
+.bp-who {
+  min-width: 110px;
+}
+.bp-owner {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 600;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 1px 9px;
+  margin: 0 4px 3px 0;
+  white-space: nowrap;
+  color: var(--muted);
+}
+.bp-owner.irene {
+  color: #2b29e6;
+}
+.bp-owner.paul {
+  color: #c72b4d;
+}
+.bp-owner.anissa {
+  color: #5350c4;
+}
+.bp-owner.april {
+  color: #2a6a12;
+}
+.bp-owner.shakara {
+  color: #9b7605;
+}
+
+@media (max-width: 1200px) {
+  .bp-layers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 620px) {
+  .bp-layers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bp-zhint {
+    display: none;
+  }
+}

@@ -62,6 +62,13 @@ const I = {
       <path d="M8 16v-4M12.5 16V8M17 16v-6" />
     </svg>
   ),
+  blueprint: (
+    <svg className="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="16" rx="3" />
+      <path d="M3 9.5h18M3 14.5h18" strokeDasharray="2 2.5" />
+      <path d="M9.5 4v16" />
+    </svg>
+  ),
 };
 
 const GROUPS: Group[] = [
@@ -88,6 +95,13 @@ const GROUPS: Group[] = [
       { href: "/engagement", label: "Replies", icon: I.engagement },
       // The quarterly report lives inside Analytics, not as its own tab.
       { href: "/analytics", label: "Analytics", icon: I.analytics },
+    ],
+  },
+  {
+    label: "The space",
+    items: [
+      // Best practices and Roles join this group in the next two stages.
+      { href: "/blueprint", label: "Service blueprint", icon: I.blueprint },
     ],
   },
 ];
