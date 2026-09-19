@@ -226,9 +226,9 @@ export const STEPS: Step[] = [
   { moment: "book", layer: "support", where: "digital_library", status: "built",
     title: "Booking engine", lines: ["Adding event type, a weekly", "printable list, item locations"],
     tag: "BUILT, REFINEMENTS WITH PAUL", tone: "built", owners: ["paul"] },
-  { moment: "arrive", layer: "support", where: "digital_library", status: "open",
-    title: "Notification routing", lines: ["After hours goes to NSCAD", "security, CRC chairs exempt"],
-    tag: "PAUL, ONCE THE INBOX IS PICKED", tone: "open", star: true, owners: ["paul"] },
+  { moment: "arrive", layer: "support", where: "in_person", status: "to_write",
+    title: "Anissa tells NSCAD security", lines: ["about after hours bookings.", "CRC chairs exempt"],
+    tag: "ANISSA, AFTER HOURS", tone: "anissa", owners: ["anissa"] },
   { moment: "borrow", layer: "support", where: "digital_library", status: "built",
     title: "Inventory and QR codes", lines: ["Item level check in and", "out, plus off site filter"],
     tag: "IRENE AND PAUL", tone: "paul", owners: ["irene", "paul"] },
@@ -300,7 +300,7 @@ export const DECISIONS: Decision[] = [
     settled: true,
     parts: [
       { kind: "done", label: "Anissa is there", text: "She shows them their booking, checks them in, and checks them out." },
-      { kind: "done", label: "Anissa is not there", text: "Usually an evening. Every after hours booking notifies NSCAD security, even for groups the building knows. CRC chairs are the only exception." },
+      { kind: "done", label: "Anissa is not there", text: "Usually an evening. Anissa tells NSCAD security about every after hours booking, even for groups the building knows. CRC chairs are the only exception." },
       { kind: "note", label: "Alongside it", text: "A security document and instructions are posted, with a checklist for each group by the type of event booked." },
     ],
   },
@@ -354,10 +354,10 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
     items: [
       { title: "Put the signup approval step back", detail: "It was removed in June so people could join without waiting", where: "digital_library", owners: ["paul"], status: "To build", tone: "doing" },
       { title: "Event type, a weekly printable bookings list, and item locations", detail: "So Anissa can pack each booking the day before and label it with the booking reference", where: "digital_library", owners: ["paul"], status: "To build", tone: "doing" },
-      { title: "After hours notifications to NSCAD security", detail: "Every booking without Anissa there, CRC chairs excepted", where: "digital_library", owners: ["paul"], status: "To build", tone: "doing" },
+      { title: "Tell NSCAD security about after hours bookings", detail: "Every booking without Anissa there, CRC chairs excepted. Anissa sends it, so it is not a platform build.", where: "in_person", owners: ["anissa"], status: "To set up", tone: "open" },
       { title: "Update the community agreement", detail: "How borrowed things are treated", where: "in_person", owners: ["to_name"], status: "Open", tone: "open" },
       { title: "Security document, instructions, and a checklist for each group", detail: "By the type of event booked", where: "in_person", owners: ["to_name"], status: "Open", tone: "open" },
-      { title: "Clear out the extra accounts", detail: "Two Google, one Proton and two Microsoft", where: "digital_library", owners: ["to_name"], status: "Open", tone: "open" },
+      { title: "Clear out the extra accounts", detail: "Two Google, one Proton and two Microsoft", where: "digital_library", owners: ["irene"], status: "Open", tone: "open" },
     ],
   },
   {
@@ -516,7 +516,7 @@ export const PEOPLE: Person[] = [
     priorities: [
       "Create the Facebook Page and link it to @labforus. Every other social item waits behind this one.",
       "Receive each booking, pack the items the day before, and label them with the booking reference.",
-      "Check people in and out of the space. After hours, NSCAD security is told instead.",
+      "Check people in and out of the space. After hours, tell NSCAD security instead.",
       "Write the content for the security and access form.",
     ],
   },
