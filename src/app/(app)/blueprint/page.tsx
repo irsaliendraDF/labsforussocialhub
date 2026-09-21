@@ -8,6 +8,7 @@ import {
   LAYERS,
   LINES,
   MANDATE,
+  MOMENTS,
   OUTSTANDING,
   OWNER_NAMES,
   STEPS,
@@ -64,7 +65,10 @@ function Star() {
 
 export default function BlueprintPage() {
   const stars = STEPS.filter((s) => s.star);
-  const nearInternal = stars.filter((s) => s.layer === "backstage" || s.layer === "support").length;
+  /** The moments the open decisions sit in, so the sentence below cannot go stale. */
+  const starMoments = [...new Set(stars.map((s) => s.moment))].map(
+    (id) => MOMENTS.find((m) => m.id === id)?.label ?? id,
+  );
   const settled = DECISIONS.filter((d) => d.settled).length;
 
   return (
@@ -122,12 +126,14 @@ export default function BlueprintPage() {
                 <>
                   {" "}
                   <b>
-                    {cap(word(nearInternal))} of the {word(stars.length)} orange
-                    stars sit either side of this line
+                    {cap(word(stars.length))} orange{" "}
+                    {stars.length === 1 ? "star is" : "stars are"} still open
                   </b>
-                  , and they are the same problem repeating: nothing is broken
-                  in the software, and a signal leaves it with nobody named to
-                  receive it.
+                  {starMoments.length === 1
+                    ? `, ${stars.length === 1 ? "in" : stars.length === 2 ? "both in" : "all in"} ${starMoments[0]}`
+                    : `, spread across ${word(starMoments.length)} moments`}
+                  . Nothing is broken in the software at those steps: what is
+                  missing is a person named to pick the work up.
                 </>
               )}
             </div>
@@ -142,14 +148,14 @@ export default function BlueprintPage() {
           {cap(word(settled))} of the {word(DECISIONS.length)} decisions are
           settled outright.{" "}
           <b>
-            What is left is small and specific: which inbox receives a booking,
-            who approves a new member, and who moves a photo from the room to
-            the calendar
+            Bookings and approvals both land at team@inacts.ca, with Anissa
+            approving, and everything borrowed is used in the space
           </b>
-          , which waits on a branding strategy for the space. The software’s
-          front half is built, with two changes coming from Paul: the approval
-          step goes back into signup, and bookings gain an event type and a
-          weekly printable list.
+          . What is left sits at the end of a visit: who moves a photo from the
+          room to the calendar, which waits on a branding strategy for the
+          space. The software’s front half is built, with changes coming from
+          Paul: the approval step goes back into signup, and bookings gain an
+          event type and a weekly printable list.
         </p>
       </section>
 
