@@ -338,7 +338,7 @@ export const ACCESS_TIERS = [
 
 export const MANDATE = {
   lead: "A programmatic space, not an institutional one.",
-  text: "It is for research and community engagement, and clubs and societies are welcome. It is not a room for holding a class. **It is shared while it is booked**, so nothing confidential belongs here, whoever booked it.",
+  text: "InACTS houses two of NSCAD's Canada Research Chairs and sits at 1871 Granville, where the university meets communities it has historically left out. **An event here needs a clear community or research purpose that reaches people outside the university**: making knowledge, sharing skills and training, or sharing findings. Work on what NSCAD students are up against, housing, food, mental wellbeing, belongs here too. It is not a room for holding a class. **It is shared while it is booked**, so nothing confidential belongs here, whoever booked it.",
 };
 
 export type Tone = "done" | "doing" | "open";
