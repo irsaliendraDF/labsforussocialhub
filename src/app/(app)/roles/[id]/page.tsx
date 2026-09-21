@@ -68,7 +68,9 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
                 <tr key={it.title}>
                   <td className="bp-item">
                     {it.title}
-                    <small>{it.detail}</small>
+                    <small>
+                      <Rich text={it.detail} />
+                    </small>
                   </td>
                   <td>
                     <span className={BADGE[it.tone]}>{it.status}</span>

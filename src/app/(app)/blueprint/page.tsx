@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import BlueprintDiagram from "@/components/BlueprintDiagram";
 import { LayerGlyph } from "@/components/BlueprintIcons";
+import { Rich } from "@/components/BlueprintBits";
 import {
   ACCESS_TIERS,
   DECIDED_ON,
@@ -177,7 +178,7 @@ export default function BlueprintPage() {
                 {d.parts.map((p) => (
                   <div key={p.label} className={`bp-dopt ${p.kind}`}>
                     <span className="k">{p.label}</span>
-                    {p.text}
+                    <Rich text={p.text} />
                   </div>
                 ))}
               </div>
@@ -194,13 +195,13 @@ export default function BlueprintPage() {
               <div className="bp-tier" key={t.n}>
                 <span className="bp-tn">{t.n}</span>
                 <div>
-                  <b>{t.who}</b> {t.text}
+                  <b>{t.who}</b> <Rich text={t.text} />
                 </div>
               </div>
             ))}
           </div>
           <p className="bp-mandate">
-            <b>{MANDATE.lead}</b> {MANDATE.text}
+            <b>{MANDATE.lead}</b> <Rich text={MANDATE.text} />
           </p>
         </div>
       </section>
@@ -231,7 +232,9 @@ export default function BlueprintPage() {
                     <tr key={it.title}>
                       <td className="bp-item">
                         {it.title}
-                        <small>{it.detail}</small>
+                        <small>
+                          <Rich text={it.detail} />
+                        </small>
                       </td>
                       <td className="bp-where">{WHERE_LABEL[it.where]}</td>
                       <td className="bp-who">

@@ -302,7 +302,8 @@ export const DECISIONS: Decision[] = [
     parts: [
       { kind: "done", label: "Anissa is there", text: "She shows them their booking, checks them in, and checks them out." },
       { kind: "done", label: "Anissa is not there", text: "Usually an evening. Anissa tells NSCAD security about every after hours booking, even for groups the building knows. CRC chairs are the only exception." },
-      { kind: "note", label: "Alongside it", text: "A security document and instructions are posted, with a checklist for each group by the type of event booked." },
+      { kind: "done", label: "How, 21 September", text: "**An email to fountainsecurity@nscad.ca with the guest list**, weekly and again whenever the list changes. No form: the NSCAD form tools do not reach the booking platform, so Anissa sends it from the week's bookings." },
+      { kind: "note", label: "Alongside it", text: "A security SOP and a closing checklist are posted in the space, and the guest list is a required field on every booking." },
     ],
   },
 ];
@@ -310,24 +311,34 @@ export const DECISIONS: Decision[] = [
 export const ACCESS_TIERS = [
   {
     n: 1,
-    who: "CRC chairs at NSCAD: Eddie, April and Josh.",
-    text: "First priority, any time, and a right of first refusal. Moving someone else’s booking for them gives 24 hours notice, or 30 days for a Thursday, under the MOU. Other NSCAD administration and faculty come just after.",
+    who: "CRC chairs at NSCAD: Eddie Furman, April and Josh.",
+    text: "First priority, any time, and a right of first refusal. Moving someone else’s booking for them gives **48 hours notice**, agreed 21 September. Their project managers and coordinators book on their behalf, which the booking says plainly.",
   },
   {
     n: 2,
+    who: "NSCAD faculty and administration.",
+    text: "Just after the CRC chairs, and still held to the mandate. An assistant often books for them, so the booking says who it is really for.",
+  },
+  {
+    n: 3,
     who: "Key partners.",
     text: "The Hub on Thursdays, and Mahnaz on Sundays during the day, booked until December. Without an MOU the space is closed in the evenings. It can open with notice if Anissa is going to be there.",
   },
   {
-    n: 3,
+    n: 4,
+    who: "Community VIPs, a short named list.",
+    text: "Can book after hours and are the one exception to nothing leaving the space. Robert is on it, and Ryan is the likely second.",
+  },
+  {
+    n: 5,
     who: "Everyone else, students and community.",
-    text: "Welcome 9 to 5 when staff are present.",
+    text: "Welcome 9 to 5 when staff are present. Everything they book is used in the space.",
   },
 ];
 
 export const MANDATE = {
   lead: "A programmatic space, not an institutional one.",
-  text: "It is for research and community engagement, and clubs and societies are welcome. It is not a room for holding a class.",
+  text: "It is for research and community engagement, and clubs and societies are welcome. It is not a room for holding a class. **It is shared while it is booked**, so nothing confidential belongs here, whoever booked it.",
 };
 
 export type Tone = "done" | "doing" | "open";
@@ -353,10 +364,13 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
     items: [
       { title: "Put the signup approval step back", detail: "It was removed in June so people could join without waiting", where: "digital_library", owners: ["paul"], status: "To build", tone: "doing" },
       { title: "Event type, a weekly printable bookings list, and item locations", detail: "So Anissa can pack each booking the day before and label it with the booking reference", where: "digital_library", owners: ["paul"], status: "To build", tone: "doing" },
-      { title: "Tell NSCAD security about after hours bookings", detail: "Every booking without Anissa there, CRC chairs excepted. Anissa sends it, so it is not a platform build.", where: "in_person", owners: ["anissa"], status: "To set up", tone: "open" },
+      { title: "Tell NSCAD security about after hours bookings", detail: "An email to fountainsecurity@nscad.ca carrying the guest list, weekly and again when the list changes. Regulars are not re-announced. Anissa sends it from the week's bookings, since no NSCAD form reaches the platform. Later, an agent can draft it for her to check and send.", where: "in_person", owners: ["anissa"], status: "To set up", tone: "open" },
       { title: "Update the community agreement", detail: "The version in the platform wins and the Drive copy follows it. Add borrowing and the objects, large group bookings, the shared table, and closing and security. It goes out at signup to be accepted.", where: "in_person", owners: ["irene"], status: "With Irene", tone: "doing" },
       { title: "Security document, instructions, and a checklist for each group", detail: "By the type of event booked", where: "in_person", owners: ["to_name"], status: "Open", tone: "open" },
       { title: "Clear out the extra accounts", detail: "Two Gmail accounts become one, kept for collaborators who cannot get a NSCAD account. Moving the Microsoft address is parked until a quieter time.", where: "digital_library", owners: ["irene"], status: "Open", tone: "open" },
+      { title: "Guest list on every booking, and who a CRC booking is really for", detail: "The guest list is a required field, and somebody booking alone puts their own name. A booking made by a project manager or an assistant says which CRC or administrator it is for.", where: "digital_library", owners: ["paul"], status: "New, to build", tone: "open" },
+      { title: "The security SOP and the closing checklist", detail: "How Anissa hands the room to security when she leaves: call them, wait, watch the door, the deadbolt and the gate. The closing checklist is laminated in the space: dishes washed and on the rack, microwave and spills cleaned, counters clear, garbage out, nothing left in the fridge past the booking.", where: "in_person", owners: ["irene"], status: "Drafting, shown next week", tone: "doing" },
+      { title: "A guest internet account for the space", detail: "Visitors cannot get online. NSCAD IT generates temporary accounts for conferences, so ask whether the space can have one.", where: "in_person", owners: ["irene"], status: "To ask NSCAD IT", tone: "open" },
       { title: "A list of members, and of anyone not welcome back", detail: "Held outside the platform, so Anissa can match a name at the door and say no when she needs to. It carries a way back for someone who repairs what they did.", where: "in_person", owners: ["irene", "anissa"], status: "New, to build", tone: "open" },
       { title: "Send the signup email from the team inbox", detail: "The welcome and the community guidelines go out from team@inacts.ca, not only from inside the platform, so they survive the platform changing. April builds it in Power Automate once Irene checks what Paul sends with.", where: "digital_library", owners: ["april", "irene"], status: "New, to build", tone: "open" },
       { title: "File management, starting in Google Drive", detail: "Templates live with templates and stay blank, filled in documents move out. Research files leave Google for Microsoft, branding stays in Google for the strategist, and the structure moves across once it is clean. April's and Anissa's naming conventions both come in.", where: "in_person", owners: ["irene"], status: "Underway", tone: "doing" },
@@ -446,7 +460,7 @@ export const BEST_PRACTICE: BestPractice[] = [
     moment: "book",
     bands: [
       { layer: "physical", text: "Nothing. Booking happens online and there is no physical step at this moment, which is the point of having a booking system at all." },
-      { layer: "user", text: "Picks a table or the studio, adds the items they need, and says what they are making. Everything booked is used in the space." },
+      { layer: "user", text: "Picks a table or the studio, adds the items they need, and says what they are making. **Everyone coming is named on the booking**, their own name included if they are on their own. Everything booked is used in the space." },
       { layer: "digital", where: "digital_library", text: "Quantities show on every item, and the screen says plainly that a single table is shared space. **Every booking detail is captured so an admin can collect the items** before the person arrives." },
       { layer: "inperson", text: "Nothing in the room. Booking happens entirely on a screen, which is the point of having one." },
       { layer: "backstage", where: "digital_library", text: "The booking lands with Anissa at **team@inacts.ca**. The room is confirmed free, the items confirmed available, and the event type tells her what the group will need." },
@@ -462,7 +476,7 @@ export const BEST_PRACTICE: BestPractice[] = [
       { layer: "digital", where: "digital_library", text: "A **check in** on arrival walks them through the arrival steps and the security details, so the same things get covered every time and nobody has to remember them. New, and it needs scoping with Paul." },
       { layer: "inperson", where: "in_person", text: "They are greeted, matched to their booking, and shown their items. A first timer gets the thirty second version of how the space works." },
       { layer: "backstage", where: "digital_library", text: "The items were packed the day before and labelled with the booking reference, from the week’s printed list. Working a day ahead is the smallest habit here and the one that makes a visit feel run." },
-      { layer: "support", where: "digital_library", text: "The booking is visible in the admin view with the items listed on the card, not buried in an email." },
+      { layer: "support", where: "digital_library", text: "The booking is visible in the admin view with the items listed on the card, not buried in an email. **Its guest list is what goes to security**, so the names are already there." },
     ],
     gate: { kind: "decided", label: "Decided 14 September", text: "Anissa or Diane by day, partners on their own days, and NSCAD security told after hours. The greeting and the check in now go into the extended SOP." },
   },
@@ -518,7 +532,7 @@ export const PEOPLE: Person[] = [
     priorities: [
       "Create the Facebook Page and link it to @labforus. Every other social item waits behind this one.",
       "Receive each booking at team@inacts.ca, approve new members there, pack the items the day before, and label them with the booking reference.",
-      "Check people in and out of the space. After hours, tell NSCAD security instead.",
+      "Check people in and out of the space. For after hours bookings, email the guest list to NSCAD security.",
       "Write the content for the security and access form.",
     ],
   },
