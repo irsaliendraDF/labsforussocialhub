@@ -259,7 +259,7 @@ export const DECISIONS: Decision[] = [
     question: "Which inbox receives a booking?",
     settled: true,
     parts: [
-      { kind: "done", label: "Decided 21 September", text: "**team@inacts.ca.** Bookings and approvals both land there, and Anissa already has access, so nothing depends on one person's phone." },
+      { kind: "done", label: "Decided 21 September", text: "**team@inacts.ca**, and it is the address for everything to do with the Digital Library, not bookings alone. Anissa already has access, so nothing depends on one person's phone." },
       { kind: "done", label: "Why not the NSCAD address", text: "**inacts@nscad.ca** authenticates through April's phone on a proxy account, and only NSCAD Computer Services can change that. Moving it is parked for a quieter time." },
       { kind: "note", label: "Alongside it", text: "The address Paul built for his own testing closes. Two Gmail accounts become one, kept for collaborators who cannot get a NSCAD account." },
     ],
@@ -356,6 +356,7 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
   {
     group: "Still to decide",
     items: [
+      { title: "How borrowing works for under 16s", detail: "Approval to enter is approval to borrow, and under 16 is the one split. What the split actually is has not been written. To ask April and Shakara next week, and the community guidelines say to talk to staff until it is.", where: "digital_library", owners: ["april", "shakara"], status: "To ask", tone: "open" },
       { title: "A branding strategy for the space", detail: "Decision 04. The posting cadence and who moves a photo to the calendar follow from it.", where: "social_hub", owners: ["chido"], status: "Not started", tone: "open" },
     ],
   },
