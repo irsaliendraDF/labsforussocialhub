@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { HUB_HOME, HUB_LABELS, HUBS, hubFromPath } from "@/lib/hubs";
 
 type Item = { href: string; label: string; icon: React.ReactNode };
 type Group = { label: string; items: Item[] };
@@ -87,7 +88,7 @@ const I = {
   ),
 };
 
-const GROUPS: Group[] = [
+const LABFORUS_GROUPS: Group[] = [
   {
     label: "The space",
     items: [
@@ -123,15 +124,68 @@ const GROUPS: Group[] = [
   },
 ];
 
+/* InACTS is the research side: the how and the why, where Lab for Us is the
+   what. Its pages land as shells and fill up in a later stage. */
+const INACTS_GROUPS: Group[] = [
+  {
+    label: "The institute",
+    items: [
+      { href: "/inacts", label: "Overview", icon: I.overview },
+      { href: "/inacts/people", label: "People", icon: I.roles },
+    ],
+  },
+  {
+    label: "The work",
+    items: [
+      { href: "/inacts/digital-library", label: "Digital Library", icon: I.blueprint },
+      { href: "/inacts/publishing", label: "Publishing", icon: I.templates },
+      { href: "/inacts/funding", label: "Funding", icon: I.analytics },
+    ],
+  },
+  {
+    label: "Content",
+    items: [{ href: "/inacts/calendar", label: "Content calendar", icon: I.calendar }],
+  },
+];
+
+const GROUPS_BY_HUB = {
+  labforus: LABFORUS_GROUPS,
+  inacts: INACTS_GROUPS,
+} as const;
+
 export default function Sidebar() {
   const pathname = usePathname();
+  const hub = hubFromPath(pathname);
 
   return (
     <nav className="sidebar" aria-label="Main">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="sidebar-logo" src="/brand/logo.webp" alt="Lab for Us" />
+      <div className="hub-switch" role="group" aria-label="Choose a hub">
+        {HUBS.map((h) => (
+          <Link
+            key={h}
+            href={HUB_HOME[h]}
+            className="hub-switch-row"
+            aria-current={h === hub ? "true" : undefined}
+          >
+            {HUB_LABELS[h]}
+          </Link>
+        ))}
+      </div>
 
-      {GROUPS.map((g) => (
+      {hub === "labforus" ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img className="sidebar-logo" src="/brand/logo.webp" alt="Lab for Us" />
+      ) : (
+        /* No InACTS logo has been found yet, so the name stands in for it. */
+        <div className="sidebar-wordmark">
+          <span className="sidebar-wordmark-name">InACTS</span>
+          <span className="sidebar-wordmark-full">
+            Institute for Art, Community &amp; Transdisciplinary Studies
+          </span>
+        </div>
+      )}
+
+      {GROUPS_BY_HUB[hub].map((g) => (
         <div className="nav-group" key={g.label}>
           <div className="nav-group-label">{g.label}</div>
           {g.items.map((it) => (
@@ -154,13 +208,15 @@ export default function Sidebar() {
       ))}
 
       <div className="nav-foot">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="nav-mascot"
-          src="/brand/mascot.webp"
-          alt=""
-          aria-hidden="true"
-        />
+        {hub === "labforus" ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            className="nav-mascot"
+            src="/brand/mascot.webp"
+            alt=""
+            aria-hidden="true"
+          />
+        ) : null}
         <div className="nav-user">
           Shared board, everyone sees the same live picture.
         </div>

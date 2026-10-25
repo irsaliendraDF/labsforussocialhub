@@ -3323,3 +3323,124 @@ table.data td.num {
     transform: none;
   }
 }
+
+/* ============================================================
+   TWO HUBS: the switch, and the InACTS treatment.
+   Lab for Us and InACTS are run by the same people, so they
+   share this shell. The switch sits at the top of the rail and
+   `data-hub` on the shell is what repaints the whole side.
+   ============================================================ */
+
+.hub-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 3px;
+  margin-bottom: 16px;
+  flex: none;
+}
+.hub-switch-row {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 11px;
+  border-radius: 9px;
+  transition: background 0.14s ease, color 0.14s ease;
+}
+.hub-switch-row:hover,
+.hub-switch-row:focus-visible {
+  color: var(--ink);
+  background: #f3ecdb;
+  outline: none;
+}
+/* The current hub is marked the way this rail already marks a current page.
+   A solid black pill is a hard edge in a warm, rounded system, so black is
+   kept for the InACTS side, where it is the point. */
+.hub-switch-row[aria-current="true"] {
+  background: #eaf3e2;
+  color: #1f5a0d;
+}
+
+/* No InACTS logo exists yet, so the name stands in for one. */
+.sidebar-wordmark {
+  flex: none;
+  text-align: center;
+  margin: 4px 0 22px;
+  padding: 0 6px;
+}
+.sidebar-wordmark-name {
+  display: block;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.sidebar-wordmark-full {
+  display: block;
+  margin-top: 5px;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+/* A page that is deliberately empty says so, rather than looking broken. */
+.hub-shell-note {
+  margin: 4px 0 0;
+  padding: 14px 16px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 14.5px;
+  max-width: 62ch;
+}
+
+/* InACTS is a research brand: black, white and one rule. Only the shared
+   shell tokens are repainted here. The palette tokens (orange, blue, gold
+   and the rest) are left alone, because the components that use them are
+   still Lab for Us ones and get decided when they go hub aware. */
+.shell[data-hub="inacts"] {
+  --cream: #ffffff;
+  --card: #ffffff;
+  --card-grad: #ffffff;
+  --line: #dcdcdc;
+  --ink: #121212;
+  --muted: #4a4a4a;
+  --amber: #767676;
+  --disp: var(--body);
+  --shadow: none;
+  --shadow-sm: none;
+  background: #ffffff;
+}
+.shell[data-hub="inacts"] .sidebar {
+  border-right: 1px solid var(--line);
+}
+.shell[data-hub="inacts"] .nav-row:hover,
+.shell[data-hub="inacts"] .nav-row:focus-visible {
+  background: #f2f2f2;
+}
+.shell[data-hub="inacts"] .nav-row[aria-current="page"] {
+  background: #ededed;
+  color: var(--ink);
+}
+.shell[data-hub="inacts"] .hub-switch-row:hover,
+.shell[data-hub="inacts"] .hub-switch-row:focus-visible {
+  background: #f2f2f2;
+}
+.shell[data-hub="inacts"] .hub-switch-row[aria-current="true"] {
+  background: var(--ink);
+  color: #ffffff;
+}
+.shell[data-hub="inacts"] .eyebrow {
+  box-shadow: none;
+  letter-spacing: 0.14em;
+}
+.shell[data-hub="inacts"] .page-head h1 {
+  letter-spacing: 0.01em;
+}
