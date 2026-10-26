@@ -2,6 +2,7 @@ import HowToSchedule from "@/components/HowToSchedule";
 import SchedulerBoard from "@/components/SchedulerBoard";
 import SetupBanner from "@/components/SetupBanner";
 import { getAdminClient } from "@/lib/supabase/server";
+import type { Hub } from "@/lib/hubs";
 import type { SocialAccount } from "@/lib/types";
 
 export const metadata = { title: "Scheduler · Lab for Us" };
@@ -11,20 +12,23 @@ export const dynamic = "force-dynamic";
  * Accounts are read with the service-role client and deliberately projected:
  * the token columns never leave the server.
  */
-async function loadAccounts(): Promise<SocialAccount[]> {
+async function loadAccounts(hub: Hub): Promise<SocialAccount[]> {
   const admin = getAdminClient();
   if (!admin) return [];
   const { data } = await admin
     .from("social_accounts")
     .select(
-      "id, platform, display_name, external_account_id, token_expires_at, connected_by, created_at",
+      "id, hub, platform, display_name, external_account_id, token_expires_at, connected_by, created_at",
     )
+    .eq("hub", hub)
     .order("created_at", { ascending: false });
   return (data ?? []) as SocialAccount[];
 }
 
 export default async function SchedulerPage() {
-  const accounts = await loadAccounts();
+  // This is the Lab for Us scheduler, so it only ever lists Lab for Us
+  // accounts. The InACTS side gets its own route and its own accounts.
+  const accounts = await loadAccounts("labforus");
 
   return (
     <>

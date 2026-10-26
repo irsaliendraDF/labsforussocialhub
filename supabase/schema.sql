@@ -23,6 +23,10 @@ create table if not exists templates (
 
 create table if not exists posts (
   id             uuid primary key default gen_random_uuid(),
+  -- Which hub this belongs to. Lab for Us and InACTS share this app and never
+  -- share content or accounts. On an existing database, run supabase/hub.sql.
+  hub            text not null default 'labforus'
+                 check (hub in ('labforus','inacts')),
   title          text not null,
   channel        text not null check (channel in ('Instagram','LinkedIn')),
   pillar         text not null,
@@ -50,6 +54,10 @@ create table if not exists posts (
 
 create table if not exists social_accounts (
   id                  uuid primary key default gen_random_uuid(),
+  -- The hub this account posts as. A post is only ever published through an
+  -- account carrying its own hub.
+  hub                 text not null default 'labforus'
+                      check (hub in ('labforus','inacts')),
   platform            text not null check (platform in ('Instagram','LinkedIn')),
   display_name        text,
   external_account_id text,
@@ -80,6 +88,11 @@ create table if not exists post_metrics (
 
 create index if not exists posts_post_date_idx      on posts (post_date);
 create index if not exists posts_publish_queue_idx  on posts (publish_status, scheduled_at);
+-- Both reads are per hub, so both indexes lead with it.
+create index if not exists posts_hub_date_idx       on posts (hub, post_date);
+create index if not exists posts_hub_queue_idx      on posts (hub, publish_status, scheduled_at);
+create index if not exists social_accounts_hub_platform_idx
+  on social_accounts (hub, platform, created_at desc);
 create index if not exists metrics_post_recent_idx  on post_metrics (post_id, captured_at desc);
 
 -- ---------- updated_at trigger ----------
@@ -189,6 +202,8 @@ alter table posts add column if not exists permission_recorded_at timestamptz;
 -- hand.
 create table if not exists engagement_log (
   id          uuid primary key default gen_random_uuid(),
+  hub         text not null default 'labforus'
+              check (hub in ('labforus','inacts')),
   platform    text not null check (platform in ('Instagram','LinkedIn')),
   kind        text not null default 'Comment'
               check (kind in ('Comment','DM','Mention','Tag','Review')),

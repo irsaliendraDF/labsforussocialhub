@@ -30,7 +30,7 @@ export async function runMetricsJob(): Promise<{
 
   const { data: accounts } = await admin
     .from("social_accounts")
-    .select("platform, access_token, external_account_id, created_at")
+    .select("hub, platform, access_token, external_account_id, created_at")
     .order("created_at", { ascending: false });
 
   const errors: string[] = [];
@@ -38,7 +38,12 @@ export async function runMetricsJob(): Promise<{
   let skipped = 0;
 
   for (const post of posts ?? []) {
-    const account = accounts?.find((a) => a.platform === post.channel);
+    // Same rule as publishing: a post's numbers are read through an account
+    // of its own hub, never another hub's token.
+    const postHub = post.hub ?? "labforus";
+    const account = accounts?.find(
+      (a) => a.platform === post.channel && (a.hub ?? "labforus") === postHub,
+    );
     const provider = getProvider(post.channel, {
       connected: Boolean(account),
     });

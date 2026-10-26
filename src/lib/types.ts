@@ -1,4 +1,5 @@
 import type { Channel, PublishStatus, Status } from "./content";
+import type { Hub } from "./hubs";
 
 export const PERMISSION_STATUSES = [
   "not_needed",
@@ -33,6 +34,7 @@ export type EngagementStatus = (typeof ENGAGEMENT_STATUSES)[number];
 
 export type EngagementEntry = {
   id: string;
+  hub?: Hub;
   platform: Channel;
   kind: EngagementKind;
   who: string | null;
@@ -47,6 +49,8 @@ export type EngagementEntry = {
 
 export type Post = {
   id: string;
+  /** Which hub owns it. Rows written before the two hubs read as Lab for Us. */
+  hub?: Hub;
   title: string;
   channel: Channel;
   pillar: string;
@@ -99,6 +103,8 @@ export type Pillar = {
 /** Tokens are never selected client-side, see the RLS notes in the schema. */
 export type SocialAccount = {
   id: string;
+  /** The hub this account posts as. */
+  hub?: Hub;
   platform: Channel;
   display_name: string | null;
   external_account_id: string | null;

@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { getBrowserClient } from "./supabase/client";
+import { hubFromPath } from "./hubs";
 import type { EngagementEntry } from "./types";
 
 const COLUMNS =
-  "id, platform, kind, who, summary, link, post_id, status, handled_by, handled_at, created_at";
+  "id, hub, platform, kind, who, summary, link, post_id, status, handled_by, handled_at, created_at";
 
 /**
  * The engagement log.
@@ -18,6 +20,8 @@ const COLUMNS =
  */
 export function useEngagement() {
   const supabase = getBrowserClient();
+  // One log per hub, read from the route the same way the board is.
+  const hub = hubFromPath(usePathname());
   const [entries, setEntries] = useState<EngagementEntry[]>([]);
   const [loading, setLoading] = useState(Boolean(supabase));
   const [error, setError] = useState<string | null>(null);
@@ -27,6 +31,7 @@ export function useEngagement() {
     const { data, error } = await supabase
       .from("engagement_log")
       .select(COLUMNS)
+      .eq("hub", hub)
       .order("created_at", { ascending: false });
     if (error) setError(error.message);
     else {
@@ -34,7 +39,7 @@ export function useEngagement() {
       setEntries((data ?? []) as EngagementEntry[]);
     }
     setLoading(false);
-  }, [supabase]);
+  }, [supabase, hub]);
 
   useEffect(() => {
     if (!supabase) return;
@@ -42,10 +47,15 @@ export function useEngagement() {
     void refresh();
 
     const channel = supabase
-      .channel("engagement-live")
+      .channel(`engagement-live-${hub}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "engagement_log" },
+        {
+          event: "*",
+          schema: "public",
+          table: "engagement_log",
+          filter: `hub=eq.${hub}`,
+        },
         (payload: RealtimePostgresChangesPayload<EngagementEntry>) => {
           setEntries((cur) => {
             if (payload.eventType === "DELETE") {
@@ -67,15 +77,19 @@ export function useEngagement() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [supabase, refresh]);
+  }, [supabase, refresh, hub]);
 
   const add = useCallback(
     async (entry: Partial<EngagementEntry>) => {
       if (!supabase) return;
-      const { error } = await supabase.from("engagement_log").insert(entry);
+      // Stamped on the way in, so an entry logged on the InACTS side cannot
+      // land in the Lab for Us log.
+      const { error } = await supabase
+        .from("engagement_log")
+        .insert({ ...entry, hub });
       if (error) setError(error.message);
     },
-    [supabase],
+    [supabase, hub],
   );
 
   const update = useCallback(

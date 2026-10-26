@@ -21,6 +21,8 @@ async function loadRows(): Promise<Row[]> {
       "id, title, channel, pillar, format, published_at, post_date, published_url, tracked_url, link_url",
     )
     .eq("publish_status", "published")
+    // Lab for Us numbers only. The InACTS side gets its own route.
+    .eq("hub", "labforus")
     .order("published_at", { ascending: false });
 
   if (!posts?.length) return [];

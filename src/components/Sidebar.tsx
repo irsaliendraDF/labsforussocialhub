@@ -137,14 +137,16 @@ const INACTS_GROUPS: Group[] = [
   {
     label: "The work",
     items: [
-      { href: "/inacts/digital-library", label: "Digital Library", icon: I.blueprint },
       { href: "/inacts/publishing", label: "Publishing", icon: I.templates },
       { href: "/inacts/funding", label: "Funding", icon: I.analytics },
     ],
   },
   {
     label: "Content",
-    items: [{ href: "/inacts/calendar", label: "Content calendar", icon: I.calendar }],
+    items: [
+      { href: "/inacts/calendar", label: "Content calendar", icon: I.calendar },
+      { href: "/inacts/scheduler", label: "Scheduler", icon: I.scheduler },
+    ],
   },
 ];
 
