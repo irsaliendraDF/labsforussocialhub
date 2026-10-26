@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { getBrowserClient } from "./supabase/client";
 import { launchRunAsPosts } from "./launchRun";
+import { inactsStarterAsPosts } from "./inactsStarter";
 import { hubFromPath } from "./hubs";
 import type { Post } from "./types";
 
@@ -75,13 +76,14 @@ export function usePosts(): PostsApi {
   const preview = !supabase;
   const hub = hubFromPath(usePathname());
 
-  // Without a database there is nothing to read, so preview mode shows the
-  // planned launch run. It makes the calendar legible before Supabase exists;
-  // edits are local to the tab and the banner says so. The launch run is Lab
-  // for Us work, so the InACTS board starts empty rather than borrowing it.
-  const [posts, setPosts] = useState<Post[]>(() =>
-    preview && hub === "labforus" ? launchRunAsPosts() : [],
-  );
+  // Without a database there is nothing to read, so preview mode shows each
+  // hub's own planned run: the Lab for Us launch, and the InACTS starter
+  // month. It makes both calendars legible before Supabase exists; edits are
+  // local to the tab and the banner says so.
+  const [posts, setPosts] = useState<Post[]>(() => {
+    if (!preview) return [];
+    return hub === "inacts" ? inactsStarterAsPosts() : launchRunAsPosts();
+  });
   const [loading, setLoading] = useState(!preview);
   const [error, setError] = useState<string | null>(null);
 

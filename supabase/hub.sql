@@ -15,6 +15,12 @@ alter table social_accounts
   add column if not exists hub text not null default 'labforus';
 alter table engagement_log
   add column if not exists hub text not null default 'labforus';
+-- Pillars and templates are keyed by name, which stays unique across both
+-- hubs, so each one only needs to say whose it is.
+alter table pillars
+  add column if not exists hub text not null default 'labforus';
+alter table templates
+  add column if not exists hub text not null default 'labforus';
 
 -- Constraints are added separately so re-running is harmless.
 do $$
@@ -29,6 +35,14 @@ begin
   end if;
   if not exists (select 1 from pg_constraint where conname = 'engagement_log_hub_check') then
     alter table engagement_log add constraint engagement_log_hub_check
+      check (hub in ('labforus','inacts'));
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'pillars_hub_check') then
+    alter table pillars add constraint pillars_hub_check
+      check (hub in ('labforus','inacts'));
+  end if;
+  if not exists (select 1 from pg_constraint where conname = 'templates_hub_check') then
+    alter table templates add constraint templates_hub_check
       check (hub in ('labforus','inacts'));
   end if;
 end $$;

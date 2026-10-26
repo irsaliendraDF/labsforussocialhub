@@ -14,31 +14,39 @@ import path from "node:path";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const SRC = path.join(ROOT, "src/lib/launchRun.ts");
 const OUT = path.join(ROOT, "supabase/seed_posts.sql");
+const INACTS_SRC = path.join(ROOT, "src/lib/inactsStarter.ts");
+const INACTS_OUT = path.join(ROOT, "supabase/seed_inacts_posts.sql");
 
-const ts = fs.readFileSync(SRC, "utf8");
-const start = ts.indexOf("export const LAUNCH_RUN: LaunchPost[] = ");
-if (start === -1) throw new Error("LAUNCH_RUN not found in launchRun.ts");
+/** Pulls one exported array literal out of a TypeScript file as JSON. */
+function readArray(file, decl) {
+  const ts = fs.readFileSync(file, "utf8");
+  const start = ts.indexOf(decl);
+  if (start === -1) throw new Error(`${decl} not found in ${file}`);
+  // Skip past the type annotation to the actual array literal.
+  const jsonStart = ts.indexOf("[", ts.indexOf("= [", start));
+  const jsonEnd = ts.indexOf("\n];", jsonStart);
+  if (jsonEnd === -1) throw new Error(`could not find the end of ${decl}`);
+  return JSON.parse(ts.slice(jsonStart, jsonEnd + 2));
+}
 
-// Skip past the `LaunchPost[]` type annotation to the actual array literal.
-const jsonStart = ts.indexOf("[", ts.indexOf("= [", start));
-const jsonEnd = ts.indexOf("\n];", jsonStart);
-if (jsonEnd === -1) throw new Error("could not find the end of LAUNCH_RUN");
-
-const posts = JSON.parse(ts.slice(jsonStart, jsonEnd + 2));
+const posts = readArray(SRC, "export const LAUNCH_RUN: LaunchPost[] = ");
 
 /** Postgres escaping: a single quote is doubled. */
 const q = (s) => `'${String(s).replace(/'/g, "''")}'`;
 
-const rows = posts
-  .map(
-    (p) => `  (${q(p.title)},
-   ${q(p.channel)}, ${q(p.pillar)}, ${q(p.format)}, ${q(p.template)},
+const rowsFor = (list, hub) =>
+  list
+    .map(
+      (p) => `  (${q(hub)}, ${q(p.title)},
+   ${q(p.channel)}, ${q(p.pillar)}, ${q(p.format)}, ${p.template ? q(p.template) : "NULL"},
    ${q(p.cta)}, ${q(p.owner)}, ${q(p.status)}, DATE ${q(p.post_date)},
    ${q(p.caption)},
    ${q(p.alt_text)},
    ${p.is_reshare}, ${q(p.permission_status)})`,
-  )
-  .join(",\n\n");
+    )
+    .join(",\n\n");
+
+const rows = rowsFor(posts, "labforus");
 
 const ig = posts.filter((p) => p.channel === "Instagram").length;
 const li = posts.filter((p) => p.channel === "LinkedIn").length;
@@ -64,16 +72,60 @@ const sql = `-- ============================================================
 -- ============================================================
 
 insert into posts
-  (title, channel, pillar, format, template, cta, owner, status, post_date,
+  (hub, title, channel, pillar, format, template, cta, owner, status, post_date,
    caption, alt_text, is_reshare, permission_status)
 select * from (values
 ${rows}
-) as seed(title, channel, pillar, format, template, cta, owner, status, post_date,
+) as seed(hub, title, channel, pillar, format, template, cta, owner, status, post_date,
           caption, alt_text, is_reshare, permission_status)
-where not exists (select 1 from posts);
+where not exists (select 1 from posts where hub = 'labforus');
 `;
 
 fs.writeFileSync(OUT, sql, "utf8");
 console.log(
   `Wrote ${path.relative(ROOT, OUT)}: ${posts.length} posts (${ig} Instagram, ${li} LinkedIn)`,
+);
+
+// ---------- InACTS starter month ----------
+
+const starter = readArray(
+  INACTS_SRC,
+  "export const INACTS_STARTER: StarterPost[] = ",
+);
+const sIg = starter.filter((p) => p.channel === "Instagram").length;
+const sLi = starter.filter((p) => p.channel === "LinkedIn").length;
+
+const inactsSql = `-- ============================================================
+-- InACTS starter month
+--
+-- GENERATED FILE. Do not edit by hand.
+-- Source: src/lib/inactsStarter.ts   Regenerate: npm run seed:sql
+--
+-- ${starter.length} drafts across the five InACTS pillars: ${sIg} Instagram, ${sLi} LinkedIn.
+-- One LinkedIn piece a week and one Instagram post a fortnight, which is the
+-- cadence two busy academics can hold.
+--
+-- Every factual claim comes from something NSCAD, McGill or Dalhousie has
+-- already published. Anything that would show a person carries
+-- permission_status 'requested', because consent here is research ethics
+-- before it is a content rule.
+--
+-- SAFETY: only runs while the InACTS side is empty, so it can never
+-- duplicate or trample work already done. Run after hub.sql and
+-- seed_inacts.sql.
+-- ============================================================
+
+insert into posts
+  (hub, title, channel, pillar, format, template, cta, owner, status, post_date,
+   caption, alt_text, is_reshare, permission_status)
+select * from (values
+${rowsFor(starter, "inacts")}
+) as seed(hub, title, channel, pillar, format, template, cta, owner, status, post_date,
+          caption, alt_text, is_reshare, permission_status)
+where not exists (select 1 from posts where hub = 'inacts');
+`;
+
+fs.writeFileSync(INACTS_OUT, inactsSql, "utf8");
+console.log(
+  `Wrote ${path.relative(ROOT, INACTS_OUT)}: ${starter.length} posts (${sIg} Instagram, ${sLi} LinkedIn)`,
 );
