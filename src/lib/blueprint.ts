@@ -29,7 +29,6 @@ export type StepStatus =
 export type Owner =
   | "irene"
   | "paul"
-  | "anissa"
   | "diane"
   | "kirsty"
   | "april"
@@ -44,7 +43,6 @@ export type Owner =
 export const OWNER_NAMES: Record<Owner, string> = {
   irene: "Irene",
   paul: "Paul",
-  anissa: "Anissa",
   diane: "Diane",
   kirsty: "Kirsty",
   april: "April",
@@ -110,7 +108,7 @@ export const LINES: { above: LayerId; label: string; note: string }[] = [
 ];
 
 /** Colour of the small label under a step, usually who owns it. */
-export type TagTone = "built" | "open" | "paul" | "irene" | "anissa" | "team";
+export type TagTone = "built" | "open" | "paul" | "irene" | "team";
 
 export type Step = {
   moment: MomentId;
@@ -138,7 +136,7 @@ export const STEPS: Step[] = [
     lines: ["Booking happens online.", "There is no physical step", "at this moment."] },
   { moment: "arrive", layer: "physical", where: "in_person", status: "to_write",
     title: "The door, and who gets in", lines: ["Kids area, pocket gallery,", "and the rules poster"],
-    tag: "AFTER HOURS, SECURITY TOLD", tone: "built", owners: ["anissa"] },
+    tag: "AFTER HOURS, SECURITY TOLD", tone: "built", owners: ["to_name"] },
   { moment: "borrow", layer: "physical", where: "in_person", status: "written",
     title: "QR sticker on the item", lines: ["Property of Lab for Us", "The materials themselves"] },
   { moment: "return", layer: "physical", where: "in_person", status: "written",
@@ -182,37 +180,37 @@ export const STEPS: Step[] = [
     lines: ["Nobody from the team", "is involved yet. This", "moment is all reach."] },
   { moment: "signup", layer: "inperson", where: "in_person", status: "to_write",
     title: "Walk them through signing", lines: ["up on the spot, at an", "activation or a first visit"],
-    tag: "IRENE TO WRITE THE PROCESS", tone: "irene", owners: ["anissa", "irene"] },
+    tag: "IRENE TO WRITE THE PROCESS", tone: "irene", owners: ["to_name", "irene"] },
   { moment: "book", layer: "inperson", where: "none", status: "written",
     lines: ["Nothing in the room.", "Booking happens on a screen."] },
   { moment: "arrive", layer: "inperson", where: "in_person", status: "to_write",
     title: "Greet them, match them to", lines: ["their booking, and show", "them their items"],
-    tag: "ANISSA OR DIANE, TO WRITE", tone: "anissa", owners: ["anissa", "diane"] },
+    tag: "OPERATIONS OR DIANE, TO WRITE", tone: "team", owners: ["to_name", "diane"] },
   { moment: "borrow", layer: "inperson", where: "in_person", status: "written",
     title: "Hand over the items and go", lines: ["over the terms of borrowing", "The return date is on the booking"],
-    tag: "WRITTEN, SOP SECTION 4", tone: "built", owners: ["anissa", "diane"] },
+    tag: "WRITTEN, SOP SECTION 4", tone: "built", owners: ["to_name", "diane"] },
   { moment: "return", layer: "inperson", where: "in_person", status: "to_write",
     title: "Check everything came back,", lines: ["flag what is running low, ask", "for a reflection, offer media help"],
-    tag: "NEEDS A DECISION", tone: "open", star: true, owners: ["anissa"] },
+    tag: "NEEDS A DECISION", tone: "open", star: true, owners: ["to_name"] },
 
   // Backstage digital actions
   { moment: "reach", layer: "backstage", where: "social_hub", status: "built",
     title: "Pick a template by pillar,", lines: ["edit it in Canva, mark it", "done on the calendar"],
     tag: "WHOEVER POSTS", tone: "team", owners: ["team"] },
   { moment: "signup", layer: "backstage", where: "digital_library", status: "open",
-    title: "Anissa approves them, then", lines: ["they can borrow. Onto the", "newsletter list"],
-    tag: "ANISSA, IN THE TEAM INBOX", tone: "anissa", owners: ["anissa"] },
+    title: "Operations approves them, then", lines: ["they can borrow. Onto the", "newsletter list"],
+    tag: "OPERATIONS, IN THE TEAM INBOX", tone: "team", owners: ["to_name"] },
   { moment: "book", layer: "backstage", where: "digital_library", status: "open",
-    title: "Booking lands with Anissa", lines: ["at team@inacts.ca, where", "she approves new members too"],
-    tag: "DECIDED 21 SEPTEMBER", tone: "anissa", owners: ["anissa"] },
+    title: "Booking lands with operations", lines: ["at team@inacts.ca, where", "she approves new members too"],
+    tag: "DECIDED 21 SEPTEMBER", tone: "team", owners: ["to_name"] },
   { moment: "arrive", layer: "backstage", where: "digital_library", status: "to_write",
     title: "Items packed the day before,", lines: ["labelled with the booking", "reference, from a weekly list"],
-    tag: "ANISSA, TO WRITE", tone: "anissa", owners: ["anissa"] },
+    tag: "OPERATIONS, TO WRITE", tone: "team", owners: ["to_name"] },
   { moment: "borrow", layer: "backstage", where: "digital_library", status: "written",
     title: "Review new borrowing", lines: ["requests. The record was", "created by the user at booking"],
-    tag: "WRITTEN, SOP SECTION 4", tone: "built", owners: ["anissa"] },
+    tag: "WRITTEN, SOP SECTION 4", tone: "built", owners: ["to_name"] },
   { moment: "return", layer: "backstage", where: "digital_library", status: "to_write",
-    title: "Close it, chase overdue", lines: [], owners: ["anissa"] },
+    title: "Close it, chase overdue", lines: [], owners: ["to_name"] },
   { moment: "return", layer: "backstage", where: "social_hub", status: "open",
     title: "Photo moves to the calendar", lines: [], star: true, owners: ["to_name"] },
 
@@ -227,8 +225,8 @@ export const STEPS: Step[] = [
     title: "Booking engine", lines: ["Adding event type, a weekly", "printable list, item locations"],
     tag: "BUILT, REFINEMENTS WITH PAUL", tone: "built", owners: ["paul"] },
   { moment: "arrive", layer: "support", where: "in_person", status: "to_write",
-    title: "Anissa tells NSCAD security", lines: ["about after hours bookings.", "CRC chairs exempt"],
-    tag: "ANISSA, AFTER HOURS", tone: "anissa", owners: ["anissa"] },
+    title: "Operations tells NSCAD security", lines: ["about after hours bookings.", "CRC chairs exempt"],
+    tag: "OPERATIONS, AFTER HOURS", tone: "team", owners: ["to_name"] },
   { moment: "borrow", layer: "support", where: "digital_library", status: "built",
     title: "Inventory and QR codes", lines: ["Item level check in and out,", "so the team knows what is out"],
     tag: "IRENE AND PAUL", tone: "paul", owners: ["irene", "paul"] },
@@ -259,7 +257,7 @@ export const DECISIONS: Decision[] = [
     question: "Which inbox receives a booking?",
     settled: true,
     parts: [
-      { kind: "done", label: "Decided 21 September", text: "**team@inacts.ca**, and it is the address for everything to do with the Digital Library, not bookings alone. Anissa already has access, so nothing depends on one person's phone." },
+      { kind: "done", label: "Decided 21 September", text: "**team@inacts.ca**, and it is the address for everything to do with the Digital Library, not bookings alone. The operations owner already has access, so nothing depends on one person's phone." },
       { kind: "done", label: "Why not the NSCAD address", text: "**inacts@nscad.ca** authenticates through April's phone on a proxy account, and only NSCAD Computer Services can change that. Moving it is parked for a quieter time." },
       { kind: "note", label: "Alongside it", text: "The address Paul built for his own testing closes. Two Gmail accounts become one, kept for collaborators who cannot get a NSCAD account." },
     ],
@@ -271,7 +269,7 @@ export const DECISIONS: Decision[] = [
     parts: [
       { kind: "done", label: "Decided", text: "Sign up, then approval, then borrowing. Only an approved membership can borrow from the space." },
       { kind: "done", label: "At signup", text: "They join the newsletter and accept the policies and terms of service." },
-      { kind: "done", label: "Who approves, 21 September", text: "**Anissa**, in the team@inacts.ca inbox where the request arrives." },
+      { kind: "done", label: "Who approves, 21 September", text: "**The operations owner**, in the team@inacts.ca inbox where the request arrives." },
       { kind: "done", label: "One approval, 21 September", text: "Approved for the space **is** approved to borrow. The one split is under 16, and the platform already asks for age at signup." },
       { kind: "note", label: "Alongside it", text: "The community agreement is updated to cover how borrowed things are treated, and goes out at signup to be accepted like the terms." },
     ],
@@ -281,7 +279,7 @@ export const DECISIONS: Decision[] = [
     question: "Who covers the room?",
     settled: true,
     parts: [
-      { kind: "done", label: "By day", text: "Anissa runs operations. Diane covers when she is in." },
+      { kind: "done", label: "By day", text: "The operations owner is still to be named. Diane covers when she is in." },
       { kind: "done", label: "Partners", text: "Mahnaz on Sundays during the day. The Hub on Thursdays, with Ryan and Maje." },
       { kind: "note", label: "Every booking", text: "Says what type of event it is, so the checklist matches the group." },
     ],
@@ -300,9 +298,9 @@ export const DECISIONS: Decision[] = [
     question: "What happens for security when someone arrives?",
     settled: true,
     parts: [
-      { kind: "done", label: "Anissa is there", text: "She shows them their booking, checks them in, and checks them out." },
-      { kind: "done", label: "Anissa is not there", text: "Usually an evening. Anissa tells NSCAD security about every after hours booking, even for groups the building knows. CRC chairs are the only exception." },
-      { kind: "done", label: "How, 21 September", text: "**An email to fountainsecurity@nscad.ca with the guest list**, weekly and again whenever the list changes. No form: the NSCAD form tools do not reach the booking platform, so Anissa sends it from the week's bookings." },
+      { kind: "done", label: "Operations is there", text: "The operations owner shows them their booking, checks them in, and checks them out." },
+      { kind: "done", label: "Operations is not there", text: "Usually an evening. The operations owner tells NSCAD security about every after hours booking, even for groups the building knows. CRC chairs are the only exception." },
+      { kind: "done", label: "How, 21 September", text: "**An email to fountainsecurity@nscad.ca with the guest list**, weekly and again whenever the list changes. No form: the NSCAD form tools do not reach the booking platform, so the operations owner sends it from the week's bookings." },
       { kind: "note", label: "Alongside it", text: "A security SOP and a closing checklist are posted in the space, and the guest list is a required field on every booking." },
     ],
   },
@@ -311,7 +309,7 @@ export const DECISIONS: Decision[] = [
 export const ACCESS_TIERS = [
   {
     n: 1,
-    who: "CRC chairs at NSCAD: Eddie Furman, April and Josh.",
+    who: "CRC chairs at NSCAD: Eddy Firmin, April and Josh.",
     text: "First priority, any time, and a right of first refusal. Moving someone else’s booking for them gives **48 hours notice**, agreed 21 September. Their project managers and coordinators book on their behalf, which the booking says plainly.",
   },
   {
@@ -322,7 +320,7 @@ export const ACCESS_TIERS = [
   {
     n: 3,
     who: "Key partners.",
-    text: "The Hub on Thursdays, and Mahnaz on Sundays during the day, booked until December. Without an MOU the space is closed in the evenings. It can open with notice if Anissa is going to be there.",
+    text: "The Hub on Thursdays, and Mahnaz on Sundays during the day, booked until December. Without an MOU the space is closed in the evenings. It can open with notice if the operations owner is going to be there.",
   },
   {
     n: 4,
@@ -365,13 +363,13 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
     items: [
       { title: "The approval step, the newsletter, and signup email from the team inbox", detail: "**Confirmed and in build.** Paul is putting the gate back so a new account cannot borrow until an admin approves, adding the newsletter checkbox, and making the signup email come from team@inacts.ca. The platform sends through Resend, so he is adding the records on the inacts.ca domain he manages to let it send as that address. All three together, and he will say when they are live.", where: "digital_library", owners: ["paul"], status: "In build", tone: "doing" },
       { title: "The weekly printable list, and the event type", detail: "**Item locations are already in the system**, with one check left on whether they show on the packing screen, and **the booking reference shows on every row**, so only a printable label is missing. **The event type goes to the scoping call and needs budget**, since Paul counts it as new. **The weekly printable list has had no answer yet**, and it came from the 18 September review rather than later, so it is worth asking whether it is already in scope.", where: "digital_library", owners: ["paul", "irene"], status: "Part built", tone: "doing" },
-      { title: "Tell NSCAD security about after hours bookings", detail: "An email to fountainsecurity@nscad.ca carrying the guest list, weekly and again when the list changes. Regulars are not re-announced. Anissa sends it from the week's bookings, since no NSCAD form reaches the platform. Later, an agent can draft it for her to check and send.", where: "in_person", owners: ["anissa"], status: "To set up", tone: "open" },
+      { title: "Tell NSCAD security about after hours bookings", detail: "An email to fountainsecurity@nscad.ca carrying the guest list, weekly and again when the list changes. Regulars are not re-announced. The operations owner sends it from the week's bookings, since no NSCAD form reaches the platform. Later, an agent can draft it for them to check and send.", where: "in_person", owners: ["to_name"], status: "To set up", tone: "open" },
       { title: "Update the community agreement", detail: "The version in the platform wins and the Drive copy follows it. Add borrowing and the objects, large group bookings, the shared table, and closing and security. It goes out at signup to be accepted.", where: "in_person", owners: ["irene"], status: "With Irene", tone: "doing" },
       { title: "Guest internet for visitors", detail: "Done 28 September. April got a guest password out of NSCAD IT. It is posted in the main area rather than printed in any document, because it changes.", where: "in_person", owners: ["april"], status: "Done", tone: "done" },
       { title: "Clear out the extra accounts", detail: "Two Gmail accounts become one, kept for collaborators who cannot get a NSCAD account. Moving the Microsoft address is parked until a quieter time.", where: "digital_library", owners: ["irene"], status: "Open", tone: "open" },
       { title: "Guest list, guardians, and who a booking is really for", detail: "**Sent to Paul, no answer yet on these three.** The guest list as a required field with your own name if you are alone, guardian name and contact when somebody is under 16, and a booking made on behalf of a chair naming them so they get the confirmation. **Expect them to count as new scope too**, which means an estimate.", where: "digital_library", owners: ["paul", "irene"], status: "Waiting on Paul", tone: "open" },
       { title: "The security SOP, the instructions and the closing checklist", detail: "Version 2 is with April and Shakara. It covers who can be in the space, the guest list, under 16s and their guardians, telling NSCAD security, and handing the room over. The closing checklist still needs to come out as its own printable sheet for the wall, and a checklist per group by event type.", where: "in_person", owners: ["irene"], status: "With April and Shakara", tone: "doing" },
-      { title: "A list of members, and of anyone not welcome back", detail: "Held outside the platform, so Anissa can match a name at the door and say no when she needs to. It carries a way back for someone who repairs what they did.", where: "in_person", owners: ["irene", "anissa"], status: "New, to build", tone: "open" },
+      { title: "A list of members, and of anyone not welcome back", detail: "Held outside the platform, so the operations owner can match a name at the door and say no when she needs to. It carries a way back for someone who repairs what they did.", where: "in_person", owners: ["irene", "to_name"], status: "New, to build", tone: "open" },
       { title: "A welcome that survives the platform changing", detail: "**Paul is making the platform send as team@inacts.ca**, which answers the address question. **The separate question stands**: whether the welcome and the community guidelines should also go out from the inbox itself, so they keep working if the platform is ever replaced.", where: "digital_library", owners: ["april", "irene"], status: "Open", tone: "open" },
       { title: "File management, starting in Google Drive", detail: "Templates live with templates and stay blank, filled in documents move out. Research files leave Google for Microsoft, branding stays in Google for the strategist, and the structure moves across once it is clean. April's and Anissa's naming conventions both come in.", where: "in_person", owners: ["irene"], status: "Underway", tone: "doing" },
     ],
@@ -379,12 +377,12 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
   {
     group: "Social Hub, and the order is fixed",
     items: [
-      { title: "Create the Facebook Page and link it to @labforus", detail: "Instagram publishing cannot work without it, so everything below waits here", where: "social_hub", owners: ["anissa"], status: "Not started", tone: "open" },
-      { title: "Add Irene as an admin of that Page", detail: "So the approvals get run without borrowing anyone’s login", where: "social_hub", owners: ["anissa"], status: "Not started", tone: "open" },
-      { title: "Fifteen minutes with whoever holds the Instagram login", detail: "The final connect is approved from the account itself", where: "social_hub", owners: ["anissa"], status: "Not started", tone: "open" },
+      { title: "Create the Facebook Page and link it to @labforus", detail: "Instagram publishing cannot work without it, so everything below waits here", where: "social_hub", owners: ["to_name"], status: "Not started", tone: "open" },
+      { title: "Add Irene as an admin of that Page", detail: "So the approvals get run without borrowing anyone’s login", where: "social_hub", owners: ["to_name"], status: "Not started", tone: "open" },
+      { title: "Fifteen minutes with whoever holds the Instagram login", detail: "The final connect is approved from the account itself", where: "social_hub", owners: ["to_name"], status: "Not started", tone: "open" },
       { title: "Name or create the LinkedIn Page admin", detail: "The app and its approval attach to the Page", where: "social_hub", owners: ["shakara"], status: "Not started", tone: "open" },
-      { title: "Brand asset files", detail: "Some arrived on 28 August and are in the brand kit. Still to check: vector logos, the custom font, the icon set as SVGs, and the hex for the vivid red.", where: "social_hub", owners: ["anissa"], status: "Partly in", tone: "doing" },
-      { title: "Share the eighteen Canva templates with everyone who posts", detail: "Test it by opening the pillars page and clicking through to Canva", where: "social_hub", owners: ["anissa"], status: "Not started", tone: "open" },
+      { title: "Brand asset files", detail: "Some arrived on 28 August and are in the brand kit. Still to check: vector logos, the custom font, the icon set as SVGs, and the hex for the vivid red.", where: "social_hub", owners: ["to_name"], status: "Partly in", tone: "doing" },
+      { title: "Share the eighteen Canva templates with everyone who posts", detail: "Test it by opening the pillars page and clicking through to Canva", where: "social_hub", owners: ["to_name"], status: "Not started", tone: "open" },
       { title: "Review the awareness day calendar", detail: "Nocturne, African Heritage Month, Pride and Mi’kmaq History Month are one line each to add", where: "social_hub", owners: ["april", "shakara"], status: "To discuss", tone: "open" },
       { title: "Meta app, LinkedIn app, and both approvals", detail: "Then connect the accounts and switch direct posting on", where: "social_hub", owners: ["irene"], status: "Behind the Page", tone: "open" },
     ],
@@ -395,11 +393,11 @@ export const OUTSTANDING: { group: string; items: OutstandingItem[] }[] = [
       { title: "Item level check in and check out", detail: "Built. Taken at and due back now show on the booking, the admin prep screen and My Bookings, and a handover can be marked returned from the same row.", where: "digital_library", owners: ["paul"], status: "Done", tone: "done" },
       { title: "Three booking types", detail: "Built as a coloured label on booking cards and admin lists, worked out from the booking rather than stored. **Only the on site case is live**, since nothing goes off site.", where: "digital_library", owners: ["paul"], status: "Done", tone: "done" },
       { title: "Booking activity in the History tab", detail: "Built. The History tab now shows a real timeline: bookings, reservations, and check in and check out events.", where: "digital_library", owners: ["paul"], status: "Done", tone: "done" },
-      { title: "Security and access form", detail: "**No code yet, and Paul is waiting on Anissa** for the list of fields and the wording. Once that lands it is a small build: a form, a table behind it, and a queue for admin.", where: "digital_library", owners: ["anissa", "paul"], status: "Blocked on Anissa", tone: "open" },
+      { title: "Security and access form", detail: "**No code yet, and Paul is waiting on the operations owner** for the list of fields and the wording. Once that lands it is a small build: a form, a table behind it, and a queue for admin.", where: "digital_library", owners: ["to_name", "paul"], status: "Blocked on operations", tone: "open" },
       { title: "Recurring bookings, and event booking", detail: "For the Thursday and Sunday groups, with reminders and a cancel. The booking engine itself is built, and these are refinements.", where: "digital_library", owners: ["paul"], status: "Refinement", tone: "doing" },
       { title: "Basket, favourites, quantities, inventory export", detail: "All built. Select adds to a basket with a badge in the header, favourites have their own filter and a heart beside the basket, every item shows how many of the total are free, and admin can export the whole catalogue as a CSV.", where: "digital_library", owners: ["paul"], status: "Done", tone: "done" },
       { title: "Wording fixes", detail: "Done. Loan reads Off-site Bookings everywhere a person sees it, Browse Equipment is the only wording left, and My Bookings and My Events are one tab with a toggle for requesting an event.", where: "digital_library", owners: ["paul"], status: "Done", tone: "done" },
-      { title: "Take Paul's test address off the booking notifications", detail: "**team@inacts.ca is already on the list.** Paul: an admin can manage this without him, under Reports and Setup, then Notifications, then Notification Recipients at the bottom. His own test address is still there and can come off whenever.", where: "digital_library", owners: ["anissa", "irene"], status: "Ours to do", tone: "open" },
+      { title: "Take Paul's test address off the booking notifications", detail: "**team@inacts.ca is already on the list.** Paul: an admin can manage this without him, under Reports and Setup, then Notifications, then Notification Recipients at the bottom. His own test address is still there and can come off whenever.", where: "digital_library", owners: ["to_name", "irene"], status: "Ours to do", tone: "open" },
       { title: "Check in on arrival", detail: "**Beyond the original scope, so it needs budget.** Paul will scope it on a call and then send an estimate to approve before he builds. Every check in today is about equipment rather than people, so the call settles who does the checking in, whether a visit is its own record, and how the arrival steps are shown.", where: "digital_library", owners: ["irene", "paul"], status: "Needs budget", tone: "open" },
       { title: "Upload a creation to the member profile", detail: "**Beyond the original scope, so it needs budget.** Same call and the same estimate as the arrival check in. A profile takes a picture and nothing else today, so the call settles file types and sizes, where files live, who can see them, and whether a creation ties back to the booking that made it.", where: "digital_library", owners: ["irene", "paul"], status: "Needs budget", tone: "open" },
     ],
@@ -454,7 +452,7 @@ export const BEST_PRACTICE: BestPractice[] = [
       { layer: "backstage", where: "digital_library", text: "The new member goes onto the newsletter list and waits for approval. The team sees them arrive, so a first timer is recognised as one when they walk in rather than treated as a regular." },
       { layer: "support", where: "digital_library", text: "**Approval comes before borrowing.** The policies and terms are accepted at signup, and the community agreement covers how borrowed things are treated." },
     ],
-    gate: { kind: "decided", label: "Decided 21 September", text: "sign up, then **Anissa approves**, then borrowing, with the newsletter and the terms at signup. Approved for the space is approved to borrow, and the one split is under 16." },
+    gate: { kind: "decided", label: "Decided 21 September", text: "sign up, then **the operations owner approves**, then borrowing, with the newsletter and the terms at signup. Approved for the space is approved to borrow, and the one split is under 16." },
   },
   {
     moment: "book",
@@ -463,7 +461,7 @@ export const BEST_PRACTICE: BestPractice[] = [
       { layer: "user", text: "Picks a table or the studio, adds the items they need, and says what they are making. **Everyone coming is named on the booking**, their own name included if they are on their own. Everything booked is used in the space." },
       { layer: "digital", where: "digital_library", text: "Quantities show on every item, and the screen says plainly that a single table is shared space. **Every booking detail is captured so an admin can collect the items** before the person arrives." },
       { layer: "inperson", text: "Nothing in the room. Booking happens entirely on a screen, which is the point of having one." },
-      { layer: "backstage", where: "digital_library", text: "The booking lands with Anissa at **team@inacts.ca**. The room is confirmed free, the items confirmed available, and the event type tells her what the group will need." },
+      { layer: "backstage", where: "digital_library", text: "The booking lands with the operations owner at **team@inacts.ca**. The room is confirmed free, the items confirmed available, and the event type tells them what the group will need." },
       { layer: "support", where: "digital_library", text: "Groups that come every week book once and get a reminder, rather than filling the same form fifty times a year." },
     ],
     gate: { kind: "decided", label: "Decided 21 September", text: "bookings go to **team@inacts.ca**. Still in build with Paul: the basket, recurring bookings and the weekly printable list." },
@@ -471,14 +469,14 @@ export const BEST_PRACTICE: BestPractice[] = [
   {
     moment: "arrive",
     bands: [
-      { layer: "physical", text: "The door and who gets through it, the kids area, the pocket gallery, and the rules poster where a new person can actually read it. **When Anissa is not there, NSCAD security has been told.**" },
+      { layer: "physical", text: "The door and who gets through it, the kids area, the pocket gallery, and the rules poster where a new person can actually read it. **When the operations owner is not there, NSCAD security has been told.**" },
       { layer: "user", text: "Shows up at Lab for Us on time, for the booking they made. Nobody asks them to explain it, because it is already known." },
       { layer: "digital", where: "digital_library", text: "A **check in** on arrival walks them through the arrival steps and the security details, so the same things get covered every time and nobody has to remember them. New, and it needs scoping with Paul." },
       { layer: "inperson", where: "in_person", text: "They are greeted, matched to their booking, and shown their items. A first timer gets the thirty second version of how the space works." },
       { layer: "backstage", where: "digital_library", text: "The items were packed the day before and labelled with the booking reference, from the week’s printed list. Working a day ahead is the smallest habit here and the one that makes a visit feel run." },
       { layer: "support", where: "digital_library", text: "The booking is visible in the admin view with the items listed on the card, not buried in an email. **Its guest list is what goes to security**, so the names are already there." },
     ],
-    gate: { kind: "decided", label: "Decided 14 September", text: "Anissa or Diane by day, partners on their own days, and NSCAD security told after hours. The greeting and the check in now go into the extended SOP." },
+    gate: { kind: "decided", label: "Decided 14 September", text: "Operations or Diane by day, partners on their own days, and NSCAD security told after hours. The greeting and the check in now go into the extended SOP." },
   },
   {
     moment: "borrow",
@@ -525,10 +523,10 @@ export type Person = {
 
 export const PEOPLE: Person[] = [
   {
-    id: "anissa",
-    name: "Anissa Peralta",
-    role: "Main operations",
-    context: "In the space regularly, and the brand and visual identity work too.",
+    id: "to_name",
+    name: "Operations",
+    role: null,
+    context: "The owner is still to be named. Until then these are the priorities that come with the role.",
     priorities: [
       "Create the Facebook Page and link it to @labforus. Every other social item waits behind this one.",
       "Receive each booking at team@inacts.ca, approve new members there, pack the items the day before, and label them with the booking reference.",

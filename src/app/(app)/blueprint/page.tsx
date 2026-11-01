@@ -149,8 +149,8 @@ export default function BlueprintPage() {
           {cap(word(settled))} of the {word(DECISIONS.length)} decisions are
           settled outright.{" "}
           <b>
-            Bookings and approvals both land at team@inacts.ca, with Anissa
-            approving, and everything borrowed is used in the space
+            Bookings and approvals both land at team@inacts.ca, with the operations
+            owner approving, and everything borrowed is used in the space
           </b>
           . What is left sits at the end of a visit: who moves a photo from the
           room to the calendar, which waits on a branding strategy for the

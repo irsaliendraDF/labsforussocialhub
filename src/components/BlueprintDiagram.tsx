@@ -102,7 +102,6 @@ const TONE: Record<TagTone, string> = {
   open: DECIDE,
   paul: "#c72b4d",
   irene: "#2b29e6",
-  anissa: "#5350c4",
   team: "#5350c4",
 };
 
