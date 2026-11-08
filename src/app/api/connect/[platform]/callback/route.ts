@@ -28,8 +28,12 @@ export async function GET(
     return back(request, searchParams.get("error_description") ?? "Cancelled.");
   }
   if (!code) return back(request, "No authorization code came back.");
-  // Echoed state must match the one we minted, or this isn't our flow.
-  if (!(await consumeOAuthState(searchParams.get("state")))) {
+  // Echoed state must match the one we minted, or this isn't our flow. It
+  // also carries the hub that started the handshake, which is what the stored
+  // account is stamped with: an account connected from the InACTS side can
+  // only ever publish InACTS posts.
+  const hub = await consumeOAuthState(searchParams.get("state"));
+  if (!hub) {
     return back(request, "That connect link expired. Hit Connect again.");
   }
 
@@ -78,6 +82,7 @@ export async function GET(
       }
 
       await admin.from("social_accounts").insert({
+        hub,
         platform: "Instagram",
         display_name: page.instagram_business_account.username ?? page.name,
         external_account_id: page.instagram_business_account.id,
@@ -136,8 +141,10 @@ export async function GET(
       }
 
       await admin.from("social_accounts").insert({
+        hub,
         platform: "LinkedIn",
-        display_name: "Lab for Us LinkedIn Page",
+        display_name:
+          hub === "inacts" ? "InACTS LinkedIn Page" : "Lab for Us LinkedIn Page",
         external_account_id: urn.split(":").pop(),
         access_token: tok.access_token,
         refresh_token: tok.refresh_token ?? null,

@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import { usePathname } from "next/navigation";
 import { pillarColor } from "@/lib/content";
+import { hubFromPath } from "@/lib/hubs";
 import { fmtDateTime, fmtLongDate, toDatetimeLocal } from "@/lib/dates";
 import { goesOutOnRun, publishRunLocalTime } from "@/lib/schedule";
 import { usePosts } from "@/lib/usePosts";
@@ -37,6 +39,9 @@ function statusBadge(p: Post) {
 
 function Board({ accounts, igLive, liLive }: Props) {
   const { posts, loading, preview, refresh } = usePosts();
+  // Which hub this scheduler belongs to, so a Connect here can only ever
+  // attach an account to this hub.
+  const hub = hubFromPath(usePathname());
   const toast = useToast();
   const [pending, startTransition] = useTransition();
   const [schedulingId, setSchedulingId] = useState<string | null>(null);
@@ -168,7 +173,7 @@ function Board({ accounts, igLive, liLive }: Props) {
               )}
               <a
                 className="btn sm"
-                href={`/api/connect/${platform.toLowerCase()}`}
+                href={`/api/connect/${platform.toLowerCase()}?hub=${hub}`}
                 style={{ alignSelf: "flex-start" }}
               >
                 {acct ? "Reconnect" : "Connect"} {platform}

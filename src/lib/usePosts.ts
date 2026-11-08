@@ -1,13 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { getBrowserClient } from "./supabase/client";
 import { launchRunAsPosts } from "./launchRun";
+import { inactsStarterAsPosts } from "./inactsStarter";
+import { hubFromPath } from "./hubs";
 import type { Post } from "./types";
 
 const COLUMNS =
-  "id, title, channel, pillar, format, template, cta, owner, status, post_date, canva_link, caption, scheduled_at, publish_status, platform_post_id, published_at, published_url, publish_error, notes, link_url, tracked_url, alt_text, is_reshare, permission_status, permission_source, permission_note, permission_recorded_at, created_at, updated_at";
+  "id, hub, title, channel, pillar, format, template, cta, owner, status, post_date, canva_link, caption, scheduled_at, publish_status, platform_post_id, published_at, published_url, publish_error, notes, link_url, tracked_url, alt_text, is_reshare, permission_status, permission_source, permission_note, permission_recorded_at, created_at, updated_at";
 
 /**
  * Shape for a post created locally before Supabase is connected, so the
@@ -61,16 +64,26 @@ export type PostsApi = {
   refresh: () => Promise<void>;
 };
 
+/**
+ * The board for the hub you are looking at.
+ *
+ * The hub comes from the route rather than from a prop, so a board dropped on
+ * an InACTS page reads and writes InACTS rows without every caller having to
+ * remember to pass it. Lab for Us and InACTS never see each other's content.
+ */
 export function usePosts(): PostsApi {
   const supabase = getBrowserClient();
   const preview = !supabase;
+  const hub = hubFromPath(usePathname());
 
-  // Without a database there is nothing to read, so preview mode shows the
-  // planned launch run. It makes the calendar legible before Supabase exists;
-  // edits are local to the tab and the banner says so.
-  const [posts, setPosts] = useState<Post[]>(() =>
-    preview ? launchRunAsPosts() : [],
-  );
+  // Without a database there is nothing to read, so preview mode shows each
+  // hub's own planned run: the Lab for Us launch, and the InACTS starter
+  // month. It makes both calendars legible before Supabase exists; edits are
+  // local to the tab and the banner says so.
+  const [posts, setPosts] = useState<Post[]>(() => {
+    if (!preview) return [];
+    return hub === "inacts" ? inactsStarterAsPosts() : launchRunAsPosts();
+  });
   const [loading, setLoading] = useState(!preview);
   const [error, setError] = useState<string | null>(null);
 
@@ -86,6 +99,7 @@ export function usePosts(): PostsApi {
     const { data, error } = await supabase
       .from("posts")
       .select(COLUMNS)
+      .eq("hub", hub)
       .order("post_date");
     if (error) setError(error.message);
     else {
@@ -93,7 +107,7 @@ export function usePosts(): PostsApi {
       setPosts((data ?? []) as Post[]);
     }
     setLoading(false);
-  }, [supabase]);
+  }, [supabase, hub]);
 
   useEffect(() => {
     if (!supabase) return;
@@ -105,10 +119,12 @@ export function usePosts(): PostsApi {
     // Realtime is what makes this a shared board: every laptop sees the same
     // picture without a reload.
     const channel = supabase
-      .channel("posts-live")
+      .channel(`posts-live-${hub}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "posts" },
+        // Filtered server-side, so a post added in the other hub never
+        // appears on this board.
+        { event: "*", schema: "public", table: "posts", filter: `hub=eq.${hub}` },
         (payload: RealtimePostgresChangesPayload<Post>) => {
           setPosts((cur) => {
             if (payload.eventType === "DELETE") {
@@ -128,19 +144,21 @@ export function usePosts(): PostsApi {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [supabase, refresh]);
+  }, [supabase, refresh, hub]);
 
   const add = useCallback(
     async (p: Partial<Post>) => {
       if (!supabase) {
-        setPosts((cur) => [...cur, blankPost(p)]);
+        setPosts((cur) => [...cur, blankPost({ hub, ...p })]);
         return;
       }
-      const { error } = await supabase.from("posts").insert(p);
+      // Stamped here rather than left to the column default, so a post made
+      // on the InACTS side can never be born as a Lab for Us one.
+      const { error } = await supabase.from("posts").insert({ ...p, hub });
       if (error) setError(error.message);
       // The realtime INSERT event adds the row.
     },
-    [supabase],
+    [supabase, hub],
   );
 
   const update = useCallback(

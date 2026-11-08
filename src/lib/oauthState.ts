@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import type { Hub } from "./hubs";
 
 const COOKIE = "lfu_oauth_state";
 
@@ -12,8 +13,12 @@ const COOKIE = "lfu_oauth_state";
  * callback to echo it back, which is what the `state` parameter is actually
  * for.
  */
-export async function mintOAuthState(): Promise<string> {
-  const state = crypto.randomUUID();
+export async function mintOAuthState(hub: Hub): Promise<string> {
+  // The hub rides inside the state, because which hub is connecting an
+  // account has to survive a round trip through the platform's consent screen
+  // and come back trustworthy. It is in the httpOnly cookie too, so a tampered
+  // `state` fails the comparison and never reaches the insert.
+  const state = `${crypto.randomUUID()}.${hub}`;
   const jar = await cookies();
   jar.set(COOKIE, state, {
     httpOnly: true,
@@ -25,10 +30,17 @@ export async function mintOAuthState(): Promise<string> {
   return state;
 }
 
-/** True when the callback's `state` matches the one we issued. Single-use. */
-export async function consumeOAuthState(state: string | null): Promise<boolean> {
+/**
+ * The hub this handshake started in, or null when the state does not match
+ * the one we issued. Single-use.
+ */
+export async function consumeOAuthState(
+  state: string | null,
+): Promise<Hub | null> {
   const jar = await cookies();
   const expected = jar.get(COOKIE)?.value;
   jar.delete(COOKIE);
-  return Boolean(state && expected && state === expected);
+  if (!state || !expected || state !== expected) return null;
+  const hub = state.split(".")[1];
+  return hub === "inacts" || hub === "labforus" ? hub : null;
 }

@@ -42,8 +42,63 @@ export const PILLARS = [
 
 export type PillarName = (typeof PILLARS)[number]["name"];
 
+/**
+ * InACTS pillars.
+ *
+ * The names come out of the institute's own name: InACTS carries "in acts",
+ * so each pillar is an "in" and the second word does the work. InACTS reads
+ * as a research brand in black and white, so these are a neutral ramp rather
+ * than the Lab for Us palette, and the label always carries the meaning.
+ *
+ * Names are unique across both hubs, which is what lets the two sets share a
+ * table keyed by name.
+ */
+export const INACTS_PILLARS = [
+  {
+    name: "In practice",
+    color: "#121212",
+    description:
+      "How the work is done: participatory, asset based, trauma informed.",
+  },
+  {
+    name: "In evidence",
+    color: "#3d3d3d",
+    description:
+      "What the making taught us, read out of the projects and the Digital Library.",
+  },
+  {
+    name: "In public",
+    color: "#5e5e5e",
+    description: "Libraries, galleries and schools, and who they are built for.",
+  },
+  {
+    name: "In company",
+    color: "#808080",
+    description:
+      "Partners, collaborators and youth co-producers, credited as makers.",
+  },
+  {
+    name: "In the open",
+    color: "#a3a3a3",
+    description:
+      "What InACTS is, how to work with it, calls, invitations and news.",
+  },
+] as const;
+
+type Pillar = { name: string; color: string; description: string };
+
+export const PILLARS_BY_HUB: Record<"labforus" | "inacts", readonly Pillar[]> = {
+  labforus: PILLARS,
+  inacts: INACTS_PILLARS,
+};
+
+/** The pillars belonging to one hub. */
+export function pillarsFor(hub: "labforus" | "inacts"): readonly Pillar[] {
+  return PILLARS_BY_HUB[hub];
+}
+
 export const PILLAR_COLOR: Record<string, string> = Object.fromEntries(
-  PILLARS.map((p) => [p.name, p.color]),
+  [...PILLARS, ...INACTS_PILLARS].map((p) => [p.name, p.color]),
 );
 
 /** Falls back to the border tone so an unknown pillar never renders colourless. */

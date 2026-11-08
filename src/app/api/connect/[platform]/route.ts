@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { mintOAuthState } from "@/lib/oauthState";
+import { type Hub } from "@/lib/hubs";
 
 export const dynamic = "force-dynamic";
 
@@ -16,8 +17,13 @@ export async function GET(
   ctx: { params: Promise<{ platform: string }> },
 ) {
   const { platform } = await ctx.params;
-  const origin = new URL(request.url).origin;
+  const requestUrl = new URL(request.url);
+  const origin = requestUrl.origin;
   const redirectUri = `${origin}/api/connect/${platform}/callback`;
+  // Which hub is connecting this account. It travels inside the state cookie,
+  // so the callback knows whose account it is about to store.
+  const hub: Hub =
+    requestUrl.searchParams.get("hub") === "inacts" ? "inacts" : "labforus";
 
   const missing = (what: string) =>
     NextResponse.redirect(
@@ -31,7 +37,7 @@ export async function GET(
         "Instagram isn't set up yet. Add META_APP_ID and META_APP_SECRET once the Meta app exists.",
       );
     }
-    const state = await mintOAuthState();
+    const state = await mintOAuthState(hub);
     const scope = [
       "instagram_basic",
       "instagram_content_publish",
@@ -56,7 +62,7 @@ export async function GET(
         "LinkedIn isn't set up yet. Add LINKEDIN_CLIENT_ID and LINKEDIN_CLIENT_SECRET once the LinkedIn app exists.",
       );
     }
-    const state = await mintOAuthState();
+    const state = await mintOAuthState(hub);
     const scope = [
       "r_organization_social",
       "w_organization_social",

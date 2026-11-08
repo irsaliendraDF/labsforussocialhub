@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   CHANNELS,
   CTAS,
   FORMATS,
-  PILLARS,
   STATUSES,
   TEMPLATES,
   canvaUrlForTemplate,
   pillarColor,
+  pillarsFor,
 } from "@/lib/content";
+import { hubFromPath } from "@/lib/hubs";
 import { fmtLongDate } from "@/lib/dates";
 import { buildTrackedUrl, destinationForCta } from "@/lib/utm";
 import { PERMISSION_LABELS, PERMISSION_STATUSES, type Post } from "@/lib/types";
@@ -43,6 +45,8 @@ export default function PostDrawer({ post, onClose, onSave, onDelete }: Props) {
   };
 
   const templatesForPillar = TEMPLATES.filter((t) => t.pillar === draft.pillar);
+  // The pillars offered are the ones belonging to the hub this post is in.
+  const PILLARS = pillarsFor(hubFromPath(usePathname()));
   const templateUrl = canvaUrlForTemplate(draft.template);
 
   // Recomputed live so the team sees the tagged link before it is saved.

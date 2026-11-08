@@ -64,10 +64,18 @@ export async function publishPost(postId: string): Promise<{
     return { ok: false, message: "Post is already being published." };
   }
 
+  // A post goes out through an account of its own hub and never another's.
+  // Matching on platform alone would hand every LinkedIn post to whichever
+  // LinkedIn account was connected most recently, so a Lab for Us post could
+  // publish as InACTS. When this hub has no account for the channel there is
+  // no account at all: the provider falls back to the manual path, exactly as
+  // it did before anything was connected.
+  const hub = post.hub ?? "labforus";
   const { data: account } = await admin
     .from("social_accounts")
     .select("*")
     .eq("platform", post.channel)
+    .eq("hub", hub)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();

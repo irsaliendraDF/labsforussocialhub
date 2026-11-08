@@ -1,3 +1,4 @@
+import HubShell from "@/components/HubShell";
 import Sidebar from "@/components/Sidebar";
 
 export default function AppLayout({
@@ -6,9 +7,9 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="shell">
+    <HubShell>
       <Sidebar />
       <main className="main">{children}</main>
-    </div>
+    </HubShell>
   );
 }

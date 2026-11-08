@@ -1,15 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   CHANNELS,
   HOLIDAYS,
-  PILLARS,
   STATUSES,
   TEMPLATES,
   pillarColor,
+  pillarsFor,
   weekOf,
 } from "@/lib/content";
+import { hubFromPath } from "@/lib/hubs";
 import { DOW, MONTHS, fmtDate, monthRange, todayIso, toIso } from "@/lib/dates";
 import { usePosts } from "@/lib/usePosts";
 import type { Post } from "@/lib/types";
@@ -21,6 +23,11 @@ type View = "calendar" | "list" | "kanban";
 function Board() {
   const { posts, loading, error, preview, add, update, remove } = usePosts();
   const toast = useToast();
+  // Each hub files against its own pillars. Templates are Canva designs and
+  // only Lab for Us has them, so the composer drops that field when a hub
+  // has none rather than offering an empty select.
+  const hub = hubFromPath(usePathname());
+  const PILLARS = pillarsFor(hub);
 
   const [channel, setChannel] = useState("All");
   const [pillar, setPillar] = useState("All");
@@ -32,7 +39,7 @@ function Board() {
   const [cChannel, setCChannel] = useState<string>("Instagram");
   const [cPillar, setCPillar] = useState<string>(PILLARS[0].name);
   const [cTemplate, setCTemplate] = useState<string>(
-    TEMPLATES.find((t) => t.pillar === PILLARS[0].name)!.name,
+    TEMPLATES.find((t) => t.pillar === PILLARS[0].name)?.name ?? "",
   );
   const [cDate, setCDate] = useState<string>(todayIso());
   const [cTitle, setCTitle] = useState("");
@@ -55,11 +62,11 @@ function Board() {
     if (!cDate) return;
     setAdding(true);
     await add({
-      title: cTitle.trim() || cTemplate,
+      title: cTitle.trim() || cTemplate || cPillar,
       channel: cChannel as Post["channel"],
       pillar: cPillar,
-      template: cTemplate,
-      format: cTemplate,
+      template: cTemplate || null,
+      format: cTemplate || null,
       status: "Idea",
       post_date: cDate,
       publish_status: "draft",
@@ -117,17 +124,19 @@ function Board() {
               ))}
             </select>
           </label>
-          <label>
-            Template
-            <select
-              value={cTemplate}
-              onChange={(e) => setCTemplate(e.target.value)}
-            >
-              {templatesForPillar.map((t) => (
-                <option key={t.name}>{t.name}</option>
-              ))}
-            </select>
-          </label>
+          {templatesForPillar.length > 0 ? (
+            <label>
+              Template
+              <select
+                value={cTemplate}
+                onChange={(e) => setCTemplate(e.target.value)}
+              >
+                {templatesForPillar.map((t) => (
+                  <option key={t.name}>{t.name}</option>
+                ))}
+              </select>
+            </label>
+          ) : null}
           <label>
             Date
             <input
