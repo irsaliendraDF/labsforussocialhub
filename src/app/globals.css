@@ -3788,3 +3788,6 @@ table.data td.num {
   font-size: 15px;
   line-height: 1.6;
 }
+.in-facts-wide .in-fact dd {
+  max-width: none;
+}

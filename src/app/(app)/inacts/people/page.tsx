@@ -5,7 +5,7 @@ export const metadata = { title: "People · InACTS" };
 export default function InactsPeoplePage() {
   return (
     <>
-      <div className="page-head">
+      <div className="page-head wide">
         <span className="eyebrow">The institute</span>
         <h1>People</h1>
         <p>
@@ -72,7 +72,7 @@ export default function InactsPeoplePage() {
       </div>
 
       <h2 className="subhead">What It Means for the Partnership</h2>
-      <dl className="in-facts">
+      <dl className="in-facts in-facts-wide">
         {TOGETHER.results.map((r) => (
           <div className="in-fact" key={r.label}>
             <dt>{r.label}</dt>
