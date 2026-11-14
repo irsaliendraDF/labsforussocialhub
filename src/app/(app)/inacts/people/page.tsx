@@ -15,6 +15,13 @@ export default function InactsPeoplePage() {
         </p>
       </div>
 
+      <h2 className="subhead">Why They Came Together</h2>
+      <p>{TOGETHER.why}</p>
+
+      <h2 className="subhead">What the Partnership Means</h2>
+      <p>{TOGETHER.means}</p>
+
+      <h2 className="subhead">What It Means for Each of Them</h2>
       <div className="in-people">
         {PEOPLE.map((p) => (
           <article className="in-person" key={p.id}>
@@ -53,17 +60,18 @@ export default function InactsPeoplePage() {
               <div className="in-label">Short bio</div>
               <p className="in-person-bio">{p.bio}</p>
             </div>
+
+            {p.results.map((r) => (
+              <div className="in-person-block" key={r.label}>
+                <div className="in-label">{r.label}</div>
+                <p className="in-person-bio">{r.body}</p>
+              </div>
+            ))}
           </article>
         ))}
       </div>
 
-      <h2 className="subhead">Why They Came Together</h2>
-      <p>{TOGETHER.why}</p>
-
-      <h2 className="subhead">What the Partnership Means</h2>
-      <p>{TOGETHER.means}</p>
-
-      <h2 className="subhead">How They Complement Each Other</h2>
+      <h2 className="subhead">What It Means for the Partnership</h2>
       <dl className="in-facts">
         {TOGETHER.results.map((r) => (
           <div className="in-fact" key={r.label}>

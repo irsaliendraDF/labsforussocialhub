@@ -95,15 +95,15 @@ export const TOGETHER = {
   results: [
     {
       label: "CliftonStrengths",
-      body: "April's top five are Strategic, Learner, Arranger, Communication and Individualization. Shakara's are Restorative, Analytical, Relator, Ideation and Significance. April reads the pattern and arranges people and resources, and Shakara fixes what is broken and tests why it works. Both have Relator and Ideation in their top ten.",
+      body: "The two profiles barely overlap, which is the point. Restorative and Analytical, the first two of Shakara's top five, sit in April's lower half, at 20th and 23rd. April's top five (Strategic, Learner, Arranger, Communication and Individualization) are not in Shakara's top five. They share Relator and Ideation, which both appear in April's top ten. Between them they cover all four domains: April supplies pattern, story and arrangement, Shakara supplies diagnosis, proof and drive for impact, and Communication and Significance are the two influencing themes between them.",
     },
     {
       label: "Working Genius",
-      body: "Both are Discriminating Ideators, with Invention and Discernment as their genius. April's frustrations are Tenacity and Galvanizing, Shakara's are Galvanizing and Enablement. Neither naturally rallies people to start, so someone else on the team has to.",
+      body: "Both are Discriminating Ideators, so the pair generates ideas and judges them well. The gap is shared as well: Galvanizing is a frustration for both, so rallying people to act is nobody's gift in the partnership. Each covers the other's second frustration. April's competency is Enablement, which is Shakara's frustration, and Shakara's competency is Tenacity, which is April's. Neither has Tenacity, Enablement or Galvanizing as a genius, so the team around them has to carry the finishing, the support and the rallying. The report warns that this pairing can appear impatient with pushback and lose interest once the invention phase is over.",
     },
     {
       label: "Enneagram",
-      body: "April is Type 2, then 6, then 3: relational and loyal. Shakara is Type 8, then 1, then 6: direct and principled.",
+      body: "April leads with care for people (Type 2, The Helper) and Shakara with direct action and protection (Type 8, The Challenger). Both have Type 6, The Loyalist, in their top three, at 22 for April and 20 for Shakara. One leads with relationship and the other with directness, and both share a loyalty to the people and commitments they hold.",
     },
   ],
 } as const;
@@ -120,6 +120,8 @@ export type Person = {
   yes: string[];
   routes: string;
   bio: string;
+  /** What each test says about this person alone. */
+  results: { label: string; body: string }[];
 };
 
 /**
@@ -156,6 +158,20 @@ export const PEOPLE: Person[] = [
     routes:
       "Pure entrepreneurship programming, venture-side partnerships, and anything framed commercially rather than scholarly or community, go to Shakara.",
     bio: "April is an Associate Professor at NSCAD and the founder of InACTS, where she builds research from communities of makers and treats making itself as a method of inquiry.",
+    results: [
+      {
+        label: "CliftonStrengths",
+        body: "April leads with Strategic Thinking. Her top ten are Strategic, Learner, Arranger, Communication, Individualization, Input, Achiever, Relator, Ideation and Connectedness. Strategic means she spots patterns and issues others miss and chooses the best of several paths. Learner means the process of learning, not only the result, is what energises her. Arranger means she aligns people and resources, organised and flexible at once. Communication means she puts thoughts into words and tells the story. The report's own caution is that she can move through options so quickly that others cannot follow, so explaining how she got there helps.",
+      },
+      {
+        label: "Working Genius",
+        body: "Invention and Discernment are her geniuses, the Discriminating Ideator: new ideas from scratch, then an instinct for which ones will work. Wonder and Enablement are competencies, work she does well without being fed by it. Tenacity, pushing a task through to done, and Galvanizing, rallying people to act, are her frustrations. The report says she craves freedom and trust, is crushed by constraint and having to prove her gut, and can lose interest once the first invention phase is over.",
+      },
+      {
+        label: "Enneagram",
+        body: "Type 2, The Helper, scored highest at 24, then Type 6, The Loyalist, at 22 and Type 3, The Achiever, at 20. Twos are the most people-oriented type: they feel best when meaningfully engaged with others and make good things happen for them. The report's caution is attending to others' needs without enough attention to their own, and the boundaries that go with it.",
+      },
+    ],
   },
   {
     id: "shakara",
@@ -185,5 +201,19 @@ export const PEOPLE: Person[] = [
     routes:
       "Art education pedagogy, fine-art scholarship, and anything needing one narrow maker discipline, go to April.",
     bio: "Shakara is an entrepreneurship scholar at Dalhousie, co-founder of the Black Entrepreneurship Knowledge Hub, and co-steward of Lab for Us and InACTS.",
+    results: [
+      {
+        label: "CliftonStrengths",
+        body: "Shakara's top five are Restorative, Analytical, Relator, Ideation and Significance. Restorative means problems energise her: she diagnoses what is wrong and fixes it. Analytical means she looks for reasons and causes and asks others to prove it, which some read as critical when she is only trying to understand. Relator means close relationships, and people regularly ask what she thinks. Ideation means original ideas come easily. Significance means she wants to make a big impact and to be recognised for her unique strengths. Only the top five are on file.",
+      },
+      {
+        label: "Working Genius",
+        body: "Invention and Discernment are her geniuses, the same Discriminating Ideator pairing. Wonder and Tenacity are competencies, so she can push work through to completion without being fed by it. Galvanizing and Enablement are her frustrations: rallying people, and providing steady support to get something started. The same report cautions apply: she craves freedom and trust and is crushed by constraint and having to prove her gut.",
+      },
+      {
+        label: "Enneagram",
+        body: "Type 8, The Challenger, scored highest at 27, then Type 1, The Reformer, at 21 and Type 6, The Loyalist, at 20. Eights are independent, assertive, natural leaders, people of vision and action who protect others and help them stand on their own. They are direct and expect directness back.",
+      },
+    ],
   },
 ];
