@@ -8,7 +8,7 @@ export const metadata = { title: "Strategy · Lab for Us" };
 export default function StrategyPage() {
   return (
     <>
-      <div className="page-head">
+      <div className="page-head wide">
         <span className="eyebrow">Strategy</span>
         <h1>Lab for Us Strategy</h1>
         <p>

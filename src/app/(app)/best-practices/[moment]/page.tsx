@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MOMENT_COLOR, Rich, WherePill } from "@/components/BlueprintBits";
 import { BEST_PRACTICE, LAYER_LABEL, MOMENTS } from "@/lib/blueprint";
+import { titleCase } from "@/lib/text";
 
 export function generateStaticParams() {
   return MOMENTS.map((m) => ({ moment: m.id }));
@@ -10,7 +11,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ moment: string }> }) {
   const { moment } = await params;
   const m = MOMENTS.find((x) => x.id === moment);
-  return { title: m ? `${m.label} · Best practices · Lab for Us` : "Best practices · Lab for Us" };
+  return { title: m ? `${titleCase(m.label)} · Best Practices · Lab for Us` : "Best Practices · Lab for Us" };
 }
 
 const WORDS = ["zero", "one", "two", "three", "four", "five", "six"];
@@ -26,13 +27,13 @@ export default async function MomentPage({ params }: { params: Promise<{ moment:
 
   return (
     <>
-      <Link href="/best-practices" className="bp-back">
-        ← All moments
+      <Link href="/blueprint#best-practices" className="bp-back">
+        ← Back to the Service Blueprint
       </Link>
 
-      <div className="page-head">
-        <span className="eyebrow">Best practices</span>
-        <h1>{MOMENTS[mi].label}</h1>
+      <div className="page-head wide">
+        <span className="eyebrow">Best Practices</span>
+        <h1>{titleCase(MOMENTS[mi].label)}</h1>
         <p>
           Moment {WORDS[mi + 1]} of {WORDS[MOMENTS.length]}, read down through the
           layers.
@@ -48,7 +49,7 @@ export default async function MomentPage({ params }: { params: Promise<{ moment:
             aria-current={m.id === moment ? "page" : undefined}
           >
             <span className="bp-moment-tab-dot" style={{ background: MOMENT_COLOR[i] }} aria-hidden="true" />
-            {m.label}
+            {titleCase(m.label)}
           </Link>
         ))}
       </nav>
@@ -72,8 +73,8 @@ export default async function MomentPage({ params }: { params: Promise<{ moment:
       </section>
 
       <nav className="bp-moment-nav" aria-label="Previous and next moment">
-        {prev ? <Link href={`/best-practices/${prev.id}`}>← {prev.label}</Link> : <span />}
-        {next ? <Link href={`/best-practices/${next.id}`}>{next.label} →</Link> : <span />}
+        {prev ? <Link href={`/best-practices/${prev.id}`}>← {titleCase(prev.label)}</Link> : <span />}
+        {next ? <Link href={`/best-practices/${next.id}`}>{titleCase(next.label)} →</Link> : <span />}
       </nav>
     </>
   );

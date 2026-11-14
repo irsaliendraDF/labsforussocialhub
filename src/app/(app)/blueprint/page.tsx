@@ -1,7 +1,9 @@
 import { Fragment } from "react";
+import Link from "next/link";
 import BlueprintDiagram from "@/components/BlueprintDiagram";
 import { LayerGlyph } from "@/components/BlueprintIcons";
-import { Rich } from "@/components/BlueprintBits";
+import { MOMENT_COLOR, Rich } from "@/components/BlueprintBits";
+import { titleCase } from "@/lib/text";
 import {
   DECIDED_ON,
   DECISIONS,
@@ -16,7 +18,7 @@ import {
   type Tone,
 } from "@/lib/blueprint";
 
-export const metadata = { title: "Service blueprint · Lab for Us" };
+export const metadata = { title: "Service Blueprint · Lab for Us" };
 
 const WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 const word = (n: number) => WORDS[n] ?? String(n);
@@ -68,13 +70,13 @@ export default function BlueprintPage() {
   const starMoments = [...new Set(stars.map((s) => s.moment))].map(
     (id) => MOMENTS.find((m) => m.id === id)?.label ?? id,
   );
-  const settled = DECISIONS.filter((d) => d.settled).length;
+  const openDecisions = DECISIONS.filter((d) => !d.settled);
 
   return (
     <>
-      <div className="page-head">
-        <span className="eyebrow">The space</span>
-        <h1>Service blueprint</h1>
+      <div className="page-head wide">
+        <span className="eyebrow">Strategy</span>
+        <h1>Service Blueprint</h1>
         <p>
           One visit to Lab for Us, all the way down: the Social Hub that brings
           people in, the Digital Library that holds the booking, and the space
@@ -82,15 +84,37 @@ export default function BlueprintPage() {
           in full, or a row left to right to follow one kind of work all the
           way through.
         </p>
-        <p className="note">
-          Updated {DECIDED_ON} with the decisions from the review with Shakara
-          and April.
-        </p>
+        <p className="note">Updated {DECIDED_ON}.</p>
       </div>
 
+      <section className="bp-section" id="best-practices">
+        <h2 className="bp-h2">Best Practices</h2>
+        <p className="bp-lede">
+          How a visit should run once everything is in place, one moment at a
+          time. Open one to read it in full.
+        </p>
+        <div className="bp-moments">
+          {MOMENTS.map((m, i) => (
+            <Link
+              key={m.id}
+              href={`/best-practices/${m.id}`}
+              className="bp-moment"
+              style={{ borderTopColor: MOMENT_COLOR[i] }}
+            >
+              <span className="bp-moment-num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="bp-moment-name">{titleCase(m.label)}</span>
+              <span className="bp-moment-go">Open Full View →</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       <section className="bp-section">
-        <h2 className="bp-h2">How to read it</h2>
-        <div className="bp-layers">
+        <details className="bp-acc">
+          <summary>
+            <h2 className="bp-h2">How to Read It</h2>
+          </summary>
+          <div className="bp-layers">
           {LAYERS.map((l) => (
             <div className="bp-layer" style={{ color: LAYER_COLOR[l.id] }} key={l.id}>
               <div className="bp-layer-name">
@@ -138,55 +162,41 @@ export default function BlueprintPage() {
             </div>
           ))}
         </div>
+        </details>
       </section>
 
       <section className="bp-section">
-        <h2 className="bp-h2">One visit, all the way down</h2>
+        <h2 className="bp-h2">One Visit, All the Way Down</h2>
         <BlueprintDiagram />
         <p className="bp-caption">
-          {cap(word(settled))} of the {word(DECISIONS.length)} decisions are
-          settled outright.{" "}
-          <b>
-            Bookings and approvals both land at team@inacts.ca, with the operations
-            owner approving, and everything borrowed is used in the space
-          </b>
-          . What is left sits at the end of a visit: who moves a photo from the
-          room to the calendar, which waits on a branding strategy for the
-          space. The software’s front half is built, with changes coming from
-          Paul: the approval step goes back into signup, and bookings gain an
-          event type and a weekly printable list.
+          The software’s front half is built, with changes coming from Paul:
+          the approval step goes back into signup, and bookings gain an event
+          type and a weekly printable list.
         </p>
       </section>
 
-      <section className="bp-section">
-        <h2 className="bp-h2">What Shakara and April decided</h2>
-        <p className="bp-lede">
-          {cap(word(settled))} of the {word(DECISIONS.length)} are settled
-          outright. The booking inbox still needs its address, and posting
-          waits on a branding strategy for the space.
-        </p>
-        <div className="bp-decisions">
-          {DECISIONS.map((d) => (
-            <div key={d.n} className={`assetbox bp-decision${d.settled ? " settled" : ""}`}>
-              <div className="bp-dhead">
-                <span className="bp-dnum">{d.n}</span>
-                <div className="bp-dq">{d.question}</div>
-              </div>
-              <div className="bp-dopts">
-                {d.parts.map((p) => (
-                  <div key={p.label} className={`bp-dopt ${p.kind}`}>
-                    <span className="k">{p.label}</span>
-                    <Rich text={p.text} />
-                  </div>
-                ))}
-              </div>
+      {openDecisions.length > 0 && (
+        <section className="bp-section">
+          <h2 className="bp-h2">
+            {openDecisions.length === 1 ? "Open Decision" : "Open Decisions"}
+          </h2>
+          {openDecisions.map((d) => (
+            <div className="bp-open-decision" key={d.n}>
+              <p>
+                <b>{d.question}</b>
+              </p>
+              {d.parts.map((p) => (
+                <p key={p.label}>
+                  <b>{p.label}.</b> <Rich text={p.text} />
+                </p>
+              ))}
             </div>
           ))}
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="bp-section">
-        <h2 className="bp-h2">Everything still open</h2>
+        <h2 className="bp-h2">Everything Still Open</h2>
         <p className="bp-lede">
           In the order it unblocks. The first rows are the answers the rest is
           waiting on.

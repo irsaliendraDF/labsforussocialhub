@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HUB_HOME, HUB_LABELS, HUBS, hubFromPath } from "@/lib/hubs";
 
-type Item = { href: string; label: string; icon: React.ReactNode };
+type Item = { href: string; label: string; icon: React.ReactNode; also?: string[] };
 type Group = { label: string; items: Item[] };
 
 /* Simple stroked glyphs, soft and rounded, matching the brand's feel. */
@@ -112,8 +112,9 @@ const LABFORUS_GROUPS: Group[] = [
     label: "Strategy",
     items: [
       { href: "/", label: "Strategy", icon: I.overview },
-      { href: "/blueprint", label: "Service Blueprint", icon: I.blueprint },
-      { href: "/best-practices", label: "Best Practices", icon: I.practices },
+      // Best Practices sits at the top of the blueprint page, so its pages
+      // light up this link rather than having a link of their own.
+      { href: "/blueprint", label: "Service Blueprint", icon: I.blueprint, also: ["/best-practices"] },
       { href: "/roles", label: "Roles", icon: I.roles },
       { href: "/brand-kit", label: "Brand Kit", icon: I.brand },
     ],
@@ -193,7 +194,8 @@ export default function Sidebar() {
               className="nav-row"
               aria-current={
                 pathname === it.href ||
-                (it.href !== "/" && pathname.startsWith(`${it.href}/`))
+                (it.href !== "/" && pathname.startsWith(`${it.href}/`)) ||
+                it.also?.some((p) => pathname === p || pathname.startsWith(`${p}/`))
                   ? "page"
                   : undefined
               }
