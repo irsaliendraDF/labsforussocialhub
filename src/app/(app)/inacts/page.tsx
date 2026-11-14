@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { INACTS_PILLARS } from "@/lib/content";
-import { LOOP, ON_THE_RECORD } from "@/lib/inacts";
+import { CONNECTS, LOOP, ON_THE_RECORD } from "@/lib/inacts";
 
 export const metadata = { title: "Overview · InACTS" };
 
@@ -16,7 +16,7 @@ export default function InactsOverviewPage() {
         </p>
       </div>
 
-      <h2 className="subhead">The loop</h2>
+      <h2 className="subhead">The Loop</h2>
       <div className="in-loop">
         {LOOP.map((s) => (
           <div className="in-loop-step" key={s.n}>
@@ -33,7 +33,17 @@ export default function InactsOverviewPage() {
         <Link href="/inacts/calendar">content calendar</Link>.
       </p>
 
-      <h2 className="subhead">What we publish</h2>
+      <h2 className="subhead">How It Connects</h2>
+      <dl className="in-facts">
+        {CONNECTS.map((f) => (
+          <div className="in-fact" key={f.label}>
+            <dt>{f.label}</dt>
+            <dd>{f.body}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h2 className="subhead">What We Publish</h2>
       <div className="in-pillars">
         {INACTS_PILLARS.map((p) => (
           <div className="in-pillar" key={p.name}>
@@ -45,7 +55,7 @@ export default function InactsOverviewPage() {
           </div>
         ))}
       </div>
-      <h2 className="subhead">On the record</h2>
+      <h2 className="subhead">On the Record</h2>
       <dl className="in-facts">
         {ON_THE_RECORD.map((f) => (
           <div className="in-fact" key={f.label}>

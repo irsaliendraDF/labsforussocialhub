@@ -8,7 +8,8 @@
  * so a deep link always lands in the right hub.
  */
 
-export const HUBS = ["labforus", "inacts"] as const;
+/* InACTS first: it is the institute, and Lab for Us is the room it runs. */
+export const HUBS = ["inacts", "labforus"] as const;
 export type Hub = (typeof HUBS)[number];
 
 export const HUB_LABELS: Record<Hub, string> = {

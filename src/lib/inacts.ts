@@ -34,6 +34,35 @@ export const LOOP = [
   },
 ] as const;
 
+/**
+ * How the parts connect, from the team's Miro board (reworked 8 to 10
+ * November 2026). Structure only: no grant amounts, end dates or
+ * unconfirmed funder detail, because this page is public and those are
+ * still heard, not confirmed. The board holds the detail.
+ */
+export const CONNECTS = [
+  {
+    label: "The two people",
+    body: "April Mandrona and Shakara Joseph are two personal brands that complement each other. April brings art education and making, Shakara brings entrepreneurship and building, and both lead research through InACTS.",
+  },
+  {
+    label: "The research",
+    body: "InACTS holds the thinking: strategy, hypotheses and the academic side. Projects sit under it, among them Storying Transnational Knowledges, Transform and Traveling Images, each funded by its own grant. Research not yet funded stays on the board as not started.",
+  },
+  {
+    label: "The funding",
+    body: "Funding is drawn by colour on the board: money tied to the Canada Research Chair, grants InACTS leads, grants InACTS joins, and finished work. Every grant sits on top of the project it pays for.",
+  },
+  {
+    label: "The Digital Library",
+    body: "The library is the asset April and Shakara use to deepen the research. It is funded separately from the research projects and pays for technical expertise, not research.",
+  },
+  {
+    label: "Lab for Us",
+    body: "The community side, where the research is put into practice. It is how the work moves into community, alongside Tiny Labs and applied research.",
+  },
+] as const;
+
 /** On the record, and therefore safe to repeat. */
 export const ON_THE_RECORD = [
   {
