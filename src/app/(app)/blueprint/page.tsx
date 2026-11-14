@@ -3,12 +3,10 @@ import BlueprintDiagram from "@/components/BlueprintDiagram";
 import { LayerGlyph } from "@/components/BlueprintIcons";
 import { Rich } from "@/components/BlueprintBits";
 import {
-  ACCESS_TIERS,
   DECIDED_ON,
   DECISIONS,
   LAYERS,
   LINES,
-  MANDATE,
   MOMENTS,
   OUTSTANDING,
   OWNER_NAMES,
@@ -184,25 +182,6 @@ export default function BlueprintPage() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="bp-section">
-        <h2 className="bp-h2">Who gets the space</h2>
-        <div className="assetbox">
-          <div className="bp-tiers">
-            {ACCESS_TIERS.map((t) => (
-              <div className="bp-tier" key={t.n}>
-                <span className="bp-tn">{t.n}</span>
-                <div>
-                  <b>{t.who}</b> <Rich text={t.text} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="bp-mandate">
-            <b>{MANDATE.lead}</b> <Rich text={MANDATE.text} />
-          </p>
         </div>
       </section>
 

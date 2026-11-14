@@ -88,29 +88,15 @@ const I = {
   ),
 };
 
+/* Daily tools first, reference last. Content Pillars sits between Calendar
+   and Scheduler because a post is planned against a pillar. Templates live
+   inside the pillar they serve, so there is no separate Templates tab. */
 const LABFORUS_GROUPS: Group[] = [
-  {
-    label: "The space",
-    items: [
-      { href: "/blueprint", label: "Service blueprint", icon: I.blueprint },
-      { href: "/best-practices", label: "Best practices", icon: I.practices },
-      { href: "/roles", label: "Roles", icon: I.roles },
-    ],
-  },
-  {
-    label: "Strategy",
-    items: [
-      { href: "/", label: "Strategy", icon: I.overview },
-      // Templates now live inside the pillar they serve, so there's no
-      // separate Templates tab.
-      { href: "/pillars", label: "Content Pillars", icon: I.templates },
-      { href: "/brand-kit", label: "Brand kit", icon: I.brand },
-    ],
-  },
   {
     label: "Content",
     items: [
       { href: "/calendar", label: "Calendar", icon: I.calendar },
+      { href: "/pillars", label: "Content Pillars", icon: I.templates },
       { href: "/scheduler", label: "Scheduler", icon: I.scheduler },
     ],
   },
@@ -120,6 +106,16 @@ const LABFORUS_GROUPS: Group[] = [
       { href: "/engagement", label: "Replies", icon: I.engagement },
       // The quarterly report lives inside Analytics, not as its own tab.
       { href: "/analytics", label: "Analytics", icon: I.analytics },
+    ],
+  },
+  {
+    label: "Strategy",
+    items: [
+      { href: "/", label: "Strategy", icon: I.overview },
+      { href: "/blueprint", label: "Service Blueprint", icon: I.blueprint },
+      { href: "/best-practices", label: "Best Practices", icon: I.practices },
+      { href: "/roles", label: "Roles", icon: I.roles },
+      { href: "/brand-kit", label: "Brand Kit", icon: I.brand },
     ],
   },
 ];

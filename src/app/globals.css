@@ -3650,3 +3650,44 @@ table.data td.num {
     grid-template-columns: 1fr;
   }
 }
+
+/* Strategy as one straight page: no cards, one reading column. */
+.strat-doc {
+  max-width: 820px;
+}
+.strat-doc h2 {
+  font-family: var(--disp);
+  font-weight: 700;
+  font-size: clamp(21px, 2.4vw, 26px);
+  letter-spacing: -0.01em;
+  margin: 40px 0 10px;
+}
+.strat-doc h2:first-child {
+  margin-top: 8px;
+}
+.strat-doc p,
+.strat-doc li {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.strat-doc p {
+  margin: 0 0 14px;
+}
+.strat-doc ul,
+.strat-doc ol {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+.strat-doc li {
+  margin-bottom: 8px;
+}
+.strat-doc .strat-note {
+  color: var(--muted);
+  font-size: 15px;
+}
+.strat-doc a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
