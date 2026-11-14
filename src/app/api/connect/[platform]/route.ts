@@ -31,22 +31,23 @@ export async function GET(
     );
 
   if (platform === "instagram") {
-    const appId = process.env.META_APP_ID;
+    // Instagram API with Instagram Login: the account signs in with Instagram
+    // itself, so no Facebook Page is involved. The Instagram app ID and secret
+    // are the ones shown under the app's Instagram product, not the Meta app's.
+    const appId = process.env.INSTAGRAM_APP_ID;
     if (!appId) {
       return missing(
-        "Instagram isn't set up yet. Add META_APP_ID and META_APP_SECRET once the Meta app exists.",
+        "Instagram isn't set up yet. Add INSTAGRAM_APP_ID and INSTAGRAM_APP_SECRET once the Meta app exists.",
       );
     }
     const state = await mintOAuthState(hub);
     const scope = [
-      "instagram_basic",
-      "instagram_content_publish",
-      "instagram_manage_insights",
-      "pages_show_list",
-      "pages_read_engagement",
+      "instagram_business_basic",
+      "instagram_business_content_publish",
+      "instagram_business_manage_insights",
     ].join(",");
 
-    const url = new URL("https://www.facebook.com/v21.0/dialog/oauth");
+    const url = new URL("https://www.instagram.com/oauth/authorize");
     url.searchParams.set("client_id", appId);
     url.searchParams.set("redirect_uri", redirectUri);
     url.searchParams.set("scope", scope);

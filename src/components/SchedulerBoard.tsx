@@ -167,7 +167,7 @@ function Board({ accounts, igLive, liLive }: Props) {
               ) : (
                 <p className="note" style={{ marginTop: 0 }}>
                   {platform === "Instagram"
-                    ? "Needs an Instagram Business or Creator account linked to a Facebook Page, plus a Meta app."
+                    ? "Needs an Instagram Business or Creator account, plus a Meta app."
                     : "Needs the Lab for Us LinkedIn Page and a LinkedIn app."}
                 </p>
               )}

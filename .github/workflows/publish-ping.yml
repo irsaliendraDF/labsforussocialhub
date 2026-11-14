@@ -1,0 +1,23 @@
+# Wakes the app every 15 minutes so scheduled posts go out close to their time.
+# Vercel's free plan only runs a cron once a day, so this does the frequent
+# part for free. GitHub may start a run a few minutes late; that is normal.
+#
+# Needs two repository secrets (Settings, Secrets and variables, Actions):
+#   APP_URL      the live address, for example https://labsforussocialhub.vercel.app
+#   CRON_SECRET  the same value as CRON_SECRET in Vercel
+name: Publish ping
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the publish route
+        run: |
+          curl --fail --silent --show-error --max-time 60 \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "${{ secrets.APP_URL }}/api/cron/publish"

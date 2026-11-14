@@ -5,20 +5,21 @@ import type {
   SocialProvider,
 } from "./types";
 
-const GRAPH = "https://graph.facebook.com/v21.0";
+const GRAPH = "https://graph.instagram.com/v22.0";
 
 /**
  * Instagram publishing is two calls: create a media container, then publish it.
  *
- * Requires an Instagram Business or Creator account linked to a Facebook Page,
- * a Meta app, and App Review for instagram_content_publish. Until that lands,
- * the manual provider stands in.
+ * Uses Instagram API with Instagram Login: an Instagram Business or Creator
+ * account signs in directly, no Facebook Page. Needs the Meta app with the
+ * instagram_business_content_publish permission. Until that is live, the
+ * manual provider stands in.
  */
 export const instagramProvider: SocialProvider = {
   id: "instagram-graph",
   platform: "Instagram",
   canPublish: true,
-  note: "Instagram Graph API. Needs a Business or Creator account on a Facebook Page, plus the content-publishing permission.",
+  note: "Instagram API with Instagram Login. Needs a Business or Creator account and the content-publishing permission. No Facebook Page.",
 
   async publish({
     mediaUrl,
@@ -105,7 +106,7 @@ export const instagramProvider: SocialProvider = {
 
   async getMetrics({ platformPostId, accessToken }): Promise<MetricsResult> {
     try {
-      const metrics = "impressions,reach,likes,comments,saved,shares";
+      const metrics = "views,reach,likes,comments,saved,shares";
       const res = await fetch(
         `${GRAPH}/${platformPostId}/insights?metric=${metrics}&access_token=${encodeURIComponent(accessToken)}`,
       );
@@ -121,7 +122,7 @@ export const instagramProvider: SocialProvider = {
 
       return {
         ok: true,
-        impressions: byName.impressions ?? null,
+        impressions: byName.views ?? byName.impressions ?? null,
         reach: byName.reach ?? null,
         likes: byName.likes ?? null,
         comments: byName.comments ?? null,

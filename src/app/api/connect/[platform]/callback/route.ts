@@ -44,52 +44,59 @@ export async function GET(
 
   try {
     if (platform === "instagram") {
-      const appId = process.env.META_APP_ID!;
-      const appSecret = process.env.META_APP_SECRET!;
+      const appId = process.env.INSTAGRAM_APP_ID!;
+      const appSecret = process.env.INSTAGRAM_APP_SECRET!;
 
-      // 1. Short-lived user token
-      const tokRes = await fetch(
-        `https://graph.facebook.com/v21.0/oauth/access_token?client_id=${appId}&redirect_uri=${encodeURIComponent(redirectUri)}&client_secret=${appSecret}&code=${code}`,
-      );
+      // 1. Short-lived Instagram user token (about an hour)
+      const tokRes = await fetch("https://api.instagram.com/oauth/access_token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          client_id: appId,
+          client_secret: appSecret,
+          grant_type: "authorization_code",
+          redirect_uri: redirectUri,
+          code,
+        }),
+      });
       const tok = await tokRes.json();
       if (!tokRes.ok || !tok.access_token) {
-        return back(request, tok?.error?.message ?? "Token exchange failed.");
-      }
-
-      // 2. Long-lived token (~60 days)
-      const longRes = await fetch(
-        `https://graph.facebook.com/v21.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${appId}&client_secret=${appSecret}&fb_exchange_token=${tok.access_token}`,
-      );
-      const long = await longRes.json();
-      const accessToken = long.access_token ?? tok.access_token;
-      const expiresIn = long.expires_in ?? tok.expires_in ?? null;
-
-      // 3. Find the Page and its linked Instagram Business account
-      const pagesRes = await fetch(
-        `https://graph.facebook.com/v21.0/me/accounts?fields=name,access_token,instagram_business_account{id,username}&access_token=${encodeURIComponent(accessToken)}`,
-      );
-      const pages = await pagesRes.json();
-      const page = (pages.data ?? []).find(
-        (p: { instagram_business_account?: { id: string } }) =>
-          p.instagram_business_account?.id,
-      );
-
-      if (!page) {
         return back(
           request,
-          "No Instagram Business account is linked to a Page on this login. Link @labforus to the Facebook Page first.",
+          tok?.error_message ?? tok?.error?.message ?? "Token exchange failed.",
+        );
+      }
+
+      // 2. Long-lived token (about 60 days)
+      const longRes = await fetch(
+        `https://graph.instagram.com/access_token?grant_type=ig_exchange_token&client_secret=${encodeURIComponent(appSecret)}&access_token=${encodeURIComponent(tok.access_token)}`,
+      );
+      const long = await longRes.json();
+      if (!longRes.ok || !long.access_token) {
+        return back(request, long?.error?.message ?? "Could not get a long-lived token.");
+      }
+
+      // 3. Who is this account
+      const meRes = await fetch(
+        `https://graph.instagram.com/v22.0/me?fields=user_id,username&access_token=${encodeURIComponent(long.access_token)}`,
+      );
+      const me = await meRes.json();
+      const igUserId: string | undefined = me.user_id ?? me.id ?? tok.user_id?.toString();
+      if (!meRes.ok || !igUserId) {
+        return back(
+          request,
+          me?.error?.message ?? "Could not read the Instagram account. It must be a Business or Creator account.",
         );
       }
 
       await admin.from("social_accounts").insert({
         hub,
         platform: "Instagram",
-        display_name: page.instagram_business_account.username ?? page.name,
-        external_account_id: page.instagram_business_account.id,
-        // Page token is what publishing actually uses.
-        access_token: page.access_token ?? accessToken,
-        token_expires_at: expiresIn
-          ? new Date(Date.now() + expiresIn * 1000).toISOString()
+        display_name: me.username ?? "Instagram",
+        external_account_id: String(igUserId),
+        access_token: long.access_token,
+        token_expires_at: long.expires_in
+          ? new Date(Date.now() + long.expires_in * 1000).toISOString()
           : null,
         connected_by: "Lab for Us team",
       });

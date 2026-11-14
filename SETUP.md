@@ -73,10 +73,14 @@ They run in parallel with everything else and the app is useful without them.
 
 **Instagram**
 
-- An Instagram **Business or Creator** account (@labforus) linked to a Facebook Page.
-- A Meta app with `instagram_content_publish` and `instagram_manage_insights`.
-- Meta **App Review** for those permissions.
-- Set `META_APP_ID` and `META_APP_SECRET`.
+- An Instagram **Business or Creator** account (@labforus). No Facebook Page: the
+  hub uses **Instagram API with Instagram Login**.
+- A Meta app with the Instagram product, and the permissions
+  `instagram_business_basic`, `instagram_business_content_publish` and
+  `instagram_business_manage_insights`.
+- Meta **App Review** if the dashboard says it is needed for accounts you own.
+- Set `INSTAGRAM_APP_ID` and `INSTAGRAM_APP_SECRET`: the Instagram app ID and
+  secret from the app's Instagram product, not the Meta app's own.
 - Add `https://<your-url>/api/connect/instagram/callback` as a valid OAuth redirect URI.
 
 **LinkedIn**
@@ -87,6 +91,14 @@ They run in parallel with everything else and the app is useful without them.
 - Add `https://<your-url>/api/connect/linkedin/callback` as a redirect URL.
 
 Then hit **Connect** on the Scheduler page for each.
+
+### The 15 minute ping
+
+`.github/workflows/publish-ping.yml` calls `/api/cron/publish` every 15 minutes
+for free, so a post set for 2pm goes out about then and not the next morning.
+It needs two repository secrets (GitHub, Settings, Secrets and variables,
+Actions): `APP_URL` (the live address) and `CRON_SECRET` (the same value as in
+Vercel). The same call renews any Instagram token inside its last 14 days.
 
 ### Turning direct posting on
 

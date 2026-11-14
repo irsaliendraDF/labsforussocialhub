@@ -53,9 +53,9 @@ export default async function SchedulerPage() {
       <HowToSchedule />
 
       <p className="note" style={{ marginTop: 26 }}>
-        Instagram publishing needs a Business or Creator account on a Facebook
-        Page, a Meta app, and App Review. LinkedIn needs the Page, a LinkedIn
-        app, and Community Management API access. Those approvals, not the code,
+        Instagram publishing needs a Business or Creator account and a Meta app
+        with the content publishing permission. LinkedIn needs the Page, a
+        LinkedIn app, and Community Management API access. Those approvals, not the code,
         are the long pole. Start them early and the switch flips with an
         environment variable.
       </p>
