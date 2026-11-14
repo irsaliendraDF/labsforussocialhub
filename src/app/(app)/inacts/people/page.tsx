@@ -1,4 +1,4 @@
-import { PEOPLE } from "@/lib/inacts";
+import { PEOPLE, TOGETHER } from "@/lib/inacts";
 
 export const metadata = { title: "People · InACTS" };
 
@@ -56,6 +56,22 @@ export default function InactsPeoplePage() {
           </article>
         ))}
       </div>
+
+      <h2 className="subhead">Why They Came Together</h2>
+      <p>{TOGETHER.why}</p>
+
+      <h2 className="subhead">What the Partnership Means</h2>
+      <p>{TOGETHER.means}</p>
+
+      <h2 className="subhead">How They Complement Each Other</h2>
+      <dl className="in-facts">
+        {TOGETHER.results.map((r) => (
+          <div className="in-fact" key={r.label}>
+            <dt>{r.label}</dt>
+            <dd>{r.body}</dd>
+          </div>
+        ))}
+      </dl>
 
       <p className="note in-note">
         Drafted from the Branding and Positioning document of April 2026 and

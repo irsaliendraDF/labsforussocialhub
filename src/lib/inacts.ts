@@ -83,6 +83,31 @@ export const ON_THE_RECORD = [
   },
 ] as const;
 
+/**
+ * Why April and Shakara came together, from the 9 November 2026 call.
+ * Heard, not established: the speaker is read as Shakara. Written with the
+ * results shown side by side, at Irene's instruction of 14 November 2026.
+ */
+export const TOGETHER = {
+  why: "April held the Canada Research Chair for two years before they met, and the work was not moving. They were introduced by a mutual contact and found the same question under both fields: how do we take better care of each other? April comes at it through art and education, Shakara through innovation and entrepreneurship. The care is the same and the lens differs.",
+  means:
+    "They are both transdisciplinary thinkers. Their fields are not fruit in a bag, side by side without touching, and not a fruit salad, still identifiable as separate pieces. The aim is a smoothie: April can talk about innovation from an art education lens, and Shakara can talk about art education from an innovation lens. The aim is to solve real societal problems. They work from mutual respect, support and alignment. United does not mean always agreeing, and each protects their own time and boundaries. Everything they build is built with a community partner, across international, inter-university and community scales.",
+  results: [
+    {
+      label: "CliftonStrengths",
+      body: "April's top five are Strategic, Learner, Arranger, Communication and Individualization. Shakara's are Restorative, Analytical, Relator, Ideation and Significance. April reads the pattern and arranges people and resources, and Shakara fixes what is broken and tests why it works. Both have Relator and Ideation in their top ten.",
+    },
+    {
+      label: "Working Genius",
+      body: "Both are Discriminating Ideators, with Invention and Discernment as their genius. April's frustrations are Tenacity and Galvanizing, Shakara's are Galvanizing and Enablement. Neither naturally rallies people to start, so someone else on the team has to.",
+    },
+    {
+      label: "Enneagram",
+      body: "April is Type 2, then 6, then 3: relational and loyal. Shakara is Type 8, then 1, then 6: direct and principled.",
+    },
+  ],
+} as const;
+
 export type Person = {
   id: string;
   name: string;
