@@ -73,12 +73,8 @@ export const SYSTEMS_OF_CARE = {
     "InACTS works on systems of care: how people and places take care of each other, and what care and repair structures look like when they work.",
   sections: [
     {
-      heading: "A Different Future",
-      body: "How do we imagine a different future than the one we have today? How do we change the systems so that future can be realized? And how do we make spaces where people come together to imagine and design those systems and futures?",
-    },
-    {
-      heading: "Led by Young People",
-      body: "Young people are prioritized, and the futures are youth-led.",
+      heading: "What It Means",
+      body: "A north star pulled through everything the institute does: systems of care, and how they interact with the actors and players within those spaces. In practice that is building spaces, places and community around care structures or repair structures, and imagining possible futures, because this cannot be the end.",
     },
     {
       heading: "Across Disciplines",
@@ -120,6 +116,24 @@ export const TOGETHER = {
   why: "April held the Canada Research Chair for two years before they met, and the work was not moving. They were introduced by a mutual contact and found the same question under both fields: how do we take better care of each other? April comes at it through art and education, Shakara through innovation and entrepreneurship. The care is the same and the lens differs.",
   means:
     "They are both transdisciplinary thinkers. Their fields are not fruit in a bag, side by side without touching, and not a fruit salad, still identifiable as separate pieces. The aim is a smoothie: April can talk about innovation from an art education lens, and Shakara can talk about art education from an innovation lens. The aim is to solve real societal problems. They work from mutual respect, support and alignment. United does not mean always agreeing, and each protects their own time and boundaries. Everything they build is built with a community partner, across international, inter-university and community scales.",
+  inTheirWords: [
+    {
+      label: "The aim",
+      body: "Boundary annihilation. By the end, April should be an innovation scholar and Shakara an art educator.",
+    },
+    {
+      label: "How it shows",
+      body: "Keep showing up as they are. People either elect in and find it makes sense, or find it too big.",
+    },
+    {
+      label: "Not traditional academics",
+      body: "Neither wants to go deeper and deeper into one subject, and the space itself challenges what universities count as output.",
+    },
+    {
+      label: "Quiet activism",
+      body: "Once a throwaway descriptor, now something they do: action within the spaces where people gather, not only talk.",
+    },
+  ],
   results: [
     {
       label: "CliftonStrengths",
@@ -148,6 +162,8 @@ export type Person = {
   yes: string[];
   routes: string;
   bio: string;
+  /** Things said about their own work in the 9 and 16 November sessions. Heard, not confirmed. */
+  heard: string[];
   /** What each test says about this person alone. */
   results: { label: string; body: string }[];
 };
@@ -186,6 +202,11 @@ export const PEOPLE: Person[] = [
     routes:
       "Pure entrepreneurship programming, venture-side partnerships, and anything framed commercially rather than scholarly or community, go to Shakara.",
     bio: "April is an Associate Professor at NSCAD and the founder of InACTS, where she builds research from communities of makers and treats making itself as a method of inquiry.",
+    heard: [
+      "Came up through fine arts and psychology, then art education and quantitative work, a PhD, rural kids in South Africa, and McGill: a hybrid path.",
+      "In community art education, formal structures can be harmful, so the answer is to make something over here.",
+      "Her presence alone can give people the legitimacy to do what they already want to do.",
+    ],
     results: [
       {
         label: "CliftonStrengths",
@@ -208,12 +229,12 @@ export const PEOPLE: Person[] = [
       "Associate Professor, Dalhousie. Co-director of InACTS",
     archetype: "The builder-theorist",
     archetypeNote:
-      "She builds in public, from a feminist and entrepreneurial lens, and theorises the thing while it is still moving.",
+      "She builds in public, from an entrepreneurial lens, and theorises the thing while it is still moving.",
     sentence:
-      "Shakara is an entrepreneurship scholar who builds several things at once, studies them while they move, and brings a gendered, relational lens to what counts as legitimate enterprise.",
+      "Shakara is an entrepreneurship scholar who builds several things at once, studies them while they move, and brings a relational lens to what counts as legitimate enterprise: even business is how people take care of each other.",
     topics: [
       "Entrepreneurship theory and practice",
-      "Feminist approaches to enterprise",
+      "Entrepreneurship as care",
       "Black entrepreneurship",
       "Risk and early-stage building",
       "Building in public",
@@ -222,13 +243,18 @@ export const PEOPLE: Person[] = [
     yes: [
       "Keynotes to large audiences",
       "Entrepreneurship and innovation programming",
-      "Feminist and Black entrepreneurship research",
+      "Research on entrepreneurship as care, and on Black entrepreneurship",
       "Partnerships with business schools and hubs",
       "Speaking to government on community economic questions",
     ],
     routes:
       "Art education pedagogy, fine-art scholarship, and anything needing one narrow maker discipline, go to April.",
     bio: "Shakara is an entrepreneurship scholar at Dalhousie, co-director of InACTS and co-steward of Lab for Us.",
+    heard: [
+      "Not attached to any one organization. The range runs from technology leaders to community work, and it should all make sense together.",
+      "Systems of innovation that recognize how the system is, then innovate in ways that are not harmful.",
+      "Builds until it works, then hands it on.",
+    ],
     results: [
       {
         label: "CliftonStrengths",

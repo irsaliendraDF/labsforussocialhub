@@ -55,40 +55,35 @@ export type PillarName = (typeof PILLARS)[number]["name"];
  */
 export const INACTS_PILLARS = [
   {
-    name: "Systems of care",
+    name: "Imagine a different future",
     color: "#121212",
     description:
-      "How people and places take care of each other, and what care and repair structures look like.",
+      "How do we imagine a different future than what we have today? Imagining possible futures, because this cannot be the end.",
   },
   {
-    name: "Imagined futures",
+    name: "Change the systems",
     color: "#3d3d3d",
     description:
-      "What young people and communities picture when this cannot be the end, and the systems that would hold it.",
+      "How do we change the system so that future can be realized? Ways to innovate that are not harmful, including quiet activism.",
   },
   {
-    name: "Spaces to gather",
+    name: "Make spaces",
     color: "#5e5e5e",
     description:
-      "The places where people come together to imagine and design: Lab for Us, the library, the lab.",
+      "How do we create spaces where people can come together to imagine these systems and futures intersecting? Lab for Us, the Digital Library and the institute.",
   },
   {
-    name: "Quiet activism",
+    name: "Youth-led futures",
     color: "#808080",
-    description: "Small, subtle acts that move things, and what they change.",
-  },
-  {
-    name: "Across disciplines",
-    color: "#a3a3a3",
     description:
-      "Art education and innovation and entrepreneurship crossing until neither stands alone, shown and not defined.",
+      "We prioritize young people, and the futures are youth-led.",
   },
 ] as const;
 
 /**
- * The first five InACTS pillars, replaced on 21 November 2026 after the 16
- * November sessions. Six starter posts still carry these names, so their
- * colours stay resolvable; the pillar pickers no longer offer them.
+ * Earlier InACTS pillar names, replaced on 21 November 2026. Starter posts
+ * still carry the first five, so their colours stay resolvable; the pillar
+ * pickers no longer offer any of these.
  */
 const LEGACY_INACTS_PILLARS = [
   { name: "In practice", color: "#121212" },
@@ -96,6 +91,11 @@ const LEGACY_INACTS_PILLARS = [
   { name: "In public", color: "#5e5e5e" },
   { name: "In company", color: "#808080" },
   { name: "In the open", color: "#a3a3a3" },
+  { name: "Systems of care", color: "#121212" },
+  { name: "Imagined futures", color: "#3d3d3d" },
+  { name: "Spaces to gather", color: "#5e5e5e" },
+  { name: "Quiet activism", color: "#808080" },
+  { name: "Across disciplines", color: "#a3a3a3" },
 ] as const;
 
 type Pillar = { name: string; color: string; description: string };

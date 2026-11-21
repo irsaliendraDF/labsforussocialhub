@@ -20,6 +20,14 @@ export default function InactsPeoplePage() {
 
       <h2 className="subhead">What the Partnership Means</h2>
       <p>{TOGETHER.means}</p>
+      <dl className="in-facts in-facts-wide">
+        {TOGETHER.inTheirWords.map((r) => (
+          <div className="in-fact" key={r.label}>
+            <dt>{r.label}</dt>
+            <dd>{r.body}</dd>
+          </div>
+        ))}
+      </dl>
 
       <h2 className="subhead">What It Means for Each of Them</h2>
       <div className="in-people">
@@ -59,6 +67,15 @@ export default function InactsPeoplePage() {
             <div className="in-person-block">
               <div className="in-label">Short bio</div>
               <p className="in-person-bio">{p.bio}</p>
+            </div>
+
+            <div className="in-person-block">
+              <div className="in-label">In their own work</div>
+              <ul className="in-list">
+                {p.heard.map((h) => (
+                  <li key={h}>{h}</li>
+                ))}
+              </ul>
             </div>
 
             {p.results.map((r) => (
