@@ -5,6 +5,9 @@
 # Needs two repository secrets (Settings, Secrets and variables, Actions):
 #   APP_URL      the live address, for example https://labsforussocialhub.vercel.app
 #   CRON_SECRET  the same value as CRON_SECRET in Vercel
+#
+# Until both are set the job says so and stops without failing, so GitHub does
+# not send a failure email on every run.
 name: Publish ping
 
 on:
@@ -15,9 +18,16 @@ on:
 jobs:
   ping:
     runs-on: ubuntu-latest
+    env:
+      APP_URL: ${{ secrets.APP_URL }}
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
     steps:
       - name: Call the publish route
         run: |
+          if [ -z "$APP_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "::notice::APP_URL or CRON_SECRET is not set as a repository secret yet, so nothing was called."
+            exit 0
+          fi
           curl --fail --silent --show-error --max-time 60 \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            "${{ secrets.APP_URL }}/api/cron/publish"
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "$APP_URL/api/cron/publish"
