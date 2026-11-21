@@ -1,6 +1,11 @@
 import Link from "next/link";
 import { INACTS_PILLARS } from "@/lib/content";
-import { CONNECTS, LOOP, ON_THE_RECORD } from "@/lib/inacts";
+import {
+  CONNECTS,
+  LOOP,
+  ON_THE_RECORD,
+  SYSTEMS_OF_CARE,
+} from "@/lib/inacts";
 
 export const metadata = { title: "Overview · InACTS" };
 
@@ -15,6 +20,17 @@ export default function InactsOverviewPage() {
           the work gets made, and the Digital Library is where the two meet.
         </p>
       </div>
+
+      <h2 className="subhead">Systems of Care</h2>
+      <p>{SYSTEMS_OF_CARE.intro}</p>
+      <dl className="in-facts in-facts-wide">
+        {SYSTEMS_OF_CARE.sections.map((s) => (
+          <div className="in-fact" key={s.heading}>
+            <dt>{s.heading}</dt>
+            <dd>{s.body}</dd>
+          </div>
+        ))}
+      </dl>
 
       <h2 className="subhead">The Loop</h2>
       <div className="in-loop">
