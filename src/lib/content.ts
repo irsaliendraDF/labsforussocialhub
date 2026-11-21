@@ -55,34 +55,47 @@ export type PillarName = (typeof PILLARS)[number]["name"];
  */
 export const INACTS_PILLARS = [
   {
-    name: "In practice",
+    name: "Systems of care",
     color: "#121212",
     description:
-      "How the work is done: participatory, asset based, trauma informed.",
+      "How people and places take care of each other, and what care and repair structures look like.",
   },
   {
-    name: "In evidence",
+    name: "Imagined futures",
     color: "#3d3d3d",
     description:
-      "What the making taught us, read out of the projects and the Digital Library.",
+      "What young people and communities picture when this cannot be the end, and the systems that would hold it.",
   },
   {
-    name: "In public",
+    name: "Spaces to gather",
     color: "#5e5e5e",
-    description: "Libraries, galleries and schools, and who they are built for.",
-  },
-  {
-    name: "In company",
-    color: "#808080",
     description:
-      "Partners, collaborators and youth co-producers, credited as makers.",
+      "The places where people come together to imagine and design: Lab for Us, the library, the lab.",
   },
   {
-    name: "In the open",
+    name: "Quiet activism",
+    color: "#808080",
+    description: "Small, subtle acts that move things, and what they change.",
+  },
+  {
+    name: "Across disciplines",
     color: "#a3a3a3",
     description:
-      "What InACTS is, how to work with it, calls, invitations and news.",
+      "Art education and innovation and entrepreneurship crossing until neither stands alone, shown and not defined.",
   },
+] as const;
+
+/**
+ * The first five InACTS pillars, replaced on 21 November 2026 after the 16
+ * November sessions. Six starter posts still carry these names, so their
+ * colours stay resolvable; the pillar pickers no longer offer them.
+ */
+const LEGACY_INACTS_PILLARS = [
+  { name: "In practice", color: "#121212" },
+  { name: "In evidence", color: "#3d3d3d" },
+  { name: "In public", color: "#5e5e5e" },
+  { name: "In company", color: "#808080" },
+  { name: "In the open", color: "#a3a3a3" },
 ] as const;
 
 type Pillar = { name: string; color: string; description: string };
@@ -98,7 +111,10 @@ export function pillarsFor(hub: "labforus" | "inacts"): readonly Pillar[] {
 }
 
 export const PILLAR_COLOR: Record<string, string> = Object.fromEntries(
-  [...PILLARS, ...INACTS_PILLARS].map((p) => [p.name, p.color]),
+  [...PILLARS, ...INACTS_PILLARS, ...LEGACY_INACTS_PILLARS].map((p) => [
+    p.name,
+    p.color,
+  ]),
 );
 
 /** Falls back to the border tone so an unknown pillar never renders colourless. */

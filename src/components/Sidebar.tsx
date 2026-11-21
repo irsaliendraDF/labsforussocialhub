@@ -129,6 +129,7 @@ const INACTS_GROUPS: Group[] = [
     items: [
       { href: "/inacts", label: "Overview", icon: I.overview },
       { href: "/inacts/people", label: "People", icon: I.roles },
+      { href: "/inacts/systems-of-care", label: "Systems of Care", icon: I.practices },
     ],
   },
   {
@@ -194,7 +195,9 @@ export default function Sidebar() {
               className="nav-row"
               aria-current={
                 pathname === it.href ||
-                (it.href !== "/" && pathname.startsWith(`${it.href}/`)) ||
+                (it.href !== "/" &&
+                  it.href !== "/inacts" &&
+                  pathname.startsWith(`${it.href}/`)) ||
                 it.also?.some((p) => pathname === p || pathname.startsWith(`${p}/`))
                   ? "page"
                   : undefined

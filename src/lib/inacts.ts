@@ -63,6 +63,34 @@ export const CONNECTS = [
   },
 ] as const;
 
+/**
+ * The Systems of Care page, from the 16 November 2026 sessions. Their words,
+ * trimmed: heard, not established, and approved by Irene as drafted in chat
+ * on 21 November 2026. Nothing about roles, staff or the research flow.
+ */
+export const SYSTEMS_OF_CARE = {
+  intro:
+    "InACTS works on systems of care: how people and places take care of each other, and what care and repair structures look like when they work.",
+  sections: [
+    {
+      heading: "A Different Future",
+      body: "How do we imagine a different future than the one we have today? How do we change the systems so that future can be realized? And how do we make spaces where people come together to imagine and design those systems and futures?",
+    },
+    {
+      heading: "Led by Young People",
+      body: "Young people are prioritized, and the futures are youth-led.",
+    },
+    {
+      heading: "Across Disciplines",
+      body: "April Mandrona brings art education and Shakara Joseph brings innovation and entrepreneurship. The aim is not to sit side by side but to cross until neither is separate.",
+    },
+    {
+      heading: "Quiet Activism",
+      body: "The work moves through small, subtle acts in the spaces where people gather, not only through loud ones.",
+    },
+  ],
+} as const;
+
 /** On the record, and therefore safe to repeat. */
 export const ON_THE_RECORD = [
   {
