@@ -177,7 +177,7 @@ export const PEOPLE: Person[] = [
     id: "shakara",
     name: "Shakara Russell Joseph",
     title:
-      "Associate Professor, Dalhousie. Co-founder, Black Entrepreneurship Knowledge Hub",
+      "Associate Professor, Dalhousie. Co-director of InACTS",
     archetype: "The builder-theorist",
     archetypeNote:
       "She builds in public, from a feminist and entrepreneurial lens, and theorises the thing while it is still moving.",
@@ -200,7 +200,7 @@ export const PEOPLE: Person[] = [
     ],
     routes:
       "Art education pedagogy, fine-art scholarship, and anything needing one narrow maker discipline, go to April.",
-    bio: "Shakara is an entrepreneurship scholar at Dalhousie, co-founder of the Black Entrepreneurship Knowledge Hub, and co-steward of Lab for Us and InACTS.",
+    bio: "Shakara is an entrepreneurship scholar at Dalhousie, co-director of InACTS and co-steward of Lab for Us.",
     results: [
       {
         label: "CliftonStrengths",
