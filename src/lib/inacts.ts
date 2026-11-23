@@ -115,7 +115,7 @@ export const ON_THE_RECORD = [
 export const TOGETHER = {
   why: "April held the Canada Research Chair for two years before they met, and the work was not moving. They were introduced by a mutual contact and found the same question under both fields: how do we take better care of each other? April comes at it through art and education, Shakara through innovation and entrepreneurship. The care is the same and the lens differs.",
   means:
-    "They are both transdisciplinary thinkers. Their fields are not fruit in a bag, side by side without touching, and not a fruit salad, still identifiable as separate pieces. The aim is a smoothie: April can talk about innovation from an art education lens, and Shakara can talk about art education from an innovation lens. The aim is to solve real societal problems. They work from mutual respect, support and alignment. United does not mean always agreeing, and each protects their own time and boundaries. Everything they build is built with a community partner, across international, inter-university and community scales.",
+    "They are both transdisciplinary thinkers. Their fields are not side by side without touching. Ideas are blended and each person stays themselves, which is not a melting pot: April can explain her art education experience through an innovation lens, and Shakara can use an art education lens. The aim is to solve real societal problems. They work from mutual respect, support and alignment. United does not mean always agreeing, and each protects their own time and boundaries. Everything they build is built with a community partner, across international, inter-university and community scales.",
   inTheirWords: [
     {
       label: "The aim",
@@ -251,7 +251,7 @@ export const PEOPLE: Person[] = [
       "Art education pedagogy, fine-art scholarship, and anything needing one narrow maker discipline, go to April.",
     bio: "Shakara is an entrepreneurship scholar at Dalhousie, co-director of InACTS and co-steward of Lab for Us.",
     heard: [
-      "Not attached to any one organization. The range runs from technology leaders to community work, and it should all make sense together.",
+      "Not attached to any one organization. The range runs from business leaders to community work, and it should all make sense together.",
       "Systems of innovation that recognize how the system is, then innovate in ways that are not harmful.",
       "Builds until it works, then hands it on.",
     ],
